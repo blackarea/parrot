@@ -1,0 +1,45 @@
+package com.graduation.parrot.domain;
+
+import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(of = {"id", "name"})
+public class User extends BaseTimeEntity{
+
+    @Id
+    @GeneratedValue
+    @Column(name = "user_id")
+    private Long id;
+
+    @Column(nullable = false, length = 100, unique = true)
+    private String login_id;
+    @Column(nullable = false, length = 100)
+    private String password;
+
+    @Column(nullable = false, length = 15)
+    private String name;
+
+    @Column(length = 100)
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.ROLE_USER;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Board> boards = new ArrayList<>();
+
+    @Builder
+    public User(String login_id, String password, String name, String email) {
+        this.login_id = login_id;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+    }
+}

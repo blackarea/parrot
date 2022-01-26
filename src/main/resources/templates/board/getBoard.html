@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+
+
+    <div class="container">
+        <h1 class="mb-3">게시글</h1>
+
+        <div class="mb-3">
+            <label class="fw-bold" for="id">글 번호</label>
+            <input class="form-control" id="id" th:value="${boardResponseForm.id}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-bold" for="title">제목</label>
+            <input type="text" class="form-control" id="title" th:value="${boardResponseForm.title}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-bold" for="author">작성자</label>
+            <input type="text" class="form-control" id="author" th:value="${boardResponseForm.author}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-bold" for="content">내용</label>
+            <textarea class="form-control" id="content" th:text="${boardResponseForm.content}"></textarea>
+        </div>
+
+        <a href="/" role="button" class="btn btn-secondary">HOME</a>
+        <a th:href="@{/board/update/{id}(id=${boardResponseForm.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
+        <a th:href="@{/board/delete/{id}(id=${boardResponseForm.id})}" type="button" class="btn btn-danger">삭제</a>
+
+    </div>
+
+
+
+</div>
+</html>
