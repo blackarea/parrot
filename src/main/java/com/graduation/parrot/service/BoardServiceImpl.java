@@ -44,7 +44,8 @@ public class BoardServiceImpl implements BoardService{
     public BoardResponseForm getBoard(Long board_id) {
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new NoSuchElementException("getBoard - 해당 게시글이 없습니다. id = " + board_id));
-        return new BoardResponseForm(board);
+
+        return new BoardResponseForm(board, board.getUser().getId());
     }
 
     @Override

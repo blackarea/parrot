@@ -55,6 +55,7 @@ class BoardServiceImplTest {
         assertThat(board.getTitle()).isEqualTo("title2");
         assertThat(board.getContent()).isEqualTo("content2");
 
+
     }
 
     @Test

@@ -1,10 +1,14 @@
 package com.graduation.parrot.controller;
 
+import com.graduation.parrot.config.SecurityUser;
+import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.form.BoardForm;
+import com.graduation.parrot.domain.form.BoardResponseForm;
 import com.graduation.parrot.domain.form.BoardSaveForm;
 import com.graduation.parrot.repository.UserRepository;
 import com.graduation.parrot.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,21 +27,24 @@ public class BoardController {
         return "index";
     }
 
+    @GetMapping("/board/{id}")
+    public String getBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal SecurityUser principal) {
+        User user = principal.getUser();
+        BoardResponseForm boardResponseForm = boardService.getBoard(id);
+        model.addAttribute("user", user);
+        model.addAttribute("boardResponseForm", boardResponseForm);
+        return "/board/getBoard";
+    }
+
     @GetMapping("/board/insert")
     public String insertBoardView() {
         return "/board/insertBoard";
     }
 
     @PostMapping("/board/insert")
-    public String insertBoard(BoardForm boardForm) {
-        boardService.insert(boardForm, userRepository.findById(1L).get());
+    public String insertBoard(BoardForm boardForm, @AuthenticationPrincipal SecurityUser principal) {
+        boardService.insert(boardForm, principal.getUser());
         return "redirect:/";
-    }
-
-    @GetMapping("/board/{id}")
-    public String getBoard(@PathVariable Long id, Model model) {
-        model.addAttribute("boardResponseForm", boardService.getBoard(id));
-        return "/board/getBoard";
     }
 
     @GetMapping("/board/update/{id}")

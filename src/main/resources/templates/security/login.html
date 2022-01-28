@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+</head>
+
+<div layout:fragment="content" class="form-signin text-center" >
+    <main class="form-signin2">
+        <form th:action="@{/security/login}" method="post">
+            <img class="mb-4" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating">
+                <input type="text" class="form-control" name="username" id="username">
+                <label for="username">username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" name="password" id="password">
+                <label for="password">Password</label>
+            </div>
+
+            <!--<div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>-->
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        </form>
+    </main>
+</div>
+
+</html>

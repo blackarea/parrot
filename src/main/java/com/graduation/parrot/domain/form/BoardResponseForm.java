@@ -13,11 +13,13 @@ public class BoardResponseForm {
     private String title;
     private String content;
     private String author;
+    private Long author_id;
 
-    public BoardResponseForm(Board board) {
+    public BoardResponseForm(Board board, Long author_id) {
         this.id = board.getId();
         this.title = board.getTitle();
         this.content = board.getContent();
         this.author = board.getAuthor();
+        this.author_id = author_id;
     }
 }

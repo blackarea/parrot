@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout}">
 
 <div layout:fragment="content">
@@ -8,7 +9,10 @@
 
         <h1>홈페이지</h1>
         <br>
-        <a th:href="@{/board/insert}" role="button" class="btn btn-primary">글 등록</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/board/insert}" role="button" class="btn btn-primary">글 등록</a>
+        <a sec:authorize="isAnonymous()"th:href="@{/security/login}" role="button" class="btn btn-primary">로그인</a>
+        <a sec:authorize="isAuthenticated()"th:href="@{/security/logout}" role="button" class="btn btn-primary">로그아웃</a>
+        <a sec:authorize="isAnonymous()"th:href="@{/security/signup}" role="button" class="btn btn-primary">회원가입</a>
 
         <table class="table table-bordered table-hover">
             <thead class="table-light">
