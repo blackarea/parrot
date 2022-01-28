@@ -13,6 +13,7 @@
         <a sec:authorize="isAnonymous()"th:href="@{/security/login}" role="button" class="btn btn-primary">로그인</a>
         <a sec:authorize="isAuthenticated()"th:href="@{/security/logout}" role="button" class="btn btn-primary">로그아웃</a>
         <a sec:authorize="isAnonymous()"th:href="@{/security/signup}" role="button" class="btn btn-primary">회원가입</a>
+        <span th:text="${userName}"></span>
 
         <table class="table table-bordered table-hover">
             <thead class="table-light">
