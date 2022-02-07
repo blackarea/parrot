@@ -14,18 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
-    private final HttpSession httpSession;
 
     @GetMapping({"/", "/board"})
-    public String index(Model model, @AuthenticationPrincipal SecurityUser principal){
-        if(principal != null){
+    public String index(Model model, @AuthenticationPrincipal SecurityUser principal) {
+        if (principal != null) {
             model.addAttribute("userName", principal.getUser().getName());
         }
         model.addAttribute("boardList", boardService.getBoardList());
@@ -38,12 +35,12 @@ public class BoardController {
         BoardResponseForm boardResponseForm = boardService.getBoard(id);
         model.addAttribute("user", user);
         model.addAttribute("boardResponseForm", boardResponseForm);
-        return "/board/getBoard";
+        return "board/getBoard";
     }
 
     @GetMapping("/board/insert")
     public String insertBoardView() {
-        return "/board/insertBoard";
+        return "board/insertBoard";
     }
 
     @PostMapping("/board/insert")
@@ -55,7 +52,7 @@ public class BoardController {
     @GetMapping("/board/update/{id}")
     public String updateBoardView(@PathVariable Long id, Model model) {
         model.addAttribute("boardResponseForm", boardService.getBoard(id));
-        return "/board/updateBoard";
+        return "board/updateBoard";
     }
 
     @PutMapping("/board/update/{id}")

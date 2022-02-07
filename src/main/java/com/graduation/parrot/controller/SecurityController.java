@@ -16,17 +16,12 @@ public class SecurityController {
 
     @GetMapping("/login")
     public String login(){
-        return "/security/login";
-    }
-
-    @GetMapping("/logout")
-    public String logout(){
-        return "/security/logout";
+        return "security/login";
     }
 
     @GetMapping("/signup")
     public String signupView(){
-        return "/security/signup";
+        return "security/signup";
     }
 
     @PostMapping("/signup")
