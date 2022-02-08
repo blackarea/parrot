@@ -18,7 +18,6 @@ public class HomeController {
     @Autowired private UserRepository userRepository;
     @Autowired private BoardRepository boardRepository;
 
-
     @PostConstruct
     public void createUserAndBoard(){
         IntStream.rangeClosed(1, 5).forEach(i -> {
