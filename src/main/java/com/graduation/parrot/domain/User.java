@@ -9,8 +9,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "name"})
+@ToString(of = {"id", "name", "login_id", "password"})
 public class User extends BaseTimeEntity{
 
     @Id
@@ -18,12 +19,12 @@ public class User extends BaseTimeEntity{
     @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(length = 100, unique = true)
     private String login_id;
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String password;
 
-    @Column(nullable = false, length = 15)
+    @Column(length = 15)
     private String name;
 
     @Column(length = 100)

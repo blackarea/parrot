@@ -1,6 +1,5 @@
 package com.graduation.parrot.controller;
 
-import com.graduation.parrot.config.SecurityUser;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.form.BoardForm;
 import com.graduation.parrot.domain.form.BoardResponseForm;
@@ -20,6 +19,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    /*
     @GetMapping({"/", "/board"})
     public String index(Model model, @AuthenticationPrincipal SecurityUser principal) {
         if (principal != null) {
@@ -47,7 +47,7 @@ public class BoardController {
     public String insertBoard(BoardForm boardForm, @AuthenticationPrincipal SecurityUser principal) {
         boardService.insert(boardForm, principal.getUser());
         return "redirect:/";
-    }
+    }*/
 
     @GetMapping("/board/update/{id}")
     public String updateBoardView(@PathVariable Long id, Model model) {
