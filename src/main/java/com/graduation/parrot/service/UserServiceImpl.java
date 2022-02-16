@@ -14,13 +14,23 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User save(UserSaveForm userSaveForm) {
-        User user = User.builder()
-                .login_id(userSaveForm.getLogin_id())
-                .password(userSaveForm.getPassword())
-                .name(userSaveForm.getUsername())
-                .email(userSaveForm.getEmail())
-                .build();
-        userRepository.save(user);
-        return user;
+        if(userSaveForm.getEmail() != "") {
+            User user = User.builder()
+                    .login_id(userSaveForm.getLogin_id())
+                    .password(userSaveForm.getPassword())
+                    .name(userSaveForm.getUsername())
+                    .email(userSaveForm.getEmail())
+                    .build();
+            userRepository.save(user);
+            return user;
+        }
+        else {
+            User user = User.builder()
+                    .login_id(userSaveForm.getLogin_id())
+                    .password(userSaveForm.getPassword())
+                    .name(userSaveForm.getUsername())
+                    .build();
+            userRepository.save(user);
+            return user;
     }
 }
