@@ -3,14 +3,11 @@ package com.graduation.parrot.controller;
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.form.UserSaveForm;
-import com.graduation.parrot.repository.UserRepository;
 import com.graduation.parrot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -18,33 +15,37 @@ import java.util.List;
 public class RestApiController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping("/home")
-    public String home(){
+    public String home() {
         return "home";
     }
 
     @PostMapping("/token")
-    public String token(){
+    public String token() {
+        System.out.println("token");
         return "token";
     }
 
     @GetMapping("user")
-    public String user(Authentication authentication) {
-        PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
-        System.out.println("principal : "+principal.getUser().getId());
-        System.out.println("principal : "+principal.getUser().getLogin_id());
-        System.out.println("principal : "+principal.getUser().getPassword());
+    public String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        User user = principalDetails.getUser();
 
-        return "<h1>user</h1>";
+        System.out.println("principal : " + user.getId());
+        System.out.println("principal : " + user.getLogin_id());
+        System.out.println("principal : " + user.getPassword());
+
+        return "user";
+    }
+
+    @GetMapping("/api/v1/admin")
+    public String admin() {
+        return "admin";
     }
 
     @PostMapping("/join")
-    public String join(@RequestBody User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+    public String join(@RequestBody UserSaveForm userSaveForm) {
+        userService.save(userSaveForm);
         return "회원가입완료";
     }
 }

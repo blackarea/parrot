@@ -7,13 +7,13 @@
 
 <div layout:fragment="content" class="form-signin text-center" >
     <main class="form-signin2">
-        <form th:action="@{/security/login}" method="post">
+        <form th:action="@{/login}" method="post">
             <img class="mb-4" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating">
-                <input type="text" class="form-control" name="username" id="username">
-                <label for="username">username</label>
+                <input type="text" class="form-control" name="login_id" id="login_id">
+                <label for="login_id">login_id</label>
             </div>
             <div class="form-floating mb-3">
                 <input type="password" class="form-control" name="password" id="password">

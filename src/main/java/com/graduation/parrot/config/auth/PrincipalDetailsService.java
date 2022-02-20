@@ -17,7 +17,6 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("PrincipalDetailsService.loadUserByUsername");
         Optional<User> optional = userRepository.findByLogin_id(username);
 
         if(!optional.isPresent()){
