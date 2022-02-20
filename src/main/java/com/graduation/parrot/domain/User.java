@@ -1,7 +1,6 @@
 package com.graduation.parrot.domain;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "name"})
+@ToString(of = {"id", "name", "login_id", "password"})
 public class User extends BaseTimeEntity{
 
     @Id
@@ -23,7 +22,7 @@ public class User extends BaseTimeEntity{
     @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(nullable = false, length = 15)
+    @Column(length = 15)
     private String name;
 
     @Column(length = 100)

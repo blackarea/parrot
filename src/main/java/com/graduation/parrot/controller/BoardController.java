@@ -1,18 +1,22 @@
 package com.graduation.parrot.controller;
 
-import com.graduation.parrot.config.SecurityUser;
+import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.form.BoardForm;
 import com.graduation.parrot.domain.form.BoardResponseForm;
 import com.graduation.parrot.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,18 +25,19 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping({"/", "/board"})
-    public String index(Model model, @AuthenticationPrincipal SecurityUser principal) {
-        if (principal != null) {
-            model.addAttribute("userName", principal.getUser().getName());
+    public String index(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        if (principalDetails != null) {
+            model.addAttribute("userName", principalDetails.getUser().getName());
         }
         model.addAttribute("boardList", boardService.getBoardList());
         return "index";
     }
 
     @GetMapping("/board/{id}")
-    public String getBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal SecurityUser principal) {
-        User user = principal.getUser();
+    public String getBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        User user = principalDetails.getUser();
         BoardResponseForm boardResponseForm = boardService.getBoard(id);
+
         model.addAttribute("user", user);
         model.addAttribute("boardResponseForm", boardResponseForm);
         return "board/getBoard";
@@ -44,8 +49,8 @@ public class BoardController {
     }
 
     @PostMapping("/board/insert")
-    public String insertBoard(BoardForm boardForm, @AuthenticationPrincipal SecurityUser principal) {
-        boardService.insert(boardForm, principal.getUser());
+    public String insertBoard(BoardForm boardForm, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        boardService.insert(boardForm, principalDetails.getUser());
         return "redirect:/";
     }
 

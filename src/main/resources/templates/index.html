@@ -4,15 +4,28 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout}">
 
+<head>
+    <script>
+        function logout() {
+            var form = document.createElement('form');
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', "/userlogout");
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</head>
+
 <div layout:fragment="content">
     <div class="container-fluid">
 
         <h1>홈페이지</h1>
         <br>
         <a sec:authorize="isAuthenticated()" th:href="@{/board/insert}" role="button" class="btn btn-primary">글 등록</a>
-        <a sec:authorize="isAnonymous()"th:href="@{/security/login}" role="button" class="btn btn-primary">로그인</a>
-        <a sec:authorize="isAuthenticated()"th:href="@{/security/logout}" role="button" class="btn btn-primary">로그아웃</a>
-        <a sec:authorize="isAnonymous()"th:href="@{/security/signup}" role="button" class="btn btn-primary">회원가입</a>
+        <a sec:authorize="isAnonymous()" th:href="@{/userlogin}" role="button" class="btn btn-primary">로그인</a>
+        <a sec:authorize="isAuthenticated()" onclick="logout()" role="button" class="btn btn-primary">로그아웃</a>
+        <a sec:authorize="isAnonymous()" th:href="@{/signup}" role="button" class="btn btn-primary">회원가입</a>
         <span th:text="${userName}"></span>
 
         <table class="table table-bordered table-hover">
@@ -27,7 +40,8 @@
 
             <tr th:each="boardListResponseForm : ${boardList}">
                 <td th:text="${boardListResponseForm.id}"></td>
-                <td><a th:href="@{/board/{id}(id=${boardListResponseForm.id})}" th:text="${boardListResponseForm.title}"></a></td>
+                <td><a th:href="@{/board/{id}(id=${boardListResponseForm.id})}"
+                       th:text="${boardListResponseForm.title}"></a></td>
                 <td th:text="${boardListResponseForm.name}"></td>
                 <td th:text="${boardListResponseForm.modifiedDate}"></td>
             </tr>

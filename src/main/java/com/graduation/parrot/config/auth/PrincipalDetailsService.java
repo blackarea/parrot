@@ -1,4 +1,4 @@
-package com.graduation.parrot.config;
+package com.graduation.parrot.config.auth;
 
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.repository.UserRepository;
@@ -12,17 +12,18 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BoardUserDetailsService implements UserDetailsService {
+public class PrincipalDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> optional = userRepository.findByLogin_id(username);
+
         if(!optional.isPresent()){
             throw new UsernameNotFoundException(username+ "사용자 없음");
         }else{
             User user = optional.get();
-            return new SecurityUser(user);
+            return new PrincipalDetails(user);
         }
     }
 }
