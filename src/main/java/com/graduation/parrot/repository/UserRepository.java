@@ -12,5 +12,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     @EntityGraph(attributePaths = {"boards"})
     @Query("select u from User u where u.login_id = :login_id")
-    Optional<User> findByLogin_id(@Param("login_id") String login_id);
+    Optional<User> findByLogin_idOptional(@Param("login_id") String login_id);
+
+    @Query("select u from User u where u.login_id = :login_id")
+    Optional<User> findByLogin_id(@Param("login_id")String login_id);
 }

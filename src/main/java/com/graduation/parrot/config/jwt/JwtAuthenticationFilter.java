@@ -1,15 +1,10 @@
 package com.graduation.parrot.config.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.form.LoginRequestDto;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -21,16 +16,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 
-@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
 
-    // Authentication 객체 만들어서 리턴 => 의존 : AuthenticationManager
-    // 인증 요청시에 실행되는 함수 => /login
-    @SneakyThrows(IOException.class)
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
+        setFilterProcessesUrl("/login");
+    }
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
@@ -48,8 +45,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            login_id = loginRequestDto.getLogin_id();
-            password = loginRequestDto.getPassword();
+            login_id = loginRequestDto != null ? loginRequestDto.getLogin_id() : null;
+            password = loginRequestDto != null ? loginRequestDto.getPassword() : null;
         } else {
             login_id = parameterLogin_id;
             password = parameterPassword;
@@ -60,16 +57,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         //PrincipalDetailsService.loadUserByUsername 실행
         //authentication은 session에 저장됨
-
-        try {
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            return authentication;
-        }catch (BadCredentialsException e){
-            logger.warn(e);
-            response.sendRedirect("/userlogin");
-        }
-
-        return null;
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        return authentication;
     }
 
     // JWT Token 생성해서 response에 담아주기
@@ -77,18 +66,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+        User user = principalDetails.getUser();
 
-        String jwtToken = JWT.create()
-                .withSubject("cos")
-                .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
-                .withClaim("id", principalDetails.getUser().getId())
-                .withClaim("login_id", principalDetails.getUser().getLogin_id())
-                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+        String jwtToken = jwtUtil.createToken(user.getId(), user.getLogin_id());
 
-        response.addHeader("Authorization", "Bearer " + jwtToken);
+        response.addHeader(JwtProperties.AUTHORIZATION, JwtProperties.TOKEN_PREFIX + jwtToken);
         Cookie cookie = new Cookie("jwtToken", jwtToken);
         response.addCookie(cookie);
         response.sendRedirect("/");
     }
 
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
+        logger.warn(failed.getMessage());
+        response.sendRedirect("/userlogin");
+    }
 }

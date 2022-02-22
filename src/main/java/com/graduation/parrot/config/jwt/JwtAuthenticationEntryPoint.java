@@ -7,16 +7,19 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    private Logger logger = LoggerFactory.getLogger(JwtAccessDeniedHandler.class);
+    private Logger logger = LoggerFactory.getLogger(JwtAuthenticationEntryPoint.class);
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        logger.info("로그인하지 않은 사람이 인증이 필요한 페이지에 접근");
+        logger.info("로그인하지 않은 사람이 인증이 필요한 페이지에 접근 또는 토큰이 만료됨");
+
         response.sendRedirect("/userlogin");
     }
+
 }

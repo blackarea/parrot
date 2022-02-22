@@ -1,5 +1,6 @@
 package com.graduation.parrot.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,8 @@ public class User extends BaseTimeEntity{
 
     @Column(nullable = false, length = 100, unique = true)
     private String login_id;
+
+    @JsonIgnore
     @Column(nullable = false, length = 100)
     private String password;
 

@@ -1,9 +1,6 @@
 package com.graduation.parrot.config;
 
-import com.graduation.parrot.config.jwt.JwtAccessDeniedHandler;
-import com.graduation.parrot.config.jwt.JwtAuthenticationEntryPoint;
-import com.graduation.parrot.config.jwt.JwtAuthenticationFilter;
-import com.graduation.parrot.config.jwt.JwtAuthorizationFilter;
+import com.graduation.parrot.config.jwt.*;
 import com.graduation.parrot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserRepository userRepository;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtUtil jwtUtil;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -34,8 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .addFilter(corsConfig.corsFilter())
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtUtil))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository, jwtUtil))
 
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

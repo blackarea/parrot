@@ -3,11 +3,13 @@ package com.graduation.parrot.controller;
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.form.UserSaveForm;
+import com.graduation.parrot.repository.UserRepository;
 import com.graduation.parrot.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class RestApiController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @GetMapping("/home")
     public String home() {
@@ -38,9 +41,14 @@ public class RestApiController {
         return "user";
     }
 
-    @GetMapping("/api/v1/admin")
+    @GetMapping("/admin")
     public String admin() {
         return "admin";
+    }
+
+    @GetMapping("/admin/userlist")
+    public List<User> userList() {
+        return userRepository.findAll();
     }
 
     @PostMapping("/join")
