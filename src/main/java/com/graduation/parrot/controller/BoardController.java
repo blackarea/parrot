@@ -4,19 +4,16 @@ import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.form.BoardForm;
 import com.graduation.parrot.domain.form.BoardResponseForm;
+import com.graduation.parrot.domain.form.UserResponseDto;
 import com.graduation.parrot.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,9 +33,10 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String getBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         User user = principalDetails.getUser();
+        UserResponseDto userResponseDto = new UserResponseDto(user);
         BoardResponseForm boardResponseForm = boardService.getBoard(id);
 
-        model.addAttribute("user", user);
+        model.addAttribute("userResponseDto", userResponseDto);
         model.addAttribute("boardResponseForm", boardResponseForm);
         return "board/getBoard";
     }

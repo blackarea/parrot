@@ -52,7 +52,6 @@ public class JwtLoginFilterTest {
                 .name("name")
                 .build();
 
-        user.setRole(Role.ROLE_ADMIN);
         userRepository.save(user);
 
         User user2 = User.builder()

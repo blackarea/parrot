@@ -28,7 +28,7 @@
         </div>
 
         <a href="/" role="button" class="btn btn-secondary">HOME</a>
-        <div th:if="${user.id == boardResponseForm.author_id}">
+        <div th:if="${userResponseDto.id == boardResponseForm.author_id}">
             <a th:href="@{/board/update/{id}(id=${boardResponseForm.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
             <a th:href="@{/board/delete/{id}(id=${boardResponseForm.id})}" type="button" class="btn btn-danger">삭제</a>
         </div>

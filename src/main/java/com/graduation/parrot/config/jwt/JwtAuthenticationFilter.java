@@ -72,6 +72,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.addHeader(JwtProperties.AUTHORIZATION, JwtProperties.TOKEN_PREFIX + jwtToken);
         Cookie cookie = new Cookie("jwtToken", jwtToken);
+        cookie.setMaxAge(3 * 60 * 60);
+        cookie.setHttpOnly(true);
         response.addCookie(cookie);
         response.sendRedirect("/");
     }
