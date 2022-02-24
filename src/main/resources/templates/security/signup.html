@@ -19,19 +19,22 @@
                 <!--ID-->
                 <div class="col-sm-12">
                     <label for="ID" class="form-label">ID</label>
-                    <input type="text" class="form-control" id="ID" name="login_id" required>
+                    <input type="text" class="form-control" th:value="${userSaveDto?.login_id}" id="ID" name="login_id" required>
+                    <span class="text-danger" th:text="${valid_login_id}"></span>
                 </div>
 
                 <!--password-->
                 <div class="col-sm-12">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <input type="password" class="form-control" th:value="${userSaveDto?.password}" id="password" name="password" required>
+                    <span class="text-danger" th:text="${valid_password}"></span>
                 </div>
 
                 <!--Username-->
                 <div class="col-12">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                    <input type="text" class="form-control" th:value="${userSaveDto?.username}" id="username" name="username" placeholder="Username" required>
+                    <span class="text-danger" th:text="${valid_username}"></span>
                 </div>
 
                 <!--email-->

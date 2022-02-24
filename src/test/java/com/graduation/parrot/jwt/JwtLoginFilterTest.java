@@ -2,9 +2,8 @@ package com.graduation.parrot.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.graduation.parrot.domain.Role;
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.UserSaveForm;
+import com.graduation.parrot.domain.form.UserSaveDto;
 import com.graduation.parrot.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +18,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -70,11 +67,11 @@ public class JwtLoginFilterTest {
     @DisplayName("1. jwt 로 로그인을 시도한다.")
     @Test
     void test_1() throws URISyntaxException {
-        UserSaveForm userSaveForm = UserSaveForm.builder()
+        UserSaveDto userSaveDto = UserSaveDto.builder()
                 .login_id("login")
                 .password("pwd")
                 .build();
-        HttpEntity<UserSaveForm> body = new HttpEntity<>(userSaveForm);
+        HttpEntity<UserSaveDto> body = new HttpEntity<>(userSaveDto);
 
         ResponseEntity<String> response = restTemplate.exchange(uri("/login"), HttpMethod.POST, body, String.class);
         assertThat(response.getStatusCodeValue()).isEqualTo(302); //redirect to "/"
@@ -97,11 +94,11 @@ public class JwtLoginFilterTest {
     }
 
     public String getToken(String login_id, String password) throws URISyntaxException {
-        UserSaveForm userSaveForm = UserSaveForm.builder()
+        UserSaveDto userSaveDto = UserSaveDto.builder()
                 .login_id(login_id)
                 .password(password)
                 .build();
-        HttpEntity<UserSaveForm> body = new HttpEntity<>(userSaveForm);
+        HttpEntity<UserSaveDto> body = new HttpEntity<>(userSaveDto);
         ResponseEntity<String> response = restTemplate.exchange(uri("/login"), HttpMethod.POST, body, String.class);
         return response.getHeaders().get("Authorization").get(0).substring("Bearer ".length());
     }

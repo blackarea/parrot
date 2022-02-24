@@ -2,7 +2,7 @@ package com.graduation.parrot.controller;
 
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.UserSaveForm;
+import com.graduation.parrot.domain.form.UserSaveDto;
 import com.graduation.parrot.repository.UserRepository;
 import com.graduation.parrot.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +52,8 @@ public class RestApiController {
     }
 
     @PostMapping("/join")
-    public String join(@RequestBody UserSaveForm userSaveForm) {
-        userService.save(userSaveForm);
+    public String join(@RequestBody UserSaveDto userSaveDto) {
+        userService.save(userSaveDto);
         return "회원가입완료";
     }
 }

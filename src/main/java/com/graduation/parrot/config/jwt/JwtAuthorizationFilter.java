@@ -1,11 +1,5 @@
 package com.graduation.parrot.config.jwt;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.repository.UserRepository;
@@ -39,7 +33,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String token = request.getHeader(JwtProperties.AUTHORIZATION);
 
         //브라우저 접근이면
-        if(token == null){
+        if (token == null) {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (int i = 0; i < cookies.length; i++) {
@@ -59,7 +53,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         token = token.replace(JwtProperties.TOKEN_PREFIX, "");
         Optional<String> tokenOptional = jwtUtil.verify(token);
 
-        if(tokenOptional.isPresent()){
+        if (tokenOptional.isPresent()) {
             Optional<User> user = userRepository.findByLogin_idOptional(tokenOptional.get());
             PrincipalDetails principalDetails = new PrincipalDetails(user.get());
             Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -69,7 +63,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
             // 강제로 시큐리티의 세션에 접근하여 값 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        }else {
+        } else {
             expireCookie(response, "jwtToken");
         }
 
