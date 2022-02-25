@@ -3,7 +3,7 @@ package com.graduation.parrot.jwt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.UserSaveDto;
+import com.graduation.parrot.domain.dto.UserSaveDto;
 import com.graduation.parrot.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

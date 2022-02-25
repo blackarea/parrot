@@ -38,12 +38,12 @@
             </tr>
             </thead>
 
-            <tr th:each="boardListResponseForm : ${boardList}">
-                <td th:text="${boardListResponseForm.id}"></td>
-                <td><a th:href="@{/board/{id}(id=${boardListResponseForm.id})}"
-                       th:text="${boardListResponseForm.title}"></a></td>
-                <td th:text="${boardListResponseForm.name}"></td>
-                <td th:text="${boardListResponseForm.modifiedDate}"></td>
+            <tr th:each="boardListResponseDto : ${boardList}">
+                <td th:text="${boardListResponseDto.id}"></td>
+                <td><a th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
+                       th:text="${boardListResponseDto.title}"></a></td>
+                <td th:text="${boardListResponseDto.name}"></td>
+                <td th:text="${boardListResponseDto.modifiedDate}"></td>
             </tr>
         </table>
     </div>

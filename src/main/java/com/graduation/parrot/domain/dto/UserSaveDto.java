@@ -1,4 +1,4 @@
-package com.graduation.parrot.domain.form;
+package com.graduation.parrot.domain.dto;
 
 import lombok.Builder;
 import lombok.Getter;

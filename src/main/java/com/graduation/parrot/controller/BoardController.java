@@ -2,9 +2,9 @@ package com.graduation.parrot.controller;
 
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.BoardForm;
-import com.graduation.parrot.domain.form.BoardResponseForm;
-import com.graduation.parrot.domain.form.UserResponseDto;
+import com.graduation.parrot.domain.dto.BoardDto;
+import com.graduation.parrot.domain.dto.BoardResponseDto;
+import com.graduation.parrot.domain.dto.UserResponseDto;
 import com.graduation.parrot.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,10 +34,10 @@ public class BoardController {
     public String getBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         User user = principalDetails.getUser();
         UserResponseDto userResponseDto = new UserResponseDto(user);
-        BoardResponseForm boardResponseForm = boardService.getBoard(id);
+        BoardResponseDto boardResponseDto = boardService.getBoard(id);
 
         model.addAttribute("userResponseDto", userResponseDto);
-        model.addAttribute("boardResponseForm", boardResponseForm);
+        model.addAttribute("boardResponseDto", boardResponseDto);
         return "board/getBoard";
     }
 
@@ -47,20 +47,20 @@ public class BoardController {
     }
 
     @PostMapping("/board/insert")
-    public String insertBoard(BoardForm boardForm, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        boardService.insert(boardForm, principalDetails.getUser());
+    public String insertBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        boardService.insert(boardDto, principalDetails.getUser());
         return "redirect:/";
     }
 
     @GetMapping("/board/update/{id}")
     public String updateBoardView(@PathVariable Long id, Model model) {
-        model.addAttribute("boardResponseForm", boardService.getBoard(id));
+        model.addAttribute("boardResponseDto", boardService.getBoard(id));
         return "board/updateBoard";
     }
 
     @PutMapping("/board/update/{id}")
-    public String updateBoard(@PathVariable Long id, BoardForm boardForm) {
-        boardService.update(id, boardForm);
+    public String updateBoard(@PathVariable Long id, BoardDto boardDto) {
+        boardService.update(id, boardDto);
         return "redirect:/";
     }
 

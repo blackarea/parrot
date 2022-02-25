@@ -1,17 +1,16 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.BoardForm;
-import com.graduation.parrot.domain.form.BoardListResponseForm;
-import com.graduation.parrot.domain.form.BoardResponseForm;
-import com.graduation.parrot.domain.form.BoardSaveForm;
+import com.graduation.parrot.domain.dto.BoardDto;
+import com.graduation.parrot.domain.dto.BoardListResponseDto;
+import com.graduation.parrot.domain.dto.BoardResponseDto;
 
 import java.util.List;
 
 public interface BoardService {
-    Long insert(BoardForm boardForm, User user);
-    Long update(Long board_id, BoardForm boardForm);
+    Long insert(BoardDto boardDto, User user);
+    Long update(Long board_id, BoardDto boardDto);
     void delete(Long board_id);
-    BoardResponseForm getBoard(Long board_id);
-    List<BoardListResponseForm> getBoardList();
+    BoardResponseDto getBoard(Long board_id);
+    List<BoardListResponseDto> getBoardList();
 }

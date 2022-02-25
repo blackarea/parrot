@@ -1,6 +1,6 @@
 package com.graduation.parrot.validator;
 
-import com.graduation.parrot.domain.form.UserSaveDto;
+import com.graduation.parrot.domain.dto.UserSaveDto;
 import com.graduation.parrot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

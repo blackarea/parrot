@@ -1,7 +1,7 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.UserSaveDto;
+import com.graduation.parrot.domain.dto.UserSaveDto;
 import org.springframework.validation.Errors;
 
 import java.util.Map;

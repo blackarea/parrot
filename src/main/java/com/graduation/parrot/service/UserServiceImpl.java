@@ -1,7 +1,7 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.UserSaveDto;
+import com.graduation.parrot.domain.dto.UserSaveDto;
 import com.graduation.parrot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

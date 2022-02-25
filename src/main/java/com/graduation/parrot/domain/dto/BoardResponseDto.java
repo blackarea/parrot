@@ -1,13 +1,12 @@
-package com.graduation.parrot.domain.form;
+package com.graduation.parrot.domain.dto;
 
 import com.graduation.parrot.domain.Board;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardResponseForm {
+public class BoardResponseDto {
 
     private Long id;
     private String title;
@@ -15,7 +14,7 @@ public class BoardResponseForm {
     private String author;
     private Long author_id;
 
-    public BoardResponseForm(Board board, Long author_id) {
+    public BoardResponseDto(Board board, Long author_id) {
         this.id = board.getId();
         this.title = board.getTitle();
         this.content = board.getContent();

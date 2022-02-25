@@ -2,9 +2,8 @@ package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.Board;
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.BoardForm;
-import com.graduation.parrot.domain.form.BoardListResponseForm;
-import com.graduation.parrot.domain.form.BoardSaveForm;
+import com.graduation.parrot.domain.dto.BoardDto;
+import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.repository.BoardRepository;
 import com.graduation.parrot.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,14 +41,14 @@ class BoardServiceImplTest {
         User savedUser = userRepository.save(user);
 
 
-        BoardForm build = BoardForm.builder()
+        BoardDto build = BoardDto.builder()
                 .title("title")
                 .content("content")
                 .build();
 
         Long board_id = boardService.insert(build, savedUser);
 
-        Long update_id = boardService.update(board_id, new BoardForm("title2", "content2"));
+        Long update_id = boardService.update(board_id, new BoardDto("title2", "content2"));
         Board board = boardRepository.findById(update_id).get();
 
         assertThat(board.getTitle()).isEqualTo("title2");
@@ -67,7 +66,7 @@ class BoardServiceImplTest {
                 .build();
         User savedUser = userRepository.save(user);
 
-        BoardForm build = BoardForm.builder()
+        BoardDto build = BoardDto.builder()
                 .title("title")
                 .content("content")
                 .build();
@@ -87,24 +86,24 @@ class BoardServiceImplTest {
                 .build();
         User savedUser = userRepository.save(user);
 
-        BoardForm build = BoardForm.builder()
+        BoardDto build = BoardDto.builder()
                 .title("title")
                 .content("content")
                 .build();
 
         Long board_id = boardService.insert(build, savedUser);
 
-        BoardForm build2 = BoardForm.builder()
+        BoardDto build2 = BoardDto.builder()
                 .title("title2")
                 .content("content2")
                 .build();
         boardService.insert(build2, savedUser);
 
-        List<BoardListResponseForm> boardList = boardService.getBoardList();
+        List<BoardListResponseDto> boardList = boardService.getBoardList();
         assertThat(boardList.size()).isEqualTo(2);
 
-        for (BoardListResponseForm boardListResponseForm : boardList) {
-            System.out.println("boardListResponseForm = " + boardListResponseForm);
+        for (BoardListResponseDto boardListResponseDto : boardList) {
+            System.out.println("boardListResponseForm = " + boardListResponseDto);
         }
     }
 }

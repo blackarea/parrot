@@ -1,6 +1,6 @@
 package com.graduation.parrot.controller;
 
-import com.graduation.parrot.domain.form.UserSaveDto;
+import com.graduation.parrot.domain.dto.UserSaveDto;
 import com.graduation.parrot.service.UserService;
 import com.graduation.parrot.validator.SignUpValidator;
 import lombok.RequiredArgsConstructor;
