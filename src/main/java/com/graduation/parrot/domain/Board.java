@@ -1,11 +1,10 @@
 package com.graduation.parrot.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,6 +30,10 @@ public class Board extends BaseTimeEntity{
     @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+    @Builder
     public Board(String title, String content, User user) {
         this.title = title;
         this.content = content;
