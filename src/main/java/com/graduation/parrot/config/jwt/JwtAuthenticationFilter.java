@@ -3,7 +3,7 @@ package com.graduation.parrot.config.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.form.LoginRequestDto;
+import com.graduation.parrot.domain.dto.LoginRequestDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

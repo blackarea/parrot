@@ -1,4 +1,4 @@
-package com.graduation.parrot.domain.form;
+package com.graduation.parrot.domain.dto;
 
 import com.graduation.parrot.domain.Board;
 import com.graduation.parrot.domain.User;
@@ -8,14 +8,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardSaveForm {
+public class BoardSaveDto {
 
     private String title;
     private String content;
     User user;
 
     @Builder
-    public BoardSaveForm(String title, String content, User user) {
+    public BoardSaveDto(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.user = user;

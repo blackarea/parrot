@@ -9,28 +9,28 @@
 
         <div class="mb-3">
             <label class="fw-bold" for="id">글 번호</label>
-            <input class="form-control" id="id" th:value="${boardResponseForm.id}" readonly>
+            <input class="form-control" id="id" th:value="${boardResponseDto.id}" readonly>
         </div>
 
         <div class="mb-3">
             <label class="fw-bold" for="title">제목</label>
-            <input type="text" class="form-control" id="title" th:value="${boardResponseForm.title}" readonly>
+            <input type="text" class="form-control" id="title" th:value="${boardResponseDto.title}" readonly>
         </div>
 
         <div class="mb-3">
             <label class="fw-bold" for="author">작성자</label>
-            <input type="text" class="form-control" id="author" th:value="${boardResponseForm.author}" readonly>
+            <input type="text" class="form-control" id="author" th:value="${boardResponseDto.author}" readonly>
         </div>
 
         <div class="mb-3">
             <label class="fw-bold" for="content">내용</label>
-            <textarea class="form-control" id="content" th:text="${boardResponseForm.content}"></textarea>
+            <textarea class="form-control" id="content" th:text="${boardResponseDto.content}"></textarea>
         </div>
 
         <a href="/" role="button" class="btn btn-secondary">HOME</a>
-        <div th:if="${userResponseDto.id == boardResponseForm.author_id}">
-            <a th:href="@{/board/update/{id}(id=${boardResponseForm.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
-            <a th:href="@{/board/delete/{id}(id=${boardResponseForm.id})}" type="button" class="btn btn-danger">삭제</a>
+        <div th:if="${userResponseDto.id == boardResponseDto.author_id}">
+            <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
+            <a th:href="@{/board/delete/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-danger">삭제</a>
         </div>
 
     </div>

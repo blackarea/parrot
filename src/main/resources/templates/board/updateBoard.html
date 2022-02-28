@@ -7,17 +7,17 @@
     <div class="container">
         <h1 class="mb-3">게시글 수정</h1>
 
-        <form th:action="@{/board/update/{id}(id=${boardResponseForm.id})}" method="post">
+        <form th:action="@{/board/update/{id}(id=${boardResponseDto.id})}" method="post">
             <input type="hidden" name="_method" value="put"/>
 
             <div class="mb-3">
                 <label class="fw-bold" for="title">제목</label>
-                <input type="text" class="form-control" id="title" name="title" th:value="${boardResponseForm.title}">
+                <input type="text" class="form-control" id="title" name="title" th:value="${boardResponseDto.title}">
             </div>
 
             <div class="mb-3">
                 <label class="fw-bold" for="content">내용</label>
-                <textarea class="form-control" id="content" name="content" th:text="${boardResponseForm.content}"></textarea>
+                <textarea class="form-control" id="content" name="content" th:text="${boardResponseDto.content}"></textarea>
             </div>
 
             <a href="/" role="button" class="btn btn-secondary">취소</a>

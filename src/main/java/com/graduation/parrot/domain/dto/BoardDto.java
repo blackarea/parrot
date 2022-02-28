@@ -1,6 +1,5 @@
-package com.graduation.parrot.domain.form;
+package com.graduation.parrot.domain.dto;
 
-import com.graduation.parrot.domain.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,13 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BoardForm {
+public class BoardDto {
 
     private String title;
     private String content;
 
     @Builder
-    public BoardForm(String title, String content) {
+    public BoardDto(String title, String content) {
         this.title = title;
         this.content = content;
     }
