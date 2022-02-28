@@ -21,6 +21,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private boolean isApp = true;
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, JwtUtil jwtUtil) {
         super(authenticationManager);
@@ -29,18 +30,20 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
         String token = request.getHeader(JwtProperties.AUTHORIZATION);
 
-        //브라우저 접근이면
         if (token == null) {
+            isApp = false;
+        }
+
+        if (!isApp) {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
-                for (int i = 0; i < cookies.length; i++) {
-                    Cookie jwtToken = cookies[i];
-                    String cName = jwtToken.getName();
-                    if (cName.equals("jwtToken")) {
-                        token = "Bearer " + jwtToken.getValue();
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("jwtToken")) {
+                        token = "Bearer " + cookie.getValue();
                     }
                 }
             }
@@ -50,6 +53,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
+
         token = token.replace(JwtProperties.TOKEN_PREFIX, "");
         Optional<String> tokenOptional = jwtUtil.verify(token);
 
@@ -64,9 +68,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             // 강제로 시큐리티의 세션에 접근하여 값 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } else {
-            expireCookie(response, "jwtToken");
+            if (!isApp){
+                expireCookie(response, "jwtToken");
+            }
         }
-
         chain.doFilter(request, response);
     }
 
