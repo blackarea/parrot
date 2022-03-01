@@ -63,7 +63,9 @@ public class SecurityController {
 
             return "security/signup";
         }
-
+        if(userSaveDto.getEmail().equals("")){
+            userSaveDto.setEmail(null);
+        }
         userService.save(userSaveDto);
         return "redirect:/";
     }

@@ -1,15 +1,13 @@
 package com.graduation.parrot.domain.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class UserSaveDto {
 
     @NotBlank(message = "아이디는 필수 입력 값입니다.")
@@ -22,7 +20,7 @@ public class UserSaveDto {
 
     @NotBlank(message = "닉네임은 필수 입력 값입니다.")
     private String username;
-    private String email;
+    private String email = null;
 
     @Builder
     public UserSaveDto(String login_id, String password, String username, String email) {

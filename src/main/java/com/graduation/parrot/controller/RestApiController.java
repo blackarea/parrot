@@ -1,59 +1,50 @@
 package com.graduation.parrot.controller;
 
-import com.graduation.parrot.config.auth.PrincipalDetails;
-import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.UserSaveDto;
-import com.graduation.parrot.repository.UserRepository;
+import com.graduation.parrot.exception.ApiException;
+import com.graduation.parrot.exception.ExceptionEnum;
 import com.graduation.parrot.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/app")
 @RequiredArgsConstructor
 public class RestApiController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
 
-    @GetMapping("/home")
-    public String home() {
-        return "home";
+    @PostMapping("/exception")
+    public void exceptionTest() throws ApiException {
+        throw new ApiException(ExceptionEnum.ALREADY_EXIST_USERNAME);
     }
 
-    @PostMapping("/token")
-    public String token() {
-        System.out.println("token");
-        return "token";
-    }
-
-    @GetMapping("user")
-    public String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        User user = principalDetails.getUser();
-
-        System.out.println("principal : " + user.getId());
-        System.out.println("principal : " + user.getLogin_id());
-        System.out.println("principal : " + user.getPassword());
-
-        return "user";
-    }
-
-    @GetMapping("/admin")
-    public String admin() {
-        return "admin";
-    }
-
-    @GetMapping("/admin/userlist")
-    public List<User> userList() {
-        return userRepository.findAll();
-    }
-
-    @PostMapping("/join")
-    public String join(@RequestBody UserSaveDto userSaveDto) {
+    @PostMapping("/signup")
+    public String join(@RequestBody @Valid UserSaveDto userSaveDto) {
         userService.save(userSaveDto);
         return "회원가입완료";
+    }
+
+    @GetMapping("/duplicate/{login_id}")
+    public Map<String, String> validateDuplicateId(@PathVariable String login_id) {
+        Map<String, String> map = new HashMap<>();
+        if (userService.validateDuplicateUser(login_id)) {
+            map.put("duplicate", "yes");
+        } else {
+            map.put("duplicate", "no");
+        }
+        return map;
+    }
+
+    @PutMapping("/user/name/{login_id}")
+    public void changeName(@PathVariable String login_id, @RequestBody Map<String, String> name) {
+        System.out.println(login_id + " " + name.get("name"));
+        userService.updateName(login_id, name.get("name"));
     }
 }

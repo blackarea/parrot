@@ -6,50 +6,55 @@ import com.graduation.parrot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
 
     @Override
     public User save(UserSaveDto userSaveDto) {
-        if(userSaveDto.getEmail().equals("")) {
-            User user = User.builder()
+        User user;
+        if (userSaveDto.getEmail() == null) {
+            user = User.builder()
                     .login_id(userSaveDto.getLogin_id())
                     .password(bCryptPasswordEncoder.encode(userSaveDto.getPassword()))
                     .name(userSaveDto.getUsername())
                     .build();
-            userRepository.save(user);
-            return user;
-        }
-        else {
-            User user = User.builder()
+        } else {
+            user = User.builder()
                     .login_id(userSaveDto.getLogin_id())
                     .password(bCryptPasswordEncoder.encode(userSaveDto.getPassword()))
                     .name(userSaveDto.getUsername())
                     .email(userSaveDto.getEmail())
                     .build();
-            userRepository.save(user);
-            return user;
         }
+        userRepository.save(user);
+        return user;
+    }
+
+    @Transactional
+    @Override
+    public void updateName(String login_id, String username) {
+        User user = userRepository.findByLogin_id(login_id)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다. login_id" + login_id));
+        user.update(username);
     }
 
     @Override
     public boolean validateDuplicateUser(String login_id) {
         Optional<User> user = userRepository.findByLogin_id(login_id);
-        if(user.isEmpty()){
-            return false;
-        }
-        return true;
+        return user.isPresent();
     }
 
     @Override
