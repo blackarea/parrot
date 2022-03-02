@@ -7,6 +7,9 @@ import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.domain.dto.BoardResponseDto;
 import com.graduation.parrot.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,9 +52,10 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<BoardListResponseDto> getBoardList() {
-        return boardRepository.findAllByOrderByIdDesc().stream()
+    public Page<BoardListResponseDto> getBoardList(Pageable pageable) {
+        List<BoardListResponseDto> collect = boardRepository.findAllByOrderByIdDesc(pageable).stream()
                 .map(BoardListResponseDto::new)
                 .collect(Collectors.toList());
+        return new PageImpl<>(collect,pageable,boardRepository.count());
     }
 }
