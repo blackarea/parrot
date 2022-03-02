@@ -4,6 +4,8 @@ import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
 import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.domain.dto.BoardResponseDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -12,5 +14,5 @@ public interface BoardService {
     Long update(Long board_id, BoardDto boardDto);
     void delete(Long board_id);
     BoardResponseDto getBoard(Long board_id);
-    List<BoardListResponseDto> getBoardList();
+    Page<BoardListResponseDto> getBoardList(Pageable pageable);
 }

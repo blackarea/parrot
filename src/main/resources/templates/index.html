@@ -47,5 +47,36 @@
             </tr>
         </table>
     </div>
+
+    <div th:align="center">
+        <ul th:with="start=${(boardList.number/10)*10+1},
+            end=${start + 9 < boardList.getTotalPages() ? start + 9 : boardList.getTotalPages()}" >
+
+            <li th:if="${boardList.number != 0}">
+                <a th:href="@{/}" th:text="'<<'"></a>
+            </li>
+
+            <li th:if="${start > 1}">
+                <a th:href="@{/(page=${(boardList.getTotalPages()/10)*10-10})}"
+                   th:text="'<'"></a>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(start, end)}">
+                <a th:href="@{/(page=${page - 1})}"
+                   th:text="${page}"></a>
+            </li>
+
+            <li th:if="${end < boardList.getTotalPages()}">
+                <a th:href="@{/(page=${(boardList.number/10)*10+10})}"
+                   th:text="'>'"></a>
+            </li>
+
+            <li th:if="${boardList.number != boardList.getTotalPages()-1}">
+                <a th:href="@{/(page=${boardList.getTotalPages()-1})}"
+                   th:text="'>>'"></a>
+            </li>
+        </ul>
+    </div>
+
 </div>
 </html>

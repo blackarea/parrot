@@ -7,6 +7,8 @@ import com.graduation.parrot.domain.dto.BoardResponseDto;
 import com.graduation.parrot.domain.dto.UserResponseDto;
 import com.graduation.parrot.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +24,11 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping({"/", "/board"})
-    public String index(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails){
+    public String index(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 20)Pageable pageable){
         if (principalDetails != null) {
             model.addAttribute("userName", principalDetails.getUser().getName());
         }
-        model.addAttribute("boardList", boardService.getBoardList());
+        model.addAttribute("boardList", boardService.getBoardList(pageable));
         return "index";
     }
 
