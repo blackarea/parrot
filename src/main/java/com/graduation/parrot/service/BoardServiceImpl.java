@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
 
     @Override
@@ -56,6 +56,6 @@ public class BoardServiceImpl implements BoardService{
         List<BoardListResponseDto> collect = boardRepository.findAllByOrderByIdDesc(pageable).stream()
                 .map(BoardListResponseDto::new)
                 .collect(Collectors.toList());
-        return new PageImpl<>(collect,pageable,boardRepository.count());
+        return new PageImpl<>(collect, pageable, boardRepository.count());
     }
 }

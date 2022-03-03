@@ -5,10 +5,8 @@ import com.graduation.parrot.exception.ApiException;
 import com.graduation.parrot.exception.ExceptionEnum;
 import com.graduation.parrot.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +42,6 @@ public class RestApiController {
 
     @PutMapping("/user/name/{login_id}")
     public void changeName(@PathVariable String login_id, @RequestBody Map<String, String> name) {
-        System.out.println(login_id + " " + name.get("name"));
         userService.updateName(login_id, name.get("name"));
     }
 }

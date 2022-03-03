@@ -22,7 +22,7 @@ public class HomeController {
 
     @PostConstruct
     public void createUserAndBoard(){
-        IntStream.rangeClosed(1, 300).forEach(i -> {
+        IntStream.rangeClosed(1, 5).forEach(i -> {
             User user = User.builder()
                     .login_id("login" + i)
                     .password(bCryptPasswordEncoder.encode("pwd" + i))

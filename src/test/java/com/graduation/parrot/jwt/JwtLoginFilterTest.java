@@ -74,7 +74,7 @@ public class JwtLoginFilterTest {
         HttpEntity<UserSaveDto> body = new HttpEntity<>(userSaveDto);
 
         ResponseEntity<String> response = restTemplate.exchange(uri("/login"), HttpMethod.POST, body, String.class);
-        assertThat(response.getStatusCodeValue()).isEqualTo(302); //redirect to "/"
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
     }
 
@@ -102,18 +102,5 @@ public class JwtLoginFilterTest {
         ResponseEntity<String> response = restTemplate.exchange(uri("/login"), HttpMethod.POST, body, String.class);
         return response.getHeaders().get("Authorization").get(0).substring("Bearer ".length());
     }
-
-    /*@DisplayName("2. 비번이 틀리면 로그인을 하지 못한다.")
-    @Test
-    void test_2() throws URISyntaxException {
-        UserLogin login = UserLogin.builder().username("user1@test.com")
-                .password("1234").build();
-        HttpEntity<UserLogin> body = new HttpEntity<>(login);
-
-        assertThrows(HttpClientErrorException.class, ()->{
-            restTemplate.exchange(uri("/login"), HttpMethod.POST, body, String.class);
-            // expected 401 에러
-        });
-    }*/
 
 }
