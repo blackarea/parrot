@@ -55,8 +55,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             login_id = parameterLogin_id;
             password = parameterPassword;
         }
-        System.out.println("login_id = " + login_id);
-        System.out.println("password = " + password);
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(login_id, password);
