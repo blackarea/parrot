@@ -15,12 +15,14 @@ public class BoardListResponseDto {
     private Long id;
     private String title;
     private String name;
+    private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
     public BoardListResponseDto(Board board) {
         this.id = board.getId();
         this.title = board.getTitle();
         this.name = board.getUser().getName();
+        this.createdDate = board.getCreatedDate();
         this.modifiedDate = board.getModifiedDate();
     }
 }

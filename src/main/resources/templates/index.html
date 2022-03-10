@@ -34,7 +34,7 @@
                 <td>게시글번호</td>
                 <td>제목</td>
                 <td>작성자</td>
-                <td>최종수정일</td>
+                <td>작성일</td>
             </tr>
             </thead>
 
@@ -43,7 +43,7 @@
                 <td><a th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
                        th:text="${boardListResponseDto.title}"></a></td>
                 <td th:text="${boardListResponseDto.name}"></td>
-                <td th:text="${boardListResponseDto.modifiedDate}"></td>
+                <td th:text="${boardListResponseDto.createdDate}"></td>
             </tr>
         </table>
     </div>

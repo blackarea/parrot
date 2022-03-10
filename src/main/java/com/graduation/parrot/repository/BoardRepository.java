@@ -12,4 +12,7 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Long> {
     @EntityGraph(attributePaths = {"user"})
     Page<Board> findAllByOrderByIdDesc(Pageable pageable);
+
+    @EntityGraph(attributePaths = {"user"})
+    Board findBoardById(Long id);
 }

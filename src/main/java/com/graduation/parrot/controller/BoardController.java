@@ -24,7 +24,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping({"/", "/board"})
-    public String index(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 20)Pageable pageable){
+    public String index(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 20) Pageable pageable) {
         if (principalDetails != null) {
             model.addAttribute("userName", principalDetails.getUser().getName());
         }
