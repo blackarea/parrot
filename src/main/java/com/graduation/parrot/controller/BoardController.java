@@ -32,6 +32,11 @@ public class BoardController {
         return "index";
     }
 
+    @GetMapping("/boardlist")
+    public String boardList() {
+        return "board/boardList";
+    }
+
     @GetMapping("/board/{id}")
     public String getBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         User user = principalDetails.getUser();
@@ -40,17 +45,17 @@ public class BoardController {
 
         model.addAttribute("userResponseDto", userResponseDto);
         model.addAttribute("boardResponseDto", boardResponseDto);
-        return "board/getBoard";
+        return "board/board";
     }
 
     @GetMapping("/board/insert")
-    public String insertBoardView() {
-        return "board/insertBoard";
+    public String createBoardView() {
+        return "board/createBoard";
     }
 
     @PostMapping("/board/insert")
-    public String insertBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        boardService.insert(boardDto, principalDetails.getUser());
+    public String createBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        boardService.create(boardDto, principalDetails.getUser());
         return "redirect:/";
     }
 

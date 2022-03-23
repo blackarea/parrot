@@ -3,19 +3,12 @@ package com.graduation.parrot.service;
 import com.graduation.parrot.domain.Board;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
-import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.repository.BoardRepository;
 import com.graduation.parrot.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,7 +43,7 @@ class BoardServiceImplTest {
                 .content("content")
                 .build();
 
-        Long board_id = boardService.insert(build, savedUser);
+        Long board_id = boardService.create(build, savedUser);
 
         Long update_id = boardService.update(board_id, new BoardDto("title2", "content2"));
         Board board = boardRepository.findById(update_id).get();
@@ -75,7 +68,7 @@ class BoardServiceImplTest {
                 .content("content")
                 .build();
 
-        Long board_id = boardService.insert(build, savedUser);
+        Long board_id = boardService.create(build, savedUser);
 
         boardService.delete(board_id);
         //assertThat(boardRepository.count()).isEqualTo(0L);
@@ -95,13 +88,13 @@ class BoardServiceImplTest {
                 .content("content")
                 .build();
 
-        Long board_id = boardService.insert(build, savedUser);
+        Long board_id = boardService.create(build, savedUser);
 
         BoardDto build2 = BoardDto.builder()
                 .title("title2")
                 .content("content2")
                 .build();
-        boardService.insert(build2, savedUser);
+        boardService.create(build2, savedUser);
 
         //TODO test 고치기
         /*Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "recipe_id");

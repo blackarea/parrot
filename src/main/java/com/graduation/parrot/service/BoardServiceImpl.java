@@ -22,7 +22,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
 
     @Override
-    public Long insert(BoardDto boardDto, User user) {
+    public Long create(BoardDto boardDto, User user) {
         return boardRepository.save(new Board(boardDto.getTitle(), boardDto.getContent(), user)).getId();
     }
 

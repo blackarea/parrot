@@ -39,12 +39,6 @@ public class SecurityController {
         return "redirect:/";
     }
 
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-    }
-
     @GetMapping("/signup")
     public String signupView() {
         return "security/signup";
@@ -70,5 +64,10 @@ public class SecurityController {
         return "redirect:/";
     }
 
+    private void expireCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
 
 }

@@ -18,6 +18,8 @@
 </head>
 
 <div layout:fragment="content">
+
+    <!-- 게시판 -->
     <div class="container-fluid">
 
         <h1>홈페이지</h1>
@@ -48,9 +50,10 @@
         </table>
     </div>
 
+    <!-- 페이지 이동 -->
     <div th:align="center">
         <ul th:with="start=${(boardList.number/10)*10+1},
-            end=${start + 9 < boardList.getTotalPages() ? start + 9 : boardList.getTotalPages()}" >
+            end=${start + 9 < boardList.getTotalPages() ? start + 9 : boardList.getTotalPages()}">
 
             <li th:if="${boardList.number != 0}">
                 <a th:href="@{/}" th:text="'<<'"></a>

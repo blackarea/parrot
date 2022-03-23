@@ -1,11 +1,7 @@
 package com.graduation.parrot.chat;
 
 import lombok.extern.slf4j.Slf4j;
-import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_6455;
-import org.java_websocket.handshake.ServerHandshake;
-import org.springframework.util.StopWatch;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +12,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-public class ChatController {
+public class WebSocketController {
 
     @PostMapping("/app/chat")
     public Map<String, String> chat(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
