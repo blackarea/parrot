@@ -7,28 +7,36 @@ import com.graduation.parrot.domain.dto.BoardResponseDto;
 import com.graduation.parrot.domain.dto.UserResponseDto;
 import com.graduation.parrot.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class BoardController {
 
     private final BoardService boardService;
 
     @GetMapping({"/", "/board"})
-    public String index(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 20) Pageable pageable) {
+    public String index(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 20) Pageable pageable,
+                        @RequestParam(defaultValue = "all")String type, String searchKeyword) {
+
         if (principalDetails != null) {
             model.addAttribute("userName", principalDetails.getUser().getName());
         }
-        model.addAttribute("boardList", boardService.getBoardList(pageable));
+
+        if(searchKeyword == null) {
+            model.addAttribute("boardList", boardService.getBoardList(pageable));
+        }
+        else {
+            model.addAttribute("boardList",boardService.getBoardListPagingSearch(pageable,type,searchKeyword));
+        }
+
         return "index";
     }
 

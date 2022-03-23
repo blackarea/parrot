@@ -15,4 +15,5 @@ public interface BoardService {
     void delete(Long board_id);
     BoardResponseDto getBoard(Long board_id);
     Page<BoardListResponseDto> getBoardList(Pageable pageable);
+    Page<BoardListResponseDto> getBoardListPagingSearch(Pageable pageable, String type, String searchKeyword);
 }
