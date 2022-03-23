@@ -22,8 +22,13 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping({"/", "/board"})
-    public String index(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 20) Pageable pageable,
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
+
+    @GetMapping("/boardlist")
+    public String boardList(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 20) Pageable pageable,
                         @RequestParam(defaultValue = "all")String type, String searchKeyword) {
 
         if (principalDetails != null) {
@@ -37,11 +42,6 @@ public class BoardController {
             model.addAttribute("boardList",boardService.getBoardListPagingSearch(pageable,type,searchKeyword));
         }
 
-        return "index";
-    }
-
-    @GetMapping("/boardlist")
-    public String boardList() {
         return "board/boardList";
     }
 
