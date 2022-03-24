@@ -1,4 +1,4 @@
-package com.graduation.parrot.chat;
+package com.graduation.parrot.webSocket;
 
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.drafts.Draft_6455;
