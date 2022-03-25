@@ -7,7 +7,7 @@
     <div class="container">
         <h1 class="mb-3">게시글 등록</h1>
 
-        <form th:action="@{/board/insert}" method="post">
+        <form th:action="@{/board/create}" method="post">
             <div class="mb-3">
                 <label class="fw-bold" for="title">제목</label>
                 <input type="text" class="form-control" id="title" name="title">
@@ -17,7 +17,7 @@
                 <label class="fw-bold" for="content">내용</label>
                 <textarea class="form-control" id="content" name="content"></textarea>
             </div>
-            <a href="/" role="button" class="btn btn-secondary">취소</a>
+            <a href="/boardlist" role="button" class="btn btn-secondary">취소</a>
             <button type="submit" class="btn btn-primary" id="btn-save">등록</button>
         </form>
 

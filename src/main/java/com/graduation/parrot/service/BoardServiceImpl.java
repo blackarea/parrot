@@ -75,6 +75,7 @@ public class BoardServiceImpl implements BoardService {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .join(board.user,user).fetchJoin()
+                .orderBy(board.id.desc())
                 .fetchResults();
         long total = boardQueryResults.getTotal();
         List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
@@ -92,6 +93,7 @@ public class BoardServiceImpl implements BoardService {
                 .join(board.user, user).fetchJoin()
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .orderBy(board.id.desc())
                 .fetchResults();
 
         long total = boardQueryResults.getTotal();

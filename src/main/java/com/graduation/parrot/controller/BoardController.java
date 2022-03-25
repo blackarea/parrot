@@ -56,15 +56,15 @@ public class BoardController {
         return "board/board";
     }
 
-    @GetMapping("/board/insert")
+    @GetMapping("/board/create")
     public String createBoardView() {
         return "board/createBoard";
     }
 
-    @PostMapping("/board/insert")
+    @PostMapping("/board/create")
     public String createBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         boardService.create(boardDto, principalDetails.getUser());
-        return "redirect:/";
+        return "redirect:/boardlist";
     }
 
     @GetMapping("/board/update/{id}")
@@ -76,13 +76,13 @@ public class BoardController {
     @PutMapping("/board/update/{id}")
     public String updateBoard(@PathVariable Long id, BoardDto boardDto) {
         boardService.update(id, boardDto);
-        return "redirect:/";
+        return "redirect:/boardlist";
     }
 
     @GetMapping("/board/delete/{id}")
     public String deleteBoard(@PathVariable Long id) {
         boardService.delete(id);
-        return "redirect:/";
+        return "redirect:/boardlist";
     }
 
 
