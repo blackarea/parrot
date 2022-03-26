@@ -33,6 +33,7 @@
                 receiveChat.innerText = response.chat;
             }).fail(function () {
                 console.log("fail");
+                receiveChat.innerText = "안녕하세요";
             });
 
             chatDiv.appendChild(pastSpan);
