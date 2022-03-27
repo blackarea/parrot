@@ -25,15 +25,20 @@
             margin: 0;
             padding: 0;
         }
+
+        .body {
+            display: flex;
+        }
     </style>
 </head>
 
 <div layout:fragment="content">
 
-    <div class="body" style="margin: 0 auto; width: 830px">
-        <a sec:authorize="isAuthenticated()" th:href="@{/board/create}" role="button" class="btn btn-primary">글 등록</a>
+    <div class="body" style="margin: auto; width: 830px">
 
         <div class="main" style="margin-top:auto">
+            <a sec:authorize="isAuthenticated()" th:href="@{/board/create}" role="button" class="btn btn-primary">글 등록</a>
+
             <div class="top">
                 <span style="font-size: 25px; font-weight:bold">이야기 광장</span>
 
@@ -204,6 +209,5 @@
         </div>
 
     </div>
-</div>
 
 </html>
