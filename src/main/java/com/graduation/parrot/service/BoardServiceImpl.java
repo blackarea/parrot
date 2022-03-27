@@ -9,9 +9,7 @@ import com.graduation.parrot.repository.BoardRepository;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -29,13 +27,12 @@ import static com.graduation.parrot.domain.QUser.user;
 @Service
 public class BoardServiceImpl implements BoardService {
 
-    @Autowired
-    private BoardRepository boardRepository;
-
+    private final BoardRepository boardRepository;
     private final JPAQueryFactory queryFactory;
 
-    public BoardServiceImpl(EntityManager em) {
+    public BoardServiceImpl(EntityManager em, BoardRepository boardRepository) {
         this.queryFactory = new JPAQueryFactory(em);
+        this.boardRepository = boardRepository;
     }
 
     @Override

@@ -1,26 +1,42 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.User;
+import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.domain.dto.UserSaveDto;
+import com.graduation.parrot.domain.dto.UserUpdateDto;
 import com.graduation.parrot.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
+import javax.persistence.EntityManager;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.graduation.parrot.domain.QBoard.board;
 
 @Service
-@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
+    private final JPAQueryFactory queryFactory;
+
+    public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository,
+                           EntityManager entityManager) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userRepository = userRepository;
+        this.queryFactory = new JPAQueryFactory(entityManager);
+    }
 
     @Override
     public User save(UserSaveDto userSaveDto) {
@@ -43,12 +59,38 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public void updatePassword(String login_id, String password) {
+        User user = userRepository.findByLogin_id(login_id).get();
+        user.updatePassword(bCryptPasswordEncoder.encode(password));
+    }
+
     @Transactional
     @Override
     public void updateName(String login_id, String username) {
-        User user = userRepository.findByLogin_id(login_id)
-                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다. login_id" + login_id));
-        user.update(username);
+        User user = userRepository.findByLogin_id(login_id).get();
+        user.updateName(username);
+    }
+
+    @Transactional
+    @Override
+    public void updateAll(String login_id, UserUpdateDto userUpdateDto) {
+        User user = userRepository.findByLogin_id(login_id).get();
+        user.updateAll(userUpdateDto.getUsername(), userUpdateDto.getEmail());
+    }
+
+    @Override
+    public Page<BoardListResponseDto> getUserBoardList(String login_id, Pageable pageable) {
+        User user = userRepository.findByLogin_id(login_id).get();
+
+        List<BoardListResponseDto> userBoardList = queryFactory
+                .selectFrom(board)
+                .where(board.author.eq(user.getName()))
+                .orderBy(board.id.desc())
+                .fetch()
+                .stream().map(BoardListResponseDto::new).collect(Collectors.toList());
+
+        return new PageImpl<>(userBoardList, pageable, userBoardList.size());
     }
 
     @Override

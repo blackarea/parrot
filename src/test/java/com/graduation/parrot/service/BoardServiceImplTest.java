@@ -3,12 +3,17 @@ package com.graduation.parrot.service;
 import com.graduation.parrot.domain.Board;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
+import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.repository.BoardRepository;
 import com.graduation.parrot.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -88,7 +93,7 @@ class BoardServiceImplTest {
                 .content("content")
                 .build();
 
-        Long board_id = boardService.create(build, savedUser);
+        boardService.create(build, savedUser);
 
         BoardDto build2 = BoardDto.builder()
                 .title("title2")
@@ -96,15 +101,9 @@ class BoardServiceImplTest {
                 .build();
         boardService.create(build2, savedUser);
 
-        //TODO test 고치기
-        /*Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "recipe_id");
+        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "board_id");
         Page<BoardListResponseDto> boardList = boardService.getBoardList(pageable);
-        
 
-        assertThat(boardList.size()).isEqualTo(2);
-
-        for (BoardListResponseDto boardListResponseDto : boardList) {
-            System.out.println("boardListResponseForm = " + boardListResponseDto);
-        }*/
+        assertThat(boardList.getTotalElements()).isEqualTo(2);
     }
 }

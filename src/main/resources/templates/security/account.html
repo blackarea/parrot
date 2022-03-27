@@ -2,8 +2,57 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
+<head>
+    <script>
+        function updateAll() {
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let data = {
+                username: username,
+                email: email
+            }
+            $.ajax({
+                type: 'PUT',
+                url: '/account/login1',
+                data: JSON.stringify(data),
+                contentType: "application/json;charset=UTF-8",
+            }).done(function (response) {
+                window.location.replace("/");
+            }).fail(function () {
+            });
+        }
+    </script>
+</head>
+
 <div layout:fragment="content">
 
+    <div>닉네임</div>
+    <input id="username" name="username" th:value="${userResponseDto.username}">
+    <div>이메일</div>
+    <input id="email" name="email" th:value="${userResponseDto.email}">
+    <button onclick="updateAll()">수정</button>
+
+    <div>내 게시글</div>
+    <div>
+        <table class="table table-bordered table-hover" style="width: 70%">
+            <thead class="table-light">
+            <tr>
+                <td>게시글번호</td>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>작성일</td>
+            </tr>
+            </thead>
+
+            <tr th:each="boardListResponseDto : ${userBoardList}">
+                <td th:text="${boardListResponseDto.id}"></td>
+                <td><a th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
+                       th:text="${boardListResponseDto.title}"></a></td>
+                <td th:text="${boardListResponseDto.name}"></td>
+                <td th:text="${boardListResponseDto.createdDate}"></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 </html>

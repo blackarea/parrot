@@ -1,16 +1,22 @@
 package com.graduation.parrot.controller;
 
+import com.graduation.parrot.config.auth.PrincipalDetails;
+import com.graduation.parrot.domain.dto.BoardListResponseDto;
+import com.graduation.parrot.domain.dto.UserResponseDto;
 import com.graduation.parrot.domain.dto.UserSaveDto;
+import com.graduation.parrot.domain.dto.UserUpdateDto;
 import com.graduation.parrot.service.UserService;
 import com.graduation.parrot.validator.SignUpValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +30,7 @@ public class SecurityController {
     private final SignUpValidator signUpValidator;
 
     @InitBinder
-    public void validatorBinder(WebDataBinder binder){
+    public void validatorBinder(WebDataBinder binder) {
         binder.addValidators(signUpValidator);
     }
 
@@ -57,7 +63,7 @@ public class SecurityController {
 
             return "security/signup";
         }
-        if(userSaveDto.getEmail().equals("")){
+        if (userSaveDto.getEmail().equals("")) {
             userSaveDto.setEmail(null);
         }
         userService.save(userSaveDto);
@@ -68,6 +74,28 @@ public class SecurityController {
         Cookie cookie = new Cookie(cookieName, null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+    }
+
+    @GetMapping("/account/{login_id}")
+    public String account(@PathVariable String login_id, Model model, @PageableDefault(size = 5) Pageable pageable,
+                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        UserResponseDto userResponseDto = new UserResponseDto(principalDetails.getUser());
+        Page<BoardListResponseDto> userBoardList = userService.getUserBoardList(login_id, pageable);
+        System.out.println(userBoardList);
+        model.addAttribute("userBoardList", userBoardList);
+        model.addAttribute("userResponseDto", userResponseDto);
+        return "security/account";
+    }
+
+    @PutMapping("/account/password/{login_id}")
+    public void updatePassword(@PathVariable String login_id, @RequestBody Map<String, String> name) {
+        userService.updatePassword(login_id, name.get("password"));
+    }
+
+    @ResponseBody
+    @PutMapping("/account/{login_id}")
+    public void updateAccount(@PathVariable String login_id, @RequestBody UserUpdateDto userUpdateDto) {
+        userService.updateAll(login_id, userUpdateDto);
     }
 
 }
