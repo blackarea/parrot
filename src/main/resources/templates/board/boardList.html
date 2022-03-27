@@ -4,87 +4,106 @@
       layout:decorate="~{layout/layout}">
 
 <head>
+
     <style>
+
         .page ul li{
             list-style-type: none;
             float: left;
             margin: 10px;
         }
+        .body{
+            display: flex;
+        }
+
     </style>
 </head>
 
 <div layout:fragment="content">
 
-    <a th:href="@{/}" role="button" class="btn btn-primary">홈</a>
+    <div class="body" style="margin: auto;">
     <a sec:authorize="isAuthenticated()" th:href="@{/board/create}" role="button" class="btn btn-primary">글 등록</a>
 
-    <!--테이블-->
-    <div>
-        <table class="table table-bordered table-hover" style="width: 70%">
-            <thead class="table-light">
-            <tr>
-                <td>게시글번호</td>
-                <td>제목</td>
-                <td>작성자</td>
-                <td>작성일</td>
-            </tr>
-            </thead>
+        <div class="bottom" style="margin: auto">
+        <div class="row">
+            <div class="col">
+                <!--테이블-->
+                <table class="table table-hover" style="width: 800px;">
+                    <thead>
+                    <tr>
+                        <td>게시글번호</td>
+                        <td>제목</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                    </tr>
+                    </thead>
 
-            <tr th:each="boardListResponseDto : ${boardList}">
-                <td th:text="${boardListResponseDto.id}"></td>
-                <td><a th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
-                       th:text="${boardListResponseDto.title}"></a></td>
-                <td th:text="${boardListResponseDto.name}"></td>
-                <td th:text="${boardListResponseDto.createdDate}"></td>
-            </tr>
-        </table>
-    </div>
-
-    <!--페이지 이동-->
-    <div class="page">
-        <ul th:with="start=${(boardList.number/10)*10+1},
+                    <tr th:each="boardListResponseDto : ${boardList}">
+                        <td th:text="${boardListResponseDto.id}"></td>
+                        <td><a th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
+                               th:text="${boardListResponseDto.title}"></a></td>
+                        <td th:text="${boardListResponseDto.name}"></td>
+                        <td th:text="${boardListResponseDto.createdDate}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <!--페이지 이동-->
+                <div class="page">
+                    <ul th:with="start=${(boardList.number/10)*10+1},
             end=${start + 9 < boardList.getTotalPages() ? start + 9 : boardList.getTotalPages()}">
 
-            <li th:if="${boardList.number != 0}">
-                <a th:href="@{/boardlist(searchKeyword=${param.searchKeyword}, type=${param.type})}" th:text="'<<'"></a>
-            </li>
+                        <li th:if="${boardList.number != 0}">
+                            <a th:href="@{/boardlist(searchKeyword=${param.searchKeyword}, type=${param.type})}" th:text="'<<'"></a>
+                        </li>
 
-            <li th:if="${start > 1}">
-                <a th:href="@{/boardlist(page=${(boardList.getTotalPages()/10)*10-10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                   th:text="'<'"></a>
-            </li>
+                        <li th:if="${start > 1}">
+                            <a th:href="@{/boardlist(page=${(boardList.getTotalPages()/10)*10-10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                               th:text="'<'"></a>
+                        </li>
 
-            <li th:each="page: ${#numbers.sequence(start, end)}">
-                <a th:href="@{/boardlist(page=${page - 1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                   th:text="${page}"></a>
-            </li>
+                        <li th:each="page: ${#numbers.sequence(start, end)}">
+                            <a th:href="@{/boardlist(page=${page - 1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                               th:text="${page}"></a>
+                        </li>
 
-            <li th:if="${end < boardList.getTotalPages()}">
-                <a th:href="@{/boardlist(page=${(boardList.number/10)*10+10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                   th:text="'>'"></a>
-            </li>
+                        <li th:if="${end < boardList.getTotalPages()}">
+                            <a th:href="@{/boardlist(page=${(boardList.number/10)*10+10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                               th:text="'>'"></a>
+                        </li>
 
-            <li th:if="${boardList.number != boardList.getTotalPages()-1}">
-                <a th:href="@{/boardlist(page=${boardList.getTotalPages()-1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                   th:text="'>>'"></a>
-            </li>
-        </ul>
+                        <li th:if="${boardList.number != boardList.getTotalPages()-1}">
+                            <a th:href="@{/boardlist(page=${boardList.getTotalPages()-1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                               th:text="'>>'"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <!--검색-->
+                <div class="search">
+                    <form method="get" th:action="@{/boardlist}">
+                        <select id="type" name = "type">
+                            <option value="all">전체</option>
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
+                            <option value="user">작성자</option>
+                        </select>
+                        <input placeholder="Search" aria-label="Search"
+                               id="searchKeyword" name="searchKeyword" th:value="${param.searchKeyword}">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
     </div>
-
-    <!--검색-->
-    <div class="search">
-        <form method="get" th:action="@{/boardlist}">
-            <select id="type" name = "type">
-                <option value="all">전체</option>
-                <option value="title">제목</option>
-                <option value="content">내용</option>
-                <option value="user">작성자</option>
-            </select>
-            <input placeholder="Search" aria-label="Search"
-                   id="searchKeyword" name="searchKeyword" th:value="${param.searchKeyword}">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
     </div>
-</div>
 
 </html>

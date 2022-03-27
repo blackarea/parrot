@@ -1,6 +1,493 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout}">
 
+<head>
+    <style>
+
+        .body{
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+
+        }
+
+        tr,td{
+            height: 68px;
+        }
+
+        .test{
+            display: flex;
+            justify-content: right;
+            align-items: flex-end;
+        }
+        .row,col{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<div layout:fragment="content">
+
+    <div class="body" style="margin: auto">
+        <div class="main" style="margin: auto">
+            <div class="top" style="width: 830px; height: 80px">
+
+
+                <span style="font-size: 25px; font-weight:bold">이야기 광장</span>
+
+                <div class="row"style="margin-top: 20px">
+                    <div class="col">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" style="font-weight:bold" aria-current="page" href="#">최신글</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary" href="#">인기글</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <div class="test">
+                        <div class="input-group mb-3" style="width: 300px ">
+                            <button class="btn btn-secondary dropdown-toggle" style="width: 100px" type="button" data-bs-toggle="dropdown" aria-expanded="false">전체</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">전체</a></li>
+                                <li><a class="dropdown-item" href="#">제목</a></li>
+                                <li><a class="dropdown-item" href="#">내용</a></li>
+                                <li><a class="dropdown-item" href="#">작성자</a></li>
+                            </ul>
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+
+
+        <div class="row"style="margin-top: 20px">
+            <div class="col">
+               <table class="table table-hover">
+                   <tr style="background-color:#efefef">
+                       <td>
+                           <div class="container" style="width: 810px">
+                               <div class="row">
+                                   <div class="col-sm-1" style="text-align: center; margin-bottom: auto; margin-top: auto">
+                                       <svg xmlns="http://www.w3.org/2000/svg" style="vercital-align:bottom" width="30" height="30" fill="currentColor" class="bi bi-megaphone-fill" viewBox="0 0 16 16">
+                                           <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
+                                       </svg>
+                                   </div>
+                                   <div class="col-sm-11">
+                                       <div class="row">
+                                           <div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 15px; vertical-align:top; font-weight:bold; color:#080051">공지사항 욕설,비방,분탕 싹 다 쳐내 [2]</span>
+                                                   </div>
+                                               </div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                       <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                       <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                       <span style="font-size: 12px; float:right; font-weight:bold">운영자</span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           <div class="container" style="width: 810px;">
+                               <div class="row">
+                                   <div class="col-sm-1" style="text-align: center">
+                                       <div class="row">
+                                           <div class="col">
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                               </svg></div>
+                                       </div>
+                                       <div class="row"style="height: 24px">
+                                           <div class="col">
+                                               <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-sm-11">
+                                       <div class="row">
+                                           <div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                                   </div>
+                                               </div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                       <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                       <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                       <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           <div class="container" style="width: 810px;">
+                               <div class="row">
+                                   <div class="col-sm-1" style="text-align: center">
+                                       <div class="row">
+                                           <div class="col">
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                               </svg></div>
+                                       </div>
+                                       <div class="row"style="height: 24px">
+                                           <div class="col">
+                                               <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-sm-11">
+                                       <div class="row">
+                                           <div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                                   </div>
+                                               </div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                       <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                       <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                       <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           <div class="container" style="width: 810px;">
+                               <div class="row">
+                                   <div class="col-sm-1" style="text-align: center">
+                                       <div class="row">
+                                           <div class="col">
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                               </svg></div>
+                                       </div>
+                                       <div class="row"style="height: 24px">
+                                           <div class="col">
+                                               <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-sm-11">
+                                       <div class="row">
+                                           <div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                                   </div>
+                                               </div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                       <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                       <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                       <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           <div class="container" style="width: 810px;">
+                               <div class="row">
+                                   <div class="col-sm-1" style="text-align: center">
+                                       <div class="row">
+                                           <div class="col">
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                               </svg></div>
+                                       </div>
+                                       <div class="row"style="height: 24px">
+                                           <div class="col">
+                                               <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-sm-11">
+                                       <div class="row">
+                                           <div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                                   </div>
+                                               </div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                       <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                       <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                       <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           <div class="container" style="width: 810px;">
+                               <div class="row">
+                                   <div class="col-sm-1" style="text-align: center">
+                                       <div class="row">
+                                           <div class="col">
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                               </svg></div>
+                                       </div>
+                                       <div class="row"style="height: 24px">
+                                           <div class="col">
+                                               <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-sm-11">
+                                       <div class="row">
+                                           <div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                                   </div>
+                                               </div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                       <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                       <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                       <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           <div class="container" style="width: 810px;">
+                               <div class="row">
+                                   <div class="col-sm-1" style="text-align: center">
+                                       <div class="row">
+                                           <div class="col">
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                               </svg></div>
+                                       </div>
+                                       <div class="row"style="height: 24px">
+                                           <div class="col">
+                                               <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-sm-11">
+                                       <div class="row">
+                                           <div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                                   </div>
+                                               </div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                       <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                       <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                       <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td><div class="container" style="width: 810px;">
+                           <div class="row">
+                               <div class="col-sm-1" style="text-align: center">
+                                   <div class="row">
+                                       <div class="col">
+                                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                               <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                           </svg></div>
+                                   </div>
+                                   <div class="row"style="height: 24px">
+                                       <div class="col">
+                                           <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="col-sm-11">
+                                   <div class="row">
+                                       <div>
+                                           <div class="row" style="height: 24px">
+                                               <div class="col">
+                                                   <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                               </div>
+                                           </div>
+                                           <div class="row" style="height: 24px">
+                                               <div class="col">
+                                                   <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                   <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                   <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                   <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                           <div class="container" style="width: 810px;">
+                               <div class="row">
+                                   <div class="col-sm-1" style="text-align: center">
+                                       <div class="row">
+                                           <div class="col">
+                                               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                   <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                               </svg></div>
+                                       </div>
+                                       <div class="row"style="height: 24px">
+                                           <div class="col">
+                                               <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="col-sm-11">
+                                       <div class="row">
+                                           <div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                                   </div>
+                                               </div>
+                                               <div class="row" style="height: 24px">
+                                                   <div class="col">
+                                                       <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                       <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                       <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                       <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td><div class="container" style="width: 810px;">
+                           <div class="row">
+                               <div class="col-sm-1" style="text-align: center">
+                                   <div class="row">
+                                       <div class="col">
+                                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                               <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                           </svg></div>
+                                   </div>
+                                   <div class="row"style="height: 24px">
+                                       <div class="col">
+                                           <span style="vertical-align:bottom; font-weight:bold">0</span>
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="col-sm-11">
+                                   <div class="row">
+                                       <div>
+                                           <div class="row" style="height: 24px">
+                                               <div class="col">
+                                                   <span style="font-size: 15px; vertical-align:top; font-weight:bold">기괴,공포) 2022년에 코르키로 원딜을 하는 사람이 있다!? [2]</span>
+                                               </div>
+                                           </div>
+                                           <div class="row" style="height: 24px">
+                                               <div class="col">
+                                                   <span style="font-size: 12px;font-weight:bold; color:#280475">댓글 2개</span>
+                                                   <span style="margin-left:10px; font-size: 12px">조회수 831</span>
+                                                   <span style="margin-left:10px; font-size: 12px;">날짜 2022-03-27 04:27</span>
+                                                   <span style="font-size: 12px; float:right; font-weight:bold">다죽여버리겠어</span>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       </td>
+                   </tr>
+
+               </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="text-align:center">
+                    <ul class="pagination justify-content-center pagination-sm" style="display:flex">
+                        <li class="page-item disabled">
+                            <a class="page-link"><</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">></a>
+                        </li>
+                    </ul>
+
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
 
 </html>
