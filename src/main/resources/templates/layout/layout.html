@@ -27,7 +27,11 @@
         .header {
             float: left;
             width: 270px;
-            height: 100vh;
+            height: 100%;
+            position: fixed;
+            overflow: auto;
+            padding: 0;
+            margin: 0;
             background: #0a0024;
         }
 
@@ -113,7 +117,7 @@
 </div>
 
 <!--<header th:replace="fragments/header :: headerFragment"></header>-->
-<div layout:fragment="content"></div>
+<div layout:fragment="content" style="margin-left: 280px"></div>
 <!--<footer th:replace="fragments/footer :: footerFragment"></footer>-->
 </body>
 

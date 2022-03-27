@@ -28,7 +28,7 @@ public class BoardController {
     }
 
     @GetMapping("/boardlist")
-    public String boardList(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 20) Pageable pageable,
+    public String boardList(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 15) Pageable pageable,
                         @RequestParam(defaultValue = "all")String type, String searchKeyword) {
 
         if (principalDetails != null) {
