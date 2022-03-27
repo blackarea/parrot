@@ -30,9 +30,6 @@ public class JwtLoginFilterTest {
     private int port;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -54,7 +51,7 @@ public class JwtLoginFilterTest {
         User user2 = User.builder()
                 .login_id("login2")
                 .password(bCryptPasswordEncoder.encode("pwd2"))
-                .name("name")
+                .name("name1")
                 .build();
 
         userRepository.save(user2);
