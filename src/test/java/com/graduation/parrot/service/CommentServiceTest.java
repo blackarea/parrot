@@ -3,6 +3,7 @@ package com.graduation.parrot.service;
 import com.graduation.parrot.domain.Board;
 import com.graduation.parrot.domain.Comment;
 import com.graduation.parrot.domain.User;
+import com.graduation.parrot.domain.dto.CommentResponseDto;
 import com.graduation.parrot.repository.BoardRepository;
 import com.graduation.parrot.repository.CommentRepository;
 import com.graduation.parrot.repository.UserRepository;
@@ -10,9 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CommentServiceTest {
@@ -46,19 +49,16 @@ class CommentServiceTest {
                 .build();
         Board foundBoard = boardRepository.save(board);
 
-        Comment comment = Comment.builder()
-                .user(foundUser)
-                .board(foundBoard)
-                .content("댓글")
-                .build();
-        commentId = commentService.save(comment);
+        commentId = commentService.create(user, board.getId(), "댓글");
     }
 
+
     @Test
-    void saveComment() {
-        Comment foundComment = commentService.getComment(commentId);
-        assertThat(foundComment.getId()).isEqualTo(commentId);
-        assertThat(commentRepository.count()).isEqualTo(1);
+    void createComment() {
+        User user = userRepository.findById(1L).get();
+        Board board = boardRepository.findById(2L).get();
+        commentService.create(user, board.getId(), "댓글내용");
+        System.out.println(commentRepository.count());
     }
 
     @Test
@@ -71,4 +71,13 @@ class CommentServiceTest {
         assertThat(commentRepository.count()).isEqualTo(0L);
     }
 
+    @Test
+    void getCommentListTest(){
+        //query 얼마나 나가는지 확인
+        Board board = boardRepository.findById(2L).get();
+
+        List<CommentResponseDto> commentList = commentService.getCommentList(board.getId());
+        assertThat(commentList.size()).isEqualTo(1);
+
+    }
 }

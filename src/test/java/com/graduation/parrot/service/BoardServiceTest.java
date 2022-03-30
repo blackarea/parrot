@@ -15,10 +15,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class BoardServiceImplTest {
+class BoardServiceTest {
 
     @Autowired
     UserRepository userRepository;
@@ -32,7 +35,7 @@ class BoardServiceImplTest {
         userRepository.deleteAll();
         boardRepository.deleteAll();
     }
-
+    
     @Test
     public void boardUpdateTest(){
         User user = User.builder()

@@ -1,8 +1,10 @@
 package com.graduation.parrot.controller;
 
 import com.graduation.parrot.domain.Board;
+import com.graduation.parrot.domain.Comment;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.repository.BoardRepository;
+import com.graduation.parrot.repository.CommentRepository;
 import com.graduation.parrot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -18,11 +20,12 @@ public class HomeController {
 
     @Autowired private UserRepository userRepository;
     @Autowired private BoardRepository boardRepository;
+    @Autowired private CommentRepository commentRepository;
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
     public void createUserAndBoard(){
-        /*IntStream.rangeClosed(1, 200).forEach(i -> {
+        /*IntStream.rangeClosed(1, 210).forEach(i -> {
             User user = User.builder()
                     .login_id("login" + i)
                     .password(bCryptPasswordEncoder.encode("pwd" + i))
@@ -30,8 +33,11 @@ public class HomeController {
                     .build();
             userRepository.save(user);
 
-            Board board = new Board("title"+i, "at", user);
+            Board board = new Board("title"+i, "content", user);
             boardRepository.save(board);
+
+            Comment comment = Comment.builder().user(user).board(board).content("comment" + i).build();
+            commentRepository.save(comment);
         });*/
     }
 }
