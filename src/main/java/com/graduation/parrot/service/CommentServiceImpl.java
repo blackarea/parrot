@@ -34,6 +34,7 @@ public class CommentServiceImpl implements CommentService{
         queryFactory = new JPAQueryFactory(entityManager);
     }
 
+    @Transactional
     @Override
     public Long create(User user, Long board_id, String content) {
         User foundUser = userRepository.findById(user.getId()).get();

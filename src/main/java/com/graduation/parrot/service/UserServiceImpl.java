@@ -1,7 +1,5 @@
 package com.graduation.parrot.service;
 
-import com.graduation.parrot.domain.QComment;
-import com.graduation.parrot.domain.QUser;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.domain.dto.UserSaveDto;
@@ -22,7 +20,6 @@ import java.util.stream.Collectors;
 
 import static com.graduation.parrot.domain.QBoard.board;
 import static com.graduation.parrot.domain.QComment.comment;
-import static com.graduation.parrot.domain.QUser.user;
 
 @Service
 public class UserServiceImpl implements UserService {

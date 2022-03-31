@@ -80,6 +80,7 @@
             }).fail(function () {
             });
         };
+
     </script>
 </head>
 
@@ -112,7 +113,9 @@
             <a th:href="@{/boardlist}" role="button" class="btn btn-secondary">글목록</a>
             <div th:if="${userResponseDto.id == boardResponseDto.author_id}">
                 <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
-                <a th:href="@{/board/delete/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-danger">삭제</a>
+                <form th:action="@{/board/delete/{id}(id=${boardResponseDto.id})}" th:method="delete">
+                    <button class="btn btn-danger" type="submit">삭제</button>
+                </form>
             </div>
         </div>
 

@@ -90,8 +90,9 @@ public class BoardController {
         return "redirect:/boardlist";
     }
 
-    @GetMapping("/board/delete/{id}")
+    @DeleteMapping("/board/delete/{id}")
     public String deleteBoard(@PathVariable Long id) {
+        System.out.println("BoardController.deleteBoard");
         boardService.delete(id);
         return "redirect:/boardlist";
     }
