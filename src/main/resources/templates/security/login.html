@@ -3,27 +3,153 @@
       layout:decorate="~{layout/layout}">
 <head>
     <link th:href="@{/css/signin.css}" rel="stylesheet">
+    <style>
+
+        .flex-container{
+            width: 100%;
+            height: 100vh;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            align-items: center; /* 수직 정렬 */
+
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center; /* 수평 정렬 */
+        }
+
+        .main{
+            width: 1000px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            background-color:#FFFFFF
+
+        }
+
+        input{
+            margin-top: 10px;
+            width: 350px;
+            height: 50px;
+            outline: none;
+            font-size:20px;
+            background-color:#FFFFFF
+        }
+
+        #ok{
+            width: 350px;
+            height: 50px;
+            background-color: #000000;
+            border-radius: 2em;
+            margin-top: 15px;
+            border: none;
+        }
+        #login{
+            margin: 0px auto;
+            width: 350px;
+        }
+      #left{
+            width: 500px;
+            height: 500px;
+      }
+      #right{
+            width: 500px;
+            height: 500px;
+            margin: 0;
+            background-color: #0a0024;
+      }
+      #section{
+            margin: 0;
+      }
+      #floatingInput{
+            width: 300px;
+            height: 50px;
+            border-radius: 2em;
+      }
+      #floatingPassword{
+            width: 300px;
+            height: 50px;
+            border-radius: 2em;
+      }
+      #forget{
+            font-size: 13px;
+            margin-bottom:10px;
+      }
+      #account{
+            font-size: 13px;
+      }
+      #smleft{
+            margin:  auto;
+            width: 300px;
+            height: 500px;
+            text-align:center;
+      }
+
+    </style>
 </head>
 
-<div layout:fragment="content" class="form-signin text-center" >
-    <main class="form-signin2">
-        <form th:action="@{/login}" method="post">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+<div layout:fragment="content">
 
-            <div class="form-floating">
-                <input type="text" class="form-control" name="login_id" id="login_id">
-                <label for="login_id">login_id</label>
+    <div class="flex-container">
+        <!--<div class="main">
+            <div class="row" id="section">
+                <div class="col" id="left">
+                    <div id="smleft" style="margin-top:50px">
+
+                            <h2 class="fw-bold mb-2 p-3"id="title">로그인</h2>
+                            <form class="">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control rounded-4" id="floatingInput" placeholder="name@example.com">
+                                    <label for="floatingInput">Id</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control rounded-4" id="floatingPassword" placeholder="Password">
+                                    <label for="floatingPassword" style="font-color: 6d6d6d">Password</label>
+                                </div>
+                                <div class= "forget" style="text-align:center">
+                                <button class="btn btn-lg rounded-4 btn-secondary" id="signup" type="submit" style="border-radius: 2em; margin-top: 20px; margin-bottom: 20px;width: 300px; height: 50px">Login</button>
+                                    &lt;!&ndash;<span id="forget">아이디, 혹은 비밀번호를 잊으셨나요?</span>&ndash;&gt;
+                                </div>
+                                <div id="account" style="margin-top: 40px;"><a>당신의 계정을 만들어 보세요</a></div>
+                            </form>
+
+
+                </div>
+                </div>
+                <div class="col" id="right">
+
+                </div>
             </div>
-            <div class="form-floating mb-2">
-                <input type="password" class="form-control" name="password" id="password">
-                <label for="password">Password</label>
-            </div>
+            </div>-->
+        <main class="form-signin2">
+            <form th:action="@{/login}" method="post">
+                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-        </form>
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="login_id" id="login_id">
+                    <label for="login_id">login_id</label>
+                </div>
+                <div class="form-floating mb-2">
+                    <input type="password" class="form-control" name="password" id="password">
+                    <label for="password">Password</label>
+                </div>
 
-        <a th:href="@{/}" class="my-2 w-100 btn btn-lg btn-primary">Home</a>
-    </main>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            </form>
+
+            <a th:href="@{/}" class="my-2 w-100 btn btn-lg btn-primary">Home</a>
+        </main>
+        </div>
+
+
 </div>
+
+
 
 </html>

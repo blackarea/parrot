@@ -2,9 +2,197 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
+<head>
+    <style>
+
+
+
+        #header{
+            width:800px;
+            height: 120px;
+        }
+        .main{
+            width:800px;
+            margin-top: -20px;
+        }
+        .recommend{
+            width:800px;
+            height: 90px;
+        }
+        .footer{
+            width:800px;
+            height: 60px;
+            background-color:#f7f7f7;
+        }
+        .article{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .body{
+            margin-top: 70px;
+        }
+        .topbar{
+            height: 40px;
+        }
+        .bottombar{
+            height: 20px;
+            display: flex;
+        }
+        .bar{
+            padding: 20px;
+        }
+        #headline{
+            color:#000000;
+            font-size: 22px;
+        }
+        .bottomleft{
+            display:flex;
+            width: 380px;
+        }
+        .bottomright{
+
+            text-align:right;
+            width: 380px;
+        }
+        #name{
+            color: #6d6d6d;
+            margin-right:20px;
+            font-size: 14px;
+        }
+        #time{
+            color: #6d6d6d;
+            margin-right:20px;
+            font-size: 14px;
+        }
+        #category{
+            color: #6d6d6d;
+            font-size: 14px;
+        }
+        #view{
+            color: #6d6d6d;
+            font-size: 14px;
+            margin-right:10px;
+        }
+        #comment{
+            color: #6d6d6d;
+            font-size: 14px;
+        }
+        #line1{
+            color: #000;
+            width: 800px;
+            margin: 0px;
+            margin-top:-20px;
+            margin-bottom: 50px;
+        }
+        #line2{
+            color: #000;
+            width: 800px;
+            margin: 0px;
+            margin-top: 50px;
+        }
+        #contents{
+            margin: 20px;
+        }
+        #contents-text{
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        #input{
+            width: 800px;
+            height: 150px;
+            margin: 0px;
+            border-bottom-left-radius: 1em;
+            border-bottom-right-radius: 1em;
+        }
+        .coment{
+
+        }
+        #coment-title{
+            width: 800px;
+            background-color: #000;
+            height: 40px;
+
+        }
+
+
+    </style>
+</head>
 
 <div layout:fragment="content">
-    <div class="container">
+
+    <div class="article">
+        <div class="body">
+        <div id="header">
+            <div class="bar">
+            <div class="topbar">
+                <span id="headline" style="#fff">테스트하는 글입니다.</span>
+            </div>
+            <div class="bottombar">
+                <div class="bottomleft">
+                    <span id="name">다죽여버리겠어</span>
+                <!--    <span id="time">자유</span>-->
+                    <span id="category">03-31</span>
+                </div>
+
+                <div class="bottomright">
+                    <span id="view">조회<span>&nbsp142567</span></span>
+                    <span id="comment">댓글<span>&nbsp142567</span></span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+            <hr id="line1">
+
+        <div class="main">
+            <div id="contents">
+                <div><span>1</span><span>2</span><span>3</span></div>
+                <div>2</div>
+                <div>3</div>
+            </div>
+        </div>
+            <hr id="line2">
+
+        <div class="recommend">
+
+        </div>
+
+        <div class="footer">
+        </div>
+
+        <div class="coment">
+
+            <div id="coment-title">
+            <span>댓글쓰기</span>
+            </div>
+            <div class="coment-input">
+                <input id="input" class="form-control me-2" type="search" placeholder="댓글을 입력하세요" aria-label="당신만의 앵무새">
+            </div>
+
+            <div class="coment-view">
+
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--<div class="container">
         <h1 class="mb-3">게시글</h1>
 
         <div class="mb-3">
@@ -33,6 +221,6 @@
             <a th:href="@{/board/delete/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-danger">삭제</a>
         </div>
 
-    </div>
+    </div>-->
 </div>
 </html>
