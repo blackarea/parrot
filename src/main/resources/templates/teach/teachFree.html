@@ -2,7 +2,55 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
+<head>
+    <style>
+        #chat input, #chat span{
+            display: block;
+        }
+    </style>
+
+    <script>
+        function chat() {
+            let inputValue = document.getElementById("inputChat1").value;
+            let data = {
+                chat : inputValue
+            }
+            let chatDiv = document.getElementById("chat");
+            let receiveChat = document.createElement("span");
+            let pastSpan = document.createElement("span");
+            $('input').remove();
+            pastSpan.innerText = inputValue;
+
+            let newInput = document.createElement("input");
+            newInput.setAttribute("id", "inputChat1");
+
+            $.ajax({
+                type:'POST',
+                url:'/app/chat',
+                data:JSON.stringify(data),
+                contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
+            }).done(function (response) {
+                receiveChat.innerText = response.chat;
+            }).fail(function () {
+                console.log("fail");
+                receiveChat.innerText = "교육실패";
+            });
+
+            chatDiv.appendChild(pastSpan);
+            chatDiv.appendChild(receiveChat);
+            chatDiv.appendChild(newInput);
+        }
+
+    </script>
+</head>
+
 <div layout:fragment="content">
+
+    <div id="chat">
+        <button class="btn btn-info" onclick="chat()">전송</button>
+
+        <input id="inputChat1">
+    </div>
 
 </div>
 
