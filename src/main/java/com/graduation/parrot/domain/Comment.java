@@ -5,9 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
+@Getter
+@ToString(of = {"id", "content"})
 public class Comment extends BaseTimeEntity{
 
     @Id @GeneratedValue
@@ -16,6 +16,7 @@ public class Comment extends BaseTimeEntity{
 
     @Column(nullable = false)
     private String content;
+    private String author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -28,6 +29,7 @@ public class Comment extends BaseTimeEntity{
     @Builder
     public Comment(String content, User user, Board board) {
         this.content = content;
+        this.author = user.getName();
         setUser(user);
         setBoard(board);
         this.board = board;
@@ -37,7 +39,6 @@ public class Comment extends BaseTimeEntity{
         this.user = user;
         user.getComments().add(this);
     }
-
 
     private void setBoard(Board board) {
         this.board = board;

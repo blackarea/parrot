@@ -41,7 +41,7 @@ public class SecurityController {
 
     @PostMapping("/userlogout")
     public String logout(HttpServletResponse response) {
-        expireCookie(response, "jwtToken");
+        expireCookie(response);
         return "redirect:/";
     }
 
@@ -66,22 +66,21 @@ public class SecurityController {
         if (userSaveDto.getEmail().equals("")) {
             userSaveDto.setEmail(null);
         }
-        userService.save(userSaveDto);
+        userService.create(userSaveDto);
         return "redirect:/";
     }
 
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
+    private void expireCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwtToken", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
 
     @GetMapping("/account/{login_id}")
-    public String account(@PathVariable String login_id, Model model, @PageableDefault(size = 5) Pageable pageable,
+    public String account(@PathVariable String login_id, Model model, @PageableDefault(size = 10) Pageable pageable,
                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
         UserResponseDto userResponseDto = new UserResponseDto(principalDetails.getUser());
         Page<BoardListResponseDto> userBoardList = userService.getUserBoardList(login_id, pageable);
-        System.out.println(userBoardList);
         model.addAttribute("userBoardList", userBoardList);
         model.addAttribute("userResponseDto", userResponseDto);
         return "security/account";
@@ -94,8 +93,9 @@ public class SecurityController {
 
     @ResponseBody
     @PutMapping("/account/{login_id}")
-    public void updateAccount(@PathVariable String login_id, @RequestBody UserUpdateDto userUpdateDto) {
-        userService.updateAll(login_id, userUpdateDto);
+    public void updateAccount(@PathVariable String login_id, @RequestBody UserUpdateDto userUpdateDto, HttpServletResponse response) {
+        userService.updateName(login_id, userUpdateDto.getUsername());
+        userService.updateEmail(login_id, userUpdateDto.getEmail());
     }
 
 }
