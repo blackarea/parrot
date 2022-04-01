@@ -4,8 +4,10 @@ import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
 import com.graduation.parrot.domain.dto.BoardResponseDto;
+import com.graduation.parrot.domain.dto.CommentResponseDto;
 import com.graduation.parrot.domain.dto.UserResponseDto;
 import com.graduation.parrot.service.BoardService;
+import com.graduation.parrot.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -15,15 +17,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class BoardController {
 
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/")
-    public String index(){
+    public String index(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
+        if (principalDetails != null) {
+            model.addAttribute("login_id", principalDetails.getUser().getLogin_id());
+        }
         return "index";
     }
 
@@ -50,9 +58,11 @@ public class BoardController {
         User user = principalDetails.getUser();
         UserResponseDto userResponseDto = new UserResponseDto(user);
         BoardResponseDto boardResponseDto = boardService.getBoard(id);
+        List<CommentResponseDto> commentDtoList = commentService.getCommentList(id);
 
         model.addAttribute("userResponseDto", userResponseDto);
         model.addAttribute("boardResponseDto", boardResponseDto);
+        model.addAttribute("commentDtoList", commentDtoList);
         return "board/board";
     }
 
@@ -63,6 +73,7 @@ public class BoardController {
 
     @PostMapping("/board/create")
     public String createBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        User user = principalDetails.getUser();
         boardService.create(boardDto, principalDetails.getUser());
         return "redirect:/boardlist";
     }
@@ -79,8 +90,9 @@ public class BoardController {
         return "redirect:/boardlist";
     }
 
-    @GetMapping("/board/delete/{id}")
+    @DeleteMapping("/board/delete/{id}")
     public String deleteBoard(@PathVariable Long id) {
+        System.out.println("BoardController.deleteBoard");
         boardService.delete(id);
         return "redirect:/boardlist";
     }

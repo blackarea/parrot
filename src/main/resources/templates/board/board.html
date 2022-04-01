@@ -155,6 +155,87 @@
     </style>
 </head>
 
+<head>
+    <style>
+        .commentAuthor{
+            margin-right: 10px;
+        }
+    </style>
+    <script th:inline="javascript">
+        $(function(){
+            printCommentList();
+        });
+        function printCommentList(){
+            let url = "/board/" + [[${boardResponseDto.id}]] + "/comment";
+            $.get(url, function (response) {
+                let ul = document.getElementById('commentUl');
+                $('li').remove();
+                $.each(response, function (index, item){
+                    let commentLi = document.createElement('li');
+                    commentLi.setAttribute("class", "list-group-item");
+                    let commentAuthor = document.createElement('span');
+                    let commentDate = document.createElement('span');
+                    let commentContent = document.createElement('p');
+                    commentAuthor.setAttribute("class", "commentAuthor");
+                    commentAuthor.innerText = item.author;
+                    commentDate.innerText = item.createdDate;
+                    commentContent.innerText = item.content;
+
+                    commentLi.appendChild(commentAuthor);
+                    commentLi.appendChild(commentDate);
+                    commentLi.appendChild(commentContent);
+                    if(item.author == [[${userResponseDto.username}]]){
+                        let commentUpdate = document.createElement('span');
+                        let commentDelete = document.createElement('span');
+                        commentUpdate.innerText = "수정";
+                        commentDelete.innerText = "삭제";
+                        commentLi.appendChild(commentUpdate);
+                        commentLi.appendChild(commentDelete);
+                        commentUpdate.addEventListener("click", function () {
+                            updateComment(item.id);
+                        });
+                        commentDelete.addEventListener("click", function () {
+                            deleteComment(item.id);
+                        })
+                    }
+                    ul.appendChild(commentLi);
+                });
+
+            })
+        };
+        function commentCreate(board_id){
+            let commentContent = document.getElementById("commentContent").value;
+            let data = {
+                chat : commentContent
+            }
+
+            $.ajax({
+                type:'POST',
+                url:'/board/'+board_id+'/comment',
+                data:JSON.stringify(data),
+                contentType:"application/json;charset=UTF-8",
+            }).done(function (response) {
+                printCommentList();
+            }).fail(function () {
+                console.log("fail");
+            });
+        };
+        function updateComment() {
+
+        };
+        function deleteComment(comment_id){
+            $.ajax({
+                type:'DELETE',
+                url:'/board/'+[[${boardResponseDto.id}]]+'/comment/'+comment_id,
+            }).done(function (response) {
+                printCommentList();
+            }).fail(function () {
+            });
+        };
+
+    </script>
+</head>
+
 <div layout:fragment="content">
 
     <div class="article">
@@ -370,30 +451,48 @@
     <!--<div class="container">
         <h1 class="mb-3">게시글</h1>
 
-        <div class="mb-3">
-            <label class="fw-bold" for="id">글 번호</label>
-            <input class="form-control" id="id" th:value="${boardResponseDto.id}" readonly>
+        <!--글 부분-->
+        <div>
+            <div class="mb-3">
+                <label class="fw-bold" for="id">글 번호</label>
+                <input class="form-control" id="id" th:value="${boardResponseDto.id}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="fw-bold" for="title">제목</label>
+                <input type="text" class="form-control" id="title" th:value="${boardResponseDto.title}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="fw-bold" for="author">작성자</label>
+                <input type="text" class="form-control" id="author" th:value="${boardResponseDto.author}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="fw-bold" for="content">내용</label>
+                <p class="form-control" id="content" th:text="${boardResponseDto.content}"></p>
+            </div>
+
+            <a th:href="@{/boardlist}" role="button" class="btn btn-secondary">글목록</a>
+            <div th:if="${userResponseDto.id == boardResponseDto.author_id}">
+                <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
+                <form th:action="@{/board/delete/{id}(id=${boardResponseDto.id})}" th:method="delete">
+                    <button class="btn btn-danger" type="submit">삭제</button>
+                </form>
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label class="fw-bold" for="title">제목</label>
-            <input type="text" class="form-control" id="title" th:value="${boardResponseDto.title}" readonly>
-        </div>
+        <br>
+        <!--댓글-->
+        <div>
+            <ul id="commentUl" class="list-group">
 
-        <div class="mb-3">
-            <label class="fw-bold" for="author">작성자</label>
-            <input type="text" class="form-control" id="author" th:value="${boardResponseDto.author}" readonly>
-        </div>
+            </ul>
+            <br>
 
-        <div class="mb-3">
-            <label class="fw-bold" for="content">내용</label>
-            <textarea class="form-control" id="content" th:text="${boardResponseDto.content}"></textarea>
-        </div>
-
-        <a th:href="@{/boardlist}" role="button" class="btn btn-secondary">글목록</a>
-        <div th:if="${userResponseDto.id == boardResponseDto.author_id}">
-            <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
-            <a th:href="@{/board/delete/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-danger">삭제</a>
+            <div th:text="${userResponseDto.username}"></div>
+            <textarea id="commentContent" class="form-control" name="content"></textarea>
+            <button class="btn btn-primary" th:onclick="|javascript:commentCreate('${boardResponseDto.id}')|">댓글 작성</button>
         </div>
 
     </div>-->

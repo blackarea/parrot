@@ -25,7 +25,7 @@ public class RestApiController {
 
     @PostMapping("/signup")
     public String join(@RequestBody @Valid UserSaveDto userSaveDto) {
-        userService.save(userSaveDto);
+        userService.create(userSaveDto);
         return "회원가입완료";
     }
 

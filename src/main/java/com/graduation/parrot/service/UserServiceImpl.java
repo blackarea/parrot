@@ -3,7 +3,6 @@ package com.graduation.parrot.service;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.domain.dto.UserSaveDto;
-import com.graduation.parrot.domain.dto.UserUpdateDto;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
@@ -16,13 +15,11 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
 import javax.persistence.EntityManager;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.graduation.parrot.domain.QBoard.board;
+import static com.graduation.parrot.domain.QComment.comment;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(UserSaveDto userSaveDto) {
+    public User create(UserSaveDto userSaveDto) {
         User user;
         if (userSaveDto.getEmail() == null) {
             user = User.builder()
@@ -59,29 +56,49 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Transactional
     @Override
     public void updatePassword(String login_id, String password) {
-        User user = userRepository.findByLogin_id(login_id).get();
+        User user = userRepository.findByLogin_id(login_id)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
         user.updatePassword(bCryptPasswordEncoder.encode(password));
     }
 
     @Transactional
     @Override
     public void updateName(String login_id, String username) {
-        User user = userRepository.findByLogin_id(login_id).get();
+        User user = userRepository.findByLogin_id(login_id)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
+
+        /*게시글의 저자 이름도 변경*/
+        queryFactory
+                .update(board)
+                .where(board.author.eq(user.getName()))
+                .set(board.author, username)
+                .execute();
+
+        /*댓글의 저자 이름도 변경*/
+        queryFactory
+                .update(comment)
+                .where(comment.author.eq(user.getName()))
+                .set(comment.author, username)
+                .execute();
+
         user.updateName(username);
     }
 
     @Transactional
     @Override
-    public void updateAll(String login_id, UserUpdateDto userUpdateDto) {
-        User user = userRepository.findByLogin_id(login_id).get();
-        user.updateAll(userUpdateDto.getUsername(), userUpdateDto.getEmail());
+    public void updateEmail(String login_id, String email) {
+        User user = userRepository.findByLogin_id(login_id)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
+        user.updateEmail(email);
     }
 
     @Override
     public Page<BoardListResponseDto> getUserBoardList(String login_id, Pageable pageable) {
-        User user = userRepository.findByLogin_id(login_id).get();
+        User user = userRepository.findByLogin_id(login_id)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
 
         List<BoardListResponseDto> userBoardList = queryFactory
                 .selectFrom(board)
