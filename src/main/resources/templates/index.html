@@ -43,7 +43,7 @@
         }
 
         hr {
-            width: 60px;
+            width: 200px;
 
         }
 
@@ -181,6 +181,20 @@
             <li class="nav-item">
                 <a sec:authorize="isAuthenticated()" class="nav-link text-light" th:href="@{/account/login1}">계정설정</a>
             </li>
+
+            <!--<li class="nav-item">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">상단전체목록</button>
+
+                <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                    <div class="offcanvas-header">
+                        <h6 id="offcanvasTopLabel">상단전체목록</h6>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        ...
+                    </div>
+                </div>
+            </li>-->
         </ul>
     </header>
 
@@ -194,7 +208,7 @@
                     <p>앵무에게 말을 걸어보세요</p>
                 </div>
                 <form class="d-flex">
-                    <input class="form-control me-2"style="border-radius: 2em;" type="search" placeholder="Search" aria-label="당신만의 앵무새">
+                    <input class="form-control me-2"style="border-radius: 2em; height:42px" type="search" placeholder="Search" aria-label="당신만의 앵무새">
 
                 </form>
             </div>

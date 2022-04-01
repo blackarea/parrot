@@ -79,7 +79,9 @@
 
             <div class="top">
                 <div class="topbar">
-                <span style="font-size: 25px; font-weight:bold">이야기 광장</span>
+                    <div style="width: 850px">
+                        <span style="font-size: 25px;margin-left:20px;color:#2B2B2B">#이야기 광장</span>
+                    </div>
                 <div class="assign">
                 <a sec:authorize="isAuthenticated()" th:href="@{/board/create}" role="button" class="btn btn-primary">글 등록</a>
                     <button class="serachimg" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -109,7 +111,7 @@
                         <div class="search" style="display: flex; justify-content: flex-end">
                             <form method="get" style="display: flex" th:action="@{/boardlist}">
 
-                                        <select class="form-select" id="type" name="type">
+                                        <select class="form-select" id="type" name="type" style="width:80px">
                                             <option value="all">전체</option>
                                             <option value="title">제목</option>
                                             <option value="content">내용</option>
@@ -160,7 +162,7 @@
                                                                     <span style="font-size: 14px">게시물 번호</span>
                                                                     <span style="margin-left:10px; font-size: 14px">조회수 831</span>
                                                                     <span style="margin-left:10px; font-size: 14px;">2022-03-27 04:27</span>
-                                                                    <span style="font-size: 14px; float:right; font-weight:bold; font-color:#666666">운영자</span>
+                                                                    <span style="font-size: 15px; float:right; font-weight:bold; font-color:#666666">운영자</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -209,7 +211,7 @@
                                                                     <span style="margin-left:10px; font-size: 14px; color:#7C7C7C">조회수 831</span>
                                                                     <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
                                                                           th:text="${boardListResponseDto.createdDate}"></span>
-                                                                    <span style="font-size: 14px; float:right; font-weight:bold; color:#666666";
+                                                                    <span style="font-size: 15px; float:right; font-weight:bold; color:#666666";
                                                                           th:text="${boardListResponseDto.name}"></span>
                                                                 </div>
                                                             </div>

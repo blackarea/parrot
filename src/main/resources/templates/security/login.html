@@ -16,12 +16,12 @@
             -webkit-box-align: center;
             -moz-box-align: center;
             -ms-flex-align: center;
-            align-items: center; /* 수직 정렬 */
+            align-items: center;
 
             -webkit-box-pack: center;
             -moz-box-pack: center;
             -ms-flex-pack: center;
-            justify-content: center; /* 수평 정렬 */
+            justify-content: center;
         }
 
         .main{
@@ -96,8 +96,8 @@
 
 <div layout:fragment="content">
 
-    <div class="flex-container">
-        <!--<div class="main">
+    <!--<div class="flex-container">
+        <div class="main">
             <div class="row" id="section">
                 <div class="col" id="left">
                     <div id="smleft" style="margin-top:50px">
@@ -118,8 +118,6 @@
                                 </div>
                                 <div id="account" style="margin-top: 40px;"><a>당신의 계정을 만들어 보세요</a></div>
                             </form>
-
-
                 </div>
                 </div>
                 <div class="col" id="right">
@@ -127,6 +125,7 @@
                 </div>
             </div>
             </div>-->
+
         <main class="form-signin2">
             <form th:action="@{/login}" method="post">
                 <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
@@ -145,11 +144,8 @@
 
             <a th:href="@{/}" class="my-2 w-100 btn btn-lg btn-primary">Home</a>
         </main>
+
+
         </div>
-
-
 </div>
-
-
-
 </html>
