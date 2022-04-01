@@ -2,6 +2,7 @@ package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardListResponseDto;
+import com.graduation.parrot.domain.dto.CommentResponseDto;
 import com.graduation.parrot.domain.dto.UserSaveDto;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -108,6 +109,21 @@ public class UserServiceImpl implements UserService {
                 .stream().map(BoardListResponseDto::new).collect(Collectors.toList());
 
         return new PageImpl<>(userBoardList, pageable, userBoardList.size());
+    }
+
+    @Override
+    public Page<CommentResponseDto> getUserCommentList(String login_id, Pageable pageable) {
+        User user = userRepository.findByLogin_id(login_id)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
+
+        List<CommentResponseDto> userCommentList = queryFactory
+                .selectFrom(comment)
+                .where(comment.author.eq(user.getName()))
+                .orderBy(comment.id.desc())
+                .fetch()
+                .stream().map(CommentResponseDto::new).collect(Collectors.toList());
+
+        return new PageImpl<>(userCommentList, pageable, userCommentList.size());
     }
 
     @Override

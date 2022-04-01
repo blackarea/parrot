@@ -58,7 +58,7 @@ class CommentServiceTest {
 
         commentId = commentService.create(user, board.getId(), "댓글");
     }
-    
+
     @Test
     void createComment() {
         User user = userRepository.findByLogin_id("login").get();
@@ -82,10 +82,12 @@ class CommentServiceTest {
     @Test
     void getCommentListTest() {
         //query 얼마나 나가는지 확인
-        Board board = boardRepository.findById(2L).get();
+        Board foundBoard = queryFactory
+                .selectFrom(board)
+                .where(board.title.eq("제목"))
+                .fetchOne();
 
-        List<CommentResponseDto> commentList = commentService.getCommentList(board.getId());
+        List<CommentResponseDto> commentList = commentService.getCommentList(foundBoard.getId());
         assertThat(commentList.size()).isEqualTo(1);
-
     }
 }

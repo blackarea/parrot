@@ -1,10 +1,7 @@
 package com.graduation.parrot.controller;
 
 import com.graduation.parrot.config.auth.PrincipalDetails;
-import com.graduation.parrot.domain.dto.BoardListResponseDto;
-import com.graduation.parrot.domain.dto.UserResponseDto;
-import com.graduation.parrot.domain.dto.UserSaveDto;
-import com.graduation.parrot.domain.dto.UserUpdateDto;
+import com.graduation.parrot.domain.dto.*;
 import com.graduation.parrot.service.UserService;
 import com.graduation.parrot.validator.SignUpValidator;
 import lombok.RequiredArgsConstructor;

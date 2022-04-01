@@ -171,6 +171,10 @@
                    th:href="@{/userlogin}">로그인</a>
             </li>
             <li class="nav-item">
+                <a sec:authorize="isAnonymous()" class="nav-link text-light link-secondary rounded"
+                   th:href="@{/signup}">회원가입</a>
+            </li>
+            <li class="nav-item">
                 <a sec:authorize="isAuthenticated()" class="nav-link text-light link-secondary rounded"
                    role="button" onclick="logout()">로그아웃</a>
             </li>
