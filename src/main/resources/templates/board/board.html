@@ -2,12 +2,156 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
-
 <head>
     <style>
-        .commentAuthor{
-            margin-right: 10px;
+
+        tr,td{
+            width:800px;
+            display: flex;
+            margin: 0px;
+            padding: 0px;
+
         }
+        #header{
+            width:800px;
+
+        }
+        .main{
+            width:800px;
+        }
+        .recommend{
+            width:800px;
+            height: 90px;
+            margin-top: 20px;
+
+        }
+        .report{
+            width:800px;
+            height: 60px;
+            background-color:#f7f7f7;
+
+            margin-top: 20px;
+        }
+        .article{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .body{
+            margin-top: 70px;
+        }
+        .topbar{
+            height: 40px;
+        }
+        .bottombar{
+            height: 20px;
+            display: flex;
+        }
+        .bar{
+            padding: 20px;
+        }
+        #headline{
+            color:#000000;
+            font-size: 22px;
+        }
+        .bottomleft{
+            display:flex;
+            width: 380px;
+        }
+        .bottomright{
+
+            text-align:right;
+            width: 380px;
+        }
+        #name{
+            color: #6d6d6d;
+            margin-right:20px;
+            font-size: 14px;
+        }
+        #time{
+            color: #6d6d6d;
+            margin-right:20px;
+            font-size: 14px;
+        }
+        #category{
+            color: #6d6d6d;
+            font-size: 14px;
+        }
+        #view{
+            color: #6d6d6d;
+            font-size: 14px;
+            margin-right:10px;
+        }
+        #comment{
+            color: #6d6d6d;
+            font-size: 14px;
+        }
+        #line1{
+            color: #000;
+            width: 800px;
+            margin: 0px;
+            margin-bottom: 50px;
+        }
+        #line2{
+            color: #000;
+            width: 800px;
+            margin: 0px;
+            margin-top: 50px;
+        }
+        #contents{
+            margin: 20px;
+        }
+        #contents-text{
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        #input{
+            margin: 0px;
+            border-bottom-left-radius: 1em;
+            border-bottom-right-radius: 1em;
+        }
+        .coment{
+
+        }
+        #coment-title{
+            width: 800px;
+            background-color: #6d6d6d;
+            height: 40px;
+
+        }
+        #accordionExample{
+            width: 800px;
+        }
+        .accordion-body{
+            height: 150px;
+            display:flex;
+        }
+        #coment-ok{
+            width: 100px;
+        }
+        table{
+            width: 800px;
+        }
+        .comment-recommend{
+            width:100px;
+            display: flex;
+            flex-direction: column;
+            margin: 0px;
+            padding: 0px;
+            justify-content: center;
+            align-items: center;
+        }
+        .comment-contents{
+            width:700px;
+        }
+        .up-down{
+            width:800px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
     </style>
     <script th:inline="javascript">
         $(function(){
@@ -84,11 +228,208 @@
     </script>
 </head>
 
+
 <div layout:fragment="content">
-    <div class="container">
+
+    <div class="article">
+        <div class="body">
+        <div id="header">
+            <div class="bar">
+            <div class="topbar">
+                <span id="headline" style="#fff">테스트하는 글입니다.</span>
+            </div>
+            <div class="bottombar">
+                <div class="bottomleft">
+                    <span id="name">다죽여버리겠어</span>
+                    <span id="time">자유</span>
+                    <span id="category">22-04-01 01:55</span>
+                </div>
+
+                <div class="bottomright">
+                    <span id="view">조회<span>&nbsp142567</span></span>
+                    <span id="comment">댓글<span>&nbsp142567</span></span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+            <hr id="line1">
+
+        <div class="main">
+            <div id="contents">
+                <div><span>매 번 늦어도 이해할게 누굴 만났니 먼저 묻지 않을게 고집스런 내 사랑 너의 말은 변명이라도 믿고 싶을 테니 눈 비비는 척 눈물 닦아내고 다음 약속도 잡을 이유 만들지</span></div>
+                <div>2</div>
+                <div>3</div>
+            </div>
+        </div>
+            <hr id="line2">
+
+        <div class="recommend">
+
+            <div class="up-down">
+                <div class="up" style="display:flex">
+                    <div class="input-group"style="margin-right:5px">
+                        <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" style="width:80px;height:50px" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
+                            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                        </svg>개추</button>
+                        <div style="background-color:#0067a3; width:60px; border-bottom-right-radius: 5px;border-top-right-radius: 5px;display:flex;justify-content: center;align-items: center;color:#fff">12</div>
+                    </div>
+                    <div class="input-group" style="margin-left:5px">
+                        <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" style="width:80px;height:50px" class="btn btn-outline-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
+                            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                        </svg>개추</button>
+                        <div style="background-color:#8e8e93; width:60px; border-bottom-right-radius: 5px;border-top-right-radius: 5px;display:flex;justify-content: center;align-items: center;color:#fff">12</div>
+                    </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="report" style="height:60px">
+
+            <span style="font-size:13px; color: #AAAAAA; vertical-align: middle">이 글을 신고합니다</span>
+
+        </div>
+
+        <div class="coment">
+
+            <div class="accordion" id="accordionExample" style="border:none">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            댓글쓰기
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <div class="input-group mb-2 mt-2">
+                                <input type="text" class="form-control" placeholder="욕설, 비방, 과도한 표현은 제재의 대상이 될 수있습니다." aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2">글쓰기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="coment-view">
+                <table class="table table-hover">
+                    <!--공지-->
+                    <tr>
+                        <td>
+                          <div class="comment-recommend"style="text-align:center">
+                              <div><button type="button" style="width:60px;height:25px;padding: 0px;margin-bottom:5px" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
+                                  <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                              </svg><span style="font-size:13px">123</span></button>
+                                  <button type="button" style="width:60px;height:25px;padding: 0px;" class="btn btn-outline-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 20">
+                                      <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                  </svg><span style="font-size:13px">123</span></button>
+                              </div>
+                          </div>
+                            <div class="comment-contents">
+                                <div class="nickname"style="height:30px"><span style="font-weight:bold;font-size:15px">다죽여버리겠어</span>&nbsp;&nbsp; <span style="color:#828282;font-size:14px">9시간전</span></div>
+                                <div class="coment-letter" style="font-size:15px;color:#3A3A3A">왜들 그리 다운돼있어? 뭐가 문제야 say something
+                                    분위기가 겁나 싸해 요새는 이런 게 유행인가
+                                    왜들 그리 재미없어? 아 그건 나도 마찬가지
+                                    Tell me what I got to do 급한 대로 블루투스 켜</div>
+                                <div class="coment-police"style="height:30px;"><span style="color:#828282;font-size:14px">신고</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">댓글</span></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="comment-recommend" style="text-align:center">
+                                <div><button type="button" style="width:60px;height:25px;padding: 0px;margin-bottom:5px" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 20">
+                                    <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                                </svg><span style="font-size:13px">123</span></button>
+                                    <button type="button" style="width:60px;height:25px;padding: 0px;" class="btn btn-outline-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 20">
+                                        <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+                                    </svg><span style="font-size:13px">123</span></button>
+                                </div>
+                            </div>
+                            <div class="comment-contents">
+                                <div class="nickname"style="height:30px"><span style="font-weight:bold;font-size:15px">다죽여버리겠어</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">9시간전</span></div>
+                                <div class="coment-letter" style="font-size:15px;color:#3A3A3A">아무 노래나 일단 틀어 아무거나 신나는 걸로
+                                    아무렇게나 춤춰 아무렇지 않아 보이게
+                                    아무 생각 하기 싫어 아무개로 살래 잠시
+                                    I'm sick and tired of my every day, keep it up 한 곡 더
+                                    아무 노래나 일단 틀어 아무렴 어때 it's so boring
+                                    아무래도 refresh가 시급한 듯해 쌓여가 스트레스가
+                                    배꼽 빠질 만큼만 폭소하고 싶은 날이야
+                                    What up my dawgs? 어디야 너희 올 때 병맥주랑 까까 몇 개 사 와 uh</div>
+                                <div class="coment-police"style="height:30px;"><span style="color:#828282;font-size:14px">신고</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">댓글</span></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="comment-recommend"style="text-align:center">
+                                <div><button type="button" style="width:60px;height:25px;padding: 0px;margin-bottom:5px" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                    <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                </svg><span style="font-size:13px">123</span></button>
+                                    <button type="button" style="width:60px;height:25px;padding: 0px;" class="btn btn-outline-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                    </svg><span style="font-size:13px">123</span></button>
+                                </div>
+                            </div>
+                            <div class="comment-contents">
+                                <div class="nickname"style="height:30px"><span style="font-weight:bold;font-size:15px">다죽여버리겠어</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">9시간전</span></div>
+                                <div class="coment-letter" style="font-size:15px;color:#3A3A3A">왜들 그리 다운돼있어? 뭐가 문제야 say something
+                                    분위기가 겁나 싸해 요새는 이런 게 유행인가</div>
+                                <div class="coment-police"style="height:30px;"><span style="color:#828282;font-size:14px">신고</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">댓글</span></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="comment-recommend" style="text-align:center">
+                                <div>
+                                    <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                        <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                    </svg></div>
+                                    <div>
+                                    0
+                                    </div>
+                                    <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                    </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-contents">
+                                <div class="nickname"style="height:30px"><span style="font-weight:bold;font-size:15px">다죽여버리겠어</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">9시간전</span></div>
+                                <div class="coment-letter" style="font-size:15px;color:#3A3A3A">왜들 그리 다운돼있어? 뭐가 문제야 say something</div>
+                                <div class="coment-police"style="height:30px;"><span style="color:#828282;font-size:14px">신고</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">댓글</span></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="comment-recommend">
+                                123
+                            </div>
+                            <div class="comment-contents">
+                                <div class="nickname"style="height:30px"><span style="font-weight:bold;font-size:15px">다죽여버리겠어</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">9시간전</span></div>
+                                <div class="coment-letter" style="font-size:15px;color:#3A3A3A">ㄱ</div>
+                                <div class="coment-police"style="height:30px;"><span style="color:#828282;font-size:14px">신고</span>&nbsp;&nbsp;<span style="color:#828282;font-size:14px">댓글</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <!--<div class="container">
         <h1 class="mb-3">게시글</h1>
 
-        <!--글 부분-->
         <div>
             <div class="mb-3">
                 <label class="fw-bold" for="id">글 번호</label>
@@ -120,7 +461,6 @@
         </div>
 
         <br>
-        <!--댓글-->
         <div>
             <ul id="commentUl" class="list-group">
 
@@ -132,6 +472,6 @@
             <button class="btn btn-primary" th:onclick="|javascript:commentCreate('${boardResponseDto.id}')|">댓글 작성</button>
         </div>
 
-    </div>
+    </div>-->
 </div>
 </html>

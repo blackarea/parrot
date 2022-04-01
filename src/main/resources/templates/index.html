@@ -43,6 +43,7 @@
         }
 
         hr {
+            width: 200px;
 
         }
 
@@ -104,7 +105,7 @@
         }
 
         #serach {
-            width: 400px;
+            width: 350px;
             height: 200px;
             margin-top: 20px;
 
@@ -185,6 +186,20 @@
                 <a sec:authorize="isAuthenticated()" class="nav-link text-light"
                    th:href="@{/account/{login_id}(login_id=${login_id})}">계정설정</a>
             </li>
+
+            <!--<li class="nav-item">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">상단전체목록</button>
+
+                <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                    <div class="offcanvas-header">
+                        <h6 id="offcanvasTopLabel">상단전체목록</h6>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        ...
+                    </div>
+                </div>
+            </li>-->
         </ul>
     </header>
 
@@ -198,7 +213,7 @@
                     <p>앵무에게 말을 걸어보세요</p>
                 </div>
                 <form class="d-flex">
-                    <input class="form-control me-2 " type="search" placeholder="Search" aria-label="당신만의 앵무새">
+                    <input class="form-control me-2"style="border-radius: 2em; height:42px" type="search" placeholder="Search" aria-label="당신만의 앵무새">
 
                 </form>
             </div>
@@ -212,13 +227,13 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <div class="card border-0" style="width: 18rem;">
+                    <div class="card border-0" style="width: 18rem">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18rem" height="12rem" fill="currentColor"
                              class="bi bi-chat-heart" viewBox="0 1 16 16">
                             <path fill-rule="evenodd"
                                   d="M2.965 12.695a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2Zm-.8 3.108.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125ZM8 5.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
                         </svg>
-                        <hr>
+                        <hr style="margin-left: auto; margin-right: auto; margin-top: 10px; margin-bottom: 10px;">
                         <div class="card-body">
                             <h5>자신만의 앵무새</h5>
                             <p class="card-text">App을 통해 나의 앵무새와 상호활동을 한다면 애증과 스트레스 수치가 변화합니다. 이것에 따라 달라지는 Ai채팅
@@ -234,7 +249,7 @@
                             <path d="M10 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h4zM6 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6z"/>
                             <path d="M8 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM1.599 4.058a.5.5 0 0 1 .208.676A6.967 6.967 0 0 0 1 8c0 1.18.292 2.292.807 3.266a.5.5 0 0 1-.884.468A7.968 7.968 0 0 1 0 8c0-1.347.334-2.619.923-3.734a.5.5 0 0 1 .676-.208zm12.802 0a.5.5 0 0 1 .676.208A7.967 7.967 0 0 1 16 8a7.967 7.967 0 0 1-.923 3.734.5.5 0 0 1-.884-.468A6.967 6.967 0 0 0 15 8c0-1.18-.292-2.292-.807-3.266a.5.5 0 0 1 .208-.676zM3.057 5.534a.5.5 0 0 1 .284.648A4.986 4.986 0 0 0 3 8c0 .642.12 1.255.34 1.818a.5.5 0 1 1-.93.364A5.986 5.986 0 0 1 2 8c0-.769.145-1.505.41-2.182a.5.5 0 0 1 .647-.284zm9.886 0a.5.5 0 0 1 .648.284C13.855 6.495 14 7.231 14 8c0 .769-.145 1.505-.41 2.182a.5.5 0 0 1-.93-.364C12.88 9.255 13 8.642 13 8c0-.642-.12-1.255-.34-1.818a.5.5 0 0 1 .283-.648z"/>
                         </svg>
-                        <hr>
+                        <hr style="margin-left: auto; margin-right: auto; margin-top: 10px; margin-bottom: 10px;">
                         <div class="card-body">
                             <h5>자신만의 앵무새</h5>
                             <p class="card-text">parrot.gg는 Web과 App환경을 모두 지원합니다. 그리고 App을 설치한다면 더 많은 기능이 있으니
@@ -248,7 +263,7 @@
                              class="bi bi-book" viewBox="0 0 16 16">
                             <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
                         </svg>
-                        <hr>
+                        <hr style="margin-left: auto; margin-right: auto; margin-top: 10px; margin-bottom: 10px;">
                         <div class="card-body">
                             <h5>자신만의 앵무새</h5>
                             <p class="card-text">앵무가 모르는 단어를 학습시키거나 문장을 가르쳐주세요. 그러면 내가 가르쳐준 말을 곧바로 따라할
