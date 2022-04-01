@@ -32,6 +32,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
+        isApp = false;
         ObjectMapper om = new ObjectMapper();
         LoginRequestDto loginRequestDto = null;
         String login_id;
@@ -87,7 +88,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
-        logger.warn(failed.getMessage());
+        logger.warn("login fail message : "+failed.toString());
         if (!isApp){
             response.sendRedirect("/userlogin");
         }

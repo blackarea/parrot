@@ -4,6 +4,8 @@ import com.graduation.parrot.domain.Board;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.format.DateTimeFormatter;
+
 @Getter
 @Setter
 public class BoardResponseDto {
@@ -12,6 +14,8 @@ public class BoardResponseDto {
     private String title;
     private String content;
     private String author;
+    private String createdDate;
+    private String modifiedDate;
     private Long author_id;
 
     public BoardResponseDto(Board board, Long author_id) {
@@ -19,6 +23,8 @@ public class BoardResponseDto {
         this.title = board.getTitle();
         this.content = board.getContent();
         this.author = board.getAuthor();
+        this.createdDate = board.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.modifiedDate = board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.author_id = author_id;
     }
 }
