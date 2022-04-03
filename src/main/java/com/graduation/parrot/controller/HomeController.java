@@ -25,7 +25,7 @@ public class HomeController {
 
     @PostConstruct
     public void createUserAndBoard(){
-            IntStream.rangeClosed(1, 210).forEach(i -> {
+/*            IntStream.rangeClosed(1, 210).forEach(i -> {
 
             User user = User.builder()
                     .login_id("login" + i)
@@ -38,6 +38,6 @@ public class HomeController {
             boardRepository.save(board);
             Comment comment = Comment.builder().user(user).board(board).content("comment" + i).build();
             commentRepository.save(comment);
-        });
+        });*/
     }
 }

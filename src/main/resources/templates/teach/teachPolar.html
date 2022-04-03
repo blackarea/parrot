@@ -2,7 +2,74 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
+<head>
+    <style>
+        #teachPolar input, #teachPolar span{
+            display: block;
+        }
+    </style>
+
+    <script>
+        function teachPolar() {
+            let inputValue1 = document.getElementById("inputQuestion").value;
+            let inputValue2 = document.getElementById("inputPostiveAnswer").value;
+            let inputValue3 = document.getElementById("inputNegativeAnswer").value;
+            let data = {
+                question : inputValue1,
+                postive : inputValue2,
+                negative : inputValue3
+            }
+
+            let teachPolarDiv = document.getElementById("teachPolar");
+            let receiveteachPolar = document.createElement("span");
+            let pastSpan1 = document.createElement("span");
+            let pastSpan2 = document.createElement("span");
+            let pastSpan3 = document.createElement("span");
+            $('input').remove();
+            pastSpan1.innerText = inputValue1;
+            pastSpan2.innerText = inputValue2;
+            pastSpan3.innerText = inputValue3;
+
+            let newInput1 = document.createElement("input");
+            let newInput2 = document.createElement("input");
+            let newInput3 = document.createElement("input");
+            newInput1.setAttribute("id", "inputQuestion");
+            newInput2.setAttribute("id", "inputPostiveAnswer");
+            newInput3.setAttribute("id", "inputNegativeAnswer");
+
+            $.ajax({
+                type:'POST',
+                url:'teach/polar',
+                data:JSON.stringify(data),
+                contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
+            }).done(function (response) {
+                receiveteachPolar.innerText = response.teachPolar;
+            }).fail(function () {
+                console.log("fail");
+                receiveteachPolar.innerText = "교육실패";
+            });
+
+            teachPolarDiv.appendChild(pastSpan1);
+            teachPolarDiv.appendChild(pastSpan2);
+            teachPolarDiv.appendChild(pastSpan3);
+            teachPolarDiv.appendChild(receiveteachPolar);
+            teachPolarDiv.appendChild(newInput1);
+            teachPolarDiv.appendChild(newInput2);
+            teachPolarDiv.appendChild(newInput3);
+        }
+
+    </script>
+</head>
+
 <div layout:fragment="content">
+
+    <div id="teachPolar">
+        <button class="btn btn-info" onclick="teachPolar()">전송</button>
+
+        <input id="inputQuestion">
+        <input id="inputPostiveAnswer">
+        <input id="inputNegativeAnswer">
+    </div>
 
 </div>
 

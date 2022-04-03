@@ -97,5 +97,4 @@ public class BoardController {
         return "redirect:/boardlist";
     }
 
-
 }
