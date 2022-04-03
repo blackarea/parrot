@@ -17,6 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -54,7 +57,10 @@ public class BoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String getBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public String getBoard(@PathVariable Long id, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails,
+                           HttpServletRequest request, HttpServletResponse response) {
+        viewCountUp(id, request, response);
+
         User user = principalDetails.getUser();
         UserResponseDto userResponseDto = new UserResponseDto(user);
         BoardResponseDto boardResponseDto = boardService.getBoard(id);
@@ -73,7 +79,6 @@ public class BoardController {
 
     @PostMapping("/board/create")
     public String createBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        User user = principalDetails.getUser();
         boardService.create(boardDto, principalDetails.getUser());
         return "redirect:/boardlist";
     }
@@ -92,9 +97,39 @@ public class BoardController {
 
     @DeleteMapping("/board/delete/{id}")
     public String deleteBoard(@PathVariable Long id) {
-        System.out.println("BoardController.deleteBoard");
         boardService.delete(id);
         return "redirect:/boardlist";
+    }
+
+    private void viewCountUp(Long board_id, HttpServletRequest request, HttpServletResponse response){
+        Cookie oldCookie = null;
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("postView")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + board_id.toString() + "]")) {
+                boardService.updateView(board_id);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + board_id + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60); //1시간 //TODO 나중에 24시간으로 변경 밑에 쿠키도
+                oldCookie.setHttpOnly(true);
+                response.addCookie(oldCookie);
+            }
+        } else {
+            boardService.updateView(board_id);
+            Cookie newCookie = new Cookie("postView","[" + board_id + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60); //1시간
+            newCookie.setHttpOnly(true);
+            response.addCookie(newCookie);
+        }
     }
 
 }

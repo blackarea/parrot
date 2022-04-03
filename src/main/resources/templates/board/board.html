@@ -2,43 +2,272 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
-
 <head>
     <style>
+
+        tr, td {
+            width: 800px;
+            display: flex;
+            margin: 0px;
+            padding: 0px;
+
+        }
+
+        #header {
+            width: 800px;
+
+        }
+
+        .main {
+            width: 800px;
+        }
+
+        .recommend {
+            width: 800px;
+            height: 90px;
+            margin-top: 20px;
+
+        }
+
+        .report {
+            width: 800px;
+            height: 60px;
+            background-color: #f7f7f7;
+
+            margin-top: 20px;
+        }
+
+        .article {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .body {
+            margin-top: 70px;
+        }
+
+        .topbar {
+            height: 40px;
+        }
+
+        .bottombar {
+            height: 20px;
+            display: flex;
+        }
+
+        .bar {
+            padding: 20px;
+        }
+
+        #headline {
+            color: #000000;
+            font-size: 22px;
+        }
+
+        .bottomleft {
+            display: flex;
+            width: 380px;
+        }
+
+        .bottomright {
+
+            text-align: right;
+            width: 380px;
+        }
+
+        #name {
+            color: #6d6d6d;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+
+        #time {
+            color: #6d6d6d;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+
+        #category {
+            color: #6d6d6d;
+            font-size: 14px;
+        }
+
+        #view {
+            color: #6d6d6d;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        #commentCount {
+            color: #6d6d6d;
+            font-size: 14px;
+        }
+
+        #line1 {
+            color: #000;
+            width: 800px;
+            margin: 0px 0px 50px;
+        }
+
+        #line2 {
+            color: #000;
+            width: 800px;
+            margin: 50px 0px 0px;
+        }
+
+        #contents {
+            margin: 20px;
+        }
+
+        #contents-text {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        #input {
+            margin: 0px;
+            border-bottom-left-radius: 1em;
+            border-bottom-right-radius: 1em;
+        }
+
+        #coment-title {
+            width: 800px;
+            background-color: #6d6d6d;
+            height: 40px;
+
+        }
+
+        #accordionExample {
+            width: 800px;
+        }
+
+        .accordion-body {
+            height: 150px;
+            display: flex;
+        }
+
+        #coment-ok {
+            width: 100px;
+        }
+
+        table {
+            width: 800px;
+        }
+
+        .comment-recommend {
+            width: 100px;
+            display: flex;
+            flex-direction: column;
+            margin: 0px;
+            padding: 0px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .up-down {
+            width: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        #commentUl{
+            padding-left: 0px;
+        }
+
+        /*JS*/
+        .comment-contents {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            width: 700px;
+        }
+
+        .commentDiv{
+            margin-right: 15px;
+            display: inline-block;
+        }
+
         .commentAuthor{
+            font-weight: bold;
+            font-size: 15px;
+            margin-right: 15px;
+        }
+
+        .commentDate{
+            color: #828282;
+            font-size: 14px;
+        }
+
+        .commentContent{
+            margin-top: 5px;
+            font-size: 15px;
+            color: #3A3A3A;
+        }
+
+        .commentButton{
+            color: #828282;
+            font-size: 14px;
             margin-right: 10px;
         }
     </style>
     <script th:inline="javascript">
-        $(function(){
+        $(function () {
             printCommentList();
         });
-        function printCommentList(){
+
+        function printCommentList() {
             let url = "/board/" + [[${boardResponseDto.id}]] + "/comment";
             $.get(url, function (response) {
                 let ul = document.getElementById('commentUl');
-                $('li').remove();
-                $.each(response, function (index, item){
+                $('.comment-contents').remove();
+                $.each(response, function (index, item) {
                     let commentLi = document.createElement('li');
-                    commentLi.setAttribute("class", "list-group-item");
+                    commentLi.setAttribute("class", "comment-contents");
+
+                    let divRecommend = document.createElement('div');
+                    let divComment = document.createElement('div');
+                    divRecommend.setAttribute("class", "commentDiv");
+                    divComment.setAttribute("class", "commentDiv");
+
+                    let recommendUp = document.createElement('div');
+                    let recommendDown = document.createElement('div');
+                    let recommendCount = document.createElement('div');
+
+                    recommendUp.innerText='up';
+                    recommendDown.innerText='down';
+                    recommendCount.innerText = '0';
+                    divRecommend.appendChild(recommendUp);
+                    divRecommend.appendChild(recommendCount);
+                    divRecommend.appendChild(recommendDown);
+
                     let commentAuthor = document.createElement('span');
                     let commentDate = document.createElement('span');
-                    let commentContent = document.createElement('p');
+                    let commentContent = document.createElement('div');
                     commentAuthor.setAttribute("class", "commentAuthor");
+                    commentDate.setAttribute("class", "commentDate");
+                    commentContent.setAttribute("class", "commentContent");
                     commentAuthor.innerText = item.author;
                     commentDate.innerText = item.createdDate;
                     commentContent.innerText = item.content;
 
-                    commentLi.appendChild(commentAuthor);
-                    commentLi.appendChild(commentDate);
-                    commentLi.appendChild(commentContent);
-                    if(item.author == [[${userResponseDto.username}]]){
+                    divComment.appendChild(commentAuthor);
+                    divComment.appendChild(commentDate);
+                    divComment.appendChild(commentContent);
+
+
+                    if (item.author == [[${userResponseDto.username}]]) {
                         let commentUpdate = document.createElement('span');
                         let commentDelete = document.createElement('span');
+                        commentUpdate.setAttribute("class", "commentButton");
+                        commentDelete.setAttribute("class", "commentButton");
+
                         commentUpdate.innerText = "수정";
                         commentDelete.innerText = "삭제";
-                        commentLi.appendChild(commentUpdate);
-                        commentLi.appendChild(commentDelete);
+                        divComment.appendChild(commentUpdate);
+                        divComment.appendChild(commentDelete);
                         commentUpdate.addEventListener("click", function () {
                             updateComment(item.id);
                         });
@@ -46,35 +275,41 @@
                             deleteComment(item.id);
                         })
                     }
+
+                    commentLi.appendChild(divRecommend);
+                    commentLi.appendChild(divComment);
                     ul.appendChild(commentLi);
                 });
 
             })
         };
-        function commentCreate(board_id){
-            let commentContent = document.getElementById("commentContent").value;
+
+        function commentCreate() {
+            let commentContent = document.getElementById("commentCreate").value;
             let data = {
-                chat : commentContent
+                chat: commentContent
             }
 
             $.ajax({
-                type:'POST',
-                url:'/board/'+board_id+'/comment',
-                data:JSON.stringify(data),
-                contentType:"application/json;charset=UTF-8",
+                type: 'POST',
+                url: '/board/' + [[${boardResponseDto.id}]] + '/comment',
+                data: JSON.stringify(data),
+                contentType: "application/json;charset=UTF-8",
             }).done(function (response) {
                 printCommentList();
             }).fail(function () {
                 console.log("fail");
             });
         };
+
         function updateComment() {
 
         };
-        function deleteComment(comment_id){
+
+        function deleteComment(comment_id) {
             $.ajax({
-                type:'DELETE',
-                url:'/board/'+[[${boardResponseDto.id}]]+'/comment/'+comment_id,
+                type: 'DELETE',
+                url: '/board/' + [[${boardResponseDto.id}]] + '/comment/' + comment_id,
             }).done(function (response) {
                 printCommentList();
             }).fail(function () {
@@ -85,53 +320,162 @@
 </head>
 
 <div layout:fragment="content">
-    <div class="container">
-        <h1 class="mb-3">게시글</h1>
 
-        <!--글 부분-->
-        <div>
-            <div class="mb-3">
-                <label class="fw-bold" for="id">글 번호</label>
-                <input class="form-control" id="id" th:value="${boardResponseDto.id}" readonly>
+    <div class="article">
+        <div class="body">
+            <div id="header">
+                <div class="bar">
+                    <div class="topbar">
+                        <span id="headline" th:text="${boardResponseDto.title}"></span>
+                    </div>
+                    <div class="bottombar">
+                        <div class="bottomleft">
+                            <span id="name" th:text="${boardResponseDto.author}"></span>
+                            <!--<span id="time">자유</span>-->
+                            <span id="category" th:text="${boardResponseDto.createdDate}"></span>
+                        </div>
+
+                        <div class="bottomright">
+                            <span id="view">조회<span th:text="${boardResponseDto.view}"></span></span>
+                            <span id="commentCount">댓글<span>&nbsp142567</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr id="line1">
+
+            <div class="main">
+                <div id="contents">
+                    <span th:text="${boardResponseDto.content}"></span>
+                </div>
+            </div>
+            <hr id="line2">
+
+            <div class="recommend">
+
+                <div class="up-down">
+                    <div class="up" style="display:flex">
+                        <div class="input-group" style="margin-right:5px">
+                            <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                    style="width:80px;height:50px" class="btn btn-outline-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-up" viewBox="0 0 16 20">
+                                    <path fill-rule="evenodd"
+                                          d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                                </svg>
+                                개추
+                            </button>
+                            <div style="background-color:#0067a3; width:60px; border-bottom-right-radius: 5px;border-top-right-radius: 5px;display:flex;justify-content: center;align-items: center;color:#fff">
+                                12
+                            </div>
+                        </div>
+                        <div class="input-group" style="margin-left:5px">
+                            <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                    style="width:80px;height:50px" class="btn btn-outline-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-up" viewBox="0 0 16 20">
+                                    <path fill-rule="evenodd"
+                                          d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+                                </svg>
+                                개추
+                            </button>
+                            <div style="background-color:#8e8e93; width:60px; border-bottom-right-radius: 5px;border-top-right-radius: 5px;display:flex;justify-content: center;align-items: center;color:#fff">
+                                12
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="report" style="height:60px">
+
+                    <span style="font-size:13px; color: #AAAAAA; vertical-align: middle">이 글을 신고합니다</span>
+
+                </div>
+
             </div>
 
-            <div class="mb-3">
-                <label class="fw-bold" for="title">제목</label>
-                <input type="text" class="form-control" id="title" th:value="${boardResponseDto.title}" readonly>
+            <div class="comment">
+                <div class="accordion" id="accordionExample" style="border:none">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                댓글쓰기
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                             data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="input-group mb-2 mt-2">
+                                    <input id="commentCreate" type="text" class="form-control"
+                                           placeholder="욕설, 비방, 과도한 표현은 제재의 대상이 될 수있습니다."
+                                           aria-label="Recipient's username" aria-describedby="button-addon2">
+                                    <button class="btn btn-outline-secondary" onclick="commentCreate()" type="button" id="button-addon2">글쓰기
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="comment-view">
+                    <ul id="commentUl">
+
+                    </ul>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="fw-bold" for="author">작성자</label>
-                <input type="text" class="form-control" id="author" th:value="${boardResponseDto.author}" readonly>
-            </div>
 
-            <div class="mb-3">
-                <label class="fw-bold" for="content">내용</label>
-                <p class="form-control" id="content" th:text="${boardResponseDto.content}"></p>
-            </div>
-
-            <a th:href="@{/boardlist}" role="button" class="btn btn-secondary">글목록</a>
-            <div th:if="${userResponseDto.id == boardResponseDto.author_id}">
-                <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
-                <form th:action="@{/board/delete/{id}(id=${boardResponseDto.id})}" th:method="delete">
-                    <button class="btn btn-danger" type="submit">삭제</button>
-                </form>
-            </div>
         </div>
 
-        <br>
-        <!--댓글-->
-        <div>
-            <ul id="commentUl" class="list-group">
+        <!--<div class="container">
+            <h1 class="mb-3">게시글</h1>
 
-            </ul>
+            <div>
+                <div class="mb-3">
+                    <label class="fw-bold" for="id">글 번호</label>
+                    <input class="form-control" id="id" th:value="${boardResponseDto.id}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-bold" for="title">제목</label>
+                    <input type="text" class="form-control" id="title" th:value="${boardResponseDto.title}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-bold" for="author">작성자</label>
+                    <input type="text" class="form-control" id="author" th:value="${boardResponseDto.author}" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-bold" for="content">내용</label>
+                    <p class="form-control" id="content" th:text="${boardResponseDto.content}"></p>
+                </div>
+
+                <a th:href="@{/boardlist}" role="button" class="btn btn-secondary">글목록</a>
+                <div th:if="${userResponseDto.id == boardResponseDto.author_id}">
+                    <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
+                    <form th:action="@{/board/delete/{id}(id=${boardResponseDto.id})}" th:method="delete">
+                        <button class="btn btn-danger" type="submit">삭제</button>
+                    </form>
+                </div>
+            </div>
+
             <br>
+            <div>
+                <ul id="commentUl" class="list-group">
 
-            <div th:text="${userResponseDto.username}"></div>
-            <textarea id="commentContent" class="form-control" name="content"></textarea>
-            <button class="btn btn-primary" th:onclick="|javascript:commentCreate('${boardResponseDto.id}')|">댓글 작성</button>
-        </div>
+                </ul>
+                <br>
 
+                <div th:text="${userResponseDto.username}"></div>
+                <textarea id="commentContent" class="form-control" name="content"></textarea>
+                <button class="btn btn-primary" th:onclick="|javascript:commentCreate('${boardResponseDto.id}')|">댓글 작성</button>
+            </div>
+
+        </div>-->
     </div>
 </div>
 </html>

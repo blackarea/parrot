@@ -29,10 +29,10 @@ public class RestApiController {
         return "회원가입완료";
     }
 
-    @GetMapping("/duplicate/{login_id}")
-    public Map<String, String> validateDuplicateId(@PathVariable String login_id) {
+    @GetMapping("/duplicate/{duplicated_id}")
+    public Map<String, String> validateDuplicateId(@PathVariable String duplicated_id) {
         Map<String, String> map = new HashMap<>();
-        if (userService.validateDuplicateUser(login_id)) {
+        if (userService.validateDuplicateUser(duplicated_id)) {
             map.put("duplicate", "yes");
         } else {
             map.put("duplicate", "no");

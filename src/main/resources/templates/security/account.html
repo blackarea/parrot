@@ -48,7 +48,7 @@
                 <td th:text="${boardListResponseDto.id}"></td>
                 <td><a th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
                        th:text="${boardListResponseDto.title}"></a></td>
-                <td th:text="${boardListResponseDto.name}"></td>
+                <td th:text="${boardListResponseDto.getAuthor}"></td>
                 <td th:text="${boardListResponseDto.createdDate}"></td>
             </tr>
         </table>
