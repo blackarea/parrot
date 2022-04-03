@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -98,6 +99,12 @@ public class BoardServiceImpl implements BoardService {
                 .map(BoardListResponseDto::new)
                 .collect(Collectors.toList());
         return new PageImpl<>(results, pageable, total);
+    }
+
+    @Transactional
+    @Override
+    public int updateView(Long board_id) {
+        return boardRepository.updateView(board_id);
     }
 
     private BooleanExpression decideWhere(String type, String searchKeyword){

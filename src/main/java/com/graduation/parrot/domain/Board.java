@@ -22,8 +22,10 @@ public class Board extends BaseTimeEntity{
 
     @Column(length = 1000)
     private String content;
-
     private String author;
+
+    @Column(columnDefinition = "integer default 0")
+    private int view;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", updatable = false)

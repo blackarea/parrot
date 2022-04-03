@@ -14,6 +14,7 @@ public class BoardResponseDto {
     private String title;
     private String content;
     private String author;
+    private int view;
     private String createdDate;
     private String modifiedDate;
     private Long author_id;
@@ -23,6 +24,7 @@ public class BoardResponseDto {
         this.title = board.getTitle();
         this.content = board.getContent();
         this.author = board.getAuthor();
+        this.view = board.getView();
         this.createdDate = board.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.modifiedDate = board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.author_id = author_id;
