@@ -29,6 +29,16 @@
 
         }
 
+        .recommendButton{
+            width:60px;
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            color:#fff
+        }
+
         .report {
             width: 800px;
             height: 60px;
@@ -316,6 +326,28 @@
             });
         };
 
+        function like(){
+            $.ajax({
+                type: 'POST',
+                url: '/like/' + [[${boardResponseDto.id}]]
+            }).done(function (response) {
+                window.location.replace("/board/" + [[${boardResponseDto.id}]]);
+            }).fail(function () {
+                console.log("like fail");
+            });
+        };
+
+        function hate() {
+            $.ajax({
+                type: 'POST',
+                url: '/hate/' + [[${boardResponseDto.id}]]
+            }).done(function (response) {
+                window.location.replace("/board/" + [[${boardResponseDto.id}]]);
+            }).fail(function () {
+                console.log("hate fail");
+            });
+        };
+
     </script>
 </head>
 
@@ -356,31 +388,31 @@
                 <div class="up-down">
                     <div class="up" style="display:flex">
                         <div class="input-group" style="margin-right:5px">
-                            <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                            <button onclick="like()" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
                                     style="width:80px;height:50px" class="btn btn-outline-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-arrow-up" viewBox="0 0 16 20">
                                     <path fill-rule="evenodd"
                                           d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
                                 </svg>
-                                개추
+                                추천
                             </button>
-                            <div style="background-color:#0067a3; width:60px; border-bottom-right-radius: 5px;border-top-right-radius: 5px;display:flex;justify-content: center;align-items: center;color:#fff">
-                                12
+                            <div class="recommendButton" th:text="${boardResponseDto.recommendCount}" style="background-color:#0067a3">
+
                             </div>
                         </div>
                         <div class="input-group" style="margin-left:5px">
-                            <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                            <button onclick="hate()" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
                                     style="width:80px;height:50px" class="btn btn-outline-secondary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-arrow-up" viewBox="0 0 16 20">
                                     <path fill-rule="evenodd"
                                           d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
                                 </svg>
-                                개추
+                                비추
                             </button>
-                            <div style="background-color:#8e8e93; width:60px; border-bottom-right-radius: 5px;border-top-right-radius: 5px;display:flex;justify-content: center;align-items: center;color:#fff">
-                                12
+                            <div class="recommendButton" th:text="${boardResponseDto.recommendCount}" style="background-color:#8e8e93">
+
                             </div>
                         </div>
                     </div>
