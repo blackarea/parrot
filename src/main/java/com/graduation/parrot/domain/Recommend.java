@@ -18,9 +18,11 @@ public class Recommend {
     private int point;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id", updatable = false)
     private Board board;
 
     @Builder

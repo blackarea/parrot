@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<div layout:fragment="content">
+
+    <a th:href="@{/account/activity/{login_id}(login_id=${login_id})}">내 활동</a>
+    <a th:href="@{/account/{login_id}(login_id=${login_id})}">계정 설정</a>
+    <div th:text="${userName}"></div>
+    <div>내 활동</div>
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th>형태</th>
+                <th>게시글 제목</th>
+                <th>게시글 저자</th>
+            </tr>
+
+            <tr th:each="userActivity : ${userActivityListDto}">
+                <td th:text="${userActivity.type}"></td>
+                <td th:text="${userActivity.title}"></td>
+                <td th:text="${userActivity.author}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</html>
