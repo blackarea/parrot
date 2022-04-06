@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <head>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <style>
 
         tr, td {
@@ -415,7 +416,6 @@
                                 비추
                             </button>
                             <div class="recommendButton" th:text="${boardResponseDto.recommendCount}" style="background-color:#8e8e93">
-
                             </div>
                         </div>
                     </div>

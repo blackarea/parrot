@@ -4,11 +4,198 @@
 
 <head>
     <link th:href="@{/css/signin.css}" rel="stylesheet">
+    <style>
+
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+    @font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;}
+
+        .flex-container {
+            width: 100%;
+            height: 100vh;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+
+            font-family:NanumSquare;
+            transform : rotate(0.04deg);
+        }
+
+        .main {
+            width: 1000px;
+            height: 500px;
+            display: flex;
+            border: 1px solid #ced4da;
+            align-items: center;
+            background-color: #FFFFFF
+
+        }
+
+        input {
+            margin-top: 10px;
+            height: 30px;
+            outline: none;
+            font-size: 20px;
+            background-color: #FFFFFF
+        }
+
+        #ok {
+            width: 350px;
+            height: 50px;
+            background-color: #000000;
+            border-radius: 2em;
+            margin-top: 15px;
+            border: none;
+
+        }
+
+        #login {
+            margin: 0px auto;
+            width: 350px;
+        }
+
+        #left {
+            width: 500px;
+            height: 500px;
+        }
+
+        #right {
+            width: 500px;
+            height: 500px;
+            margin: 0;
+            background-color: #444444;
+        }
+
+        #section {
+            margin: 0;
+        }
+
+        #floatingInput {
+            width: 300px;
+            height: 50px;
+            border-radius: 2em;
+        }
+
+        #floatingPassword {
+            width: 300px;
+            height: 50px;
+            border-radius: 2em;
+        }
+
+        #forget {
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        #account {
+            font-size: 13px;
+        }
+
+        #smleft {
+            margin: auto;
+            width: 400px;
+            height: 500px;
+            text-align: center;
+        }
+        a {
+            color:#444444;
+            text-decoration: none;
+        }
+        a:hover {
+            color : #ffb830;
+            text-decoration: none;
+        }
+        #title{
+            margin-top:30px;
+            margin-bottom:20px;
+
+        }
+
+
+    </style>
 </head>
 
 <div layout:fragment="content" class="text-center">
 
-    <main class="form-signin">
+    <div class="flex-container">
+        <div class="main">
+            <div class="row" id="section">
+                <div class="col" id="left">
+                    <div id="smleft" style="text-align:left">
+                        <h2 id="title" style="font-family:'NanumSquareRound';font-weight:bold">회원가입</h2>
+
+
+                        <div style="margin-bottom:10px">
+                        <span style="font-size:14px">아이디</span>
+                            <div style="display:flex">
+                            <input class="form-control me-2"style="border-radius: 0.5em;width:300px; height:45px; margin:0px" type="search" placeholder="">
+                            <!--<button class="btn btn-secondary"style="width:70px;height:40px"><span style="font-size:13px">중복</span></button>-->
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:10px">
+                        <span style="font-size:14px">비밀번호</span>
+                            <form class="d-flex">
+                                <input class="form-control me-2"style="border-radius: 0.5em; height:45px; margin:0px" type="search" placeholder="영문, 숫자를 포함하여 8자 내외">
+
+                            </form>
+                        </div>
+
+                        <div style="margin-bottom:10px">
+                            <span style="font-size:14px">비밀번호 확인</span>
+                            <form class="d-flex">
+                                <input class="form-control me-2"style="border-radius: 0.5em; height:45px; margin:0px" type="search" placeholder="">
+                            </form>
+                        </div>
+
+                        <div style="margin-bottom:10px">
+                            <span style="font-size:14px">유저 이름</span>
+                            <form class="d-flex">
+                                <input class="form-control me-2"style="border-radius: 0.5em;width:300px; height:45px; margin:0px" type="search" placeholder="">
+                                <!--<button class="btn btn-secondary"style="width:70px;height:40px"><span style="font-size:13px">중복</span></button>-->
+                            </form>
+                        </div>
+
+
+
+
+                            <div class="forget" style="text-align:center">
+                                <button class="btn btn-lg rounded-4 btn-primary" id="signup" type="submit"
+                                        style="border-radius: 2em; margin-top: 20px; margin-bottom: 20px;width: 300px; height: 50px">
+                                    회원가입
+                                </button>
+                                <!--<span id="forget">아이디, 혹은 비밀번호를 잊으셨나요?</span>-->
+                            </div>
+
+                            </div>
+
+                    </div>
+                </div>
+
+                <div class="col" id="right">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--<main class="form-signin">
         <form th:action="@{/signup}" method="post">
 
             <div class="py-5 text-center">
@@ -16,28 +203,28 @@
             </div>
 
             <div class="row g-3 mb-3">
-                <!--ID-->
+                &lt;!&ndash;ID&ndash;&gt;
                 <div class="col-sm-12">
                     <label for="ID" class="form-label">ID</label>
                     <input type="text" class="form-control" th:value="${userSaveDto?.login_id}" id="ID" name="login_id" required>
                     <span class="text-danger" th:text="${valid_login_id}"></span>
                 </div>
 
-                <!--password-->
+                &lt;!&ndash;password&ndash;&gt;
                 <div class="col-sm-12">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" th:value="${userSaveDto?.password}" id="password" name="password" required>
                     <span class="text-danger" th:text="${valid_password}"></span>
                 </div>
 
-                <!--Username-->
+                &lt;!&ndash;Username&ndash;&gt;
                 <div class="col-12">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control" th:value="${userSaveDto?.username}" id="username" name="username" placeholder="Username" required>
                     <span class="text-danger" th:text="${valid_username}"></span>
                 </div>
 
-                <!--email-->
+                &lt;!&ndash;email&ndash;&gt;
                 <div class="col-12">
                     <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
@@ -47,6 +234,6 @@
             <button class="w-100 btn btn-primary btn-lg" type="submit">회원가입 완료</button>
 
         </form>
-    </main>
+    </main>-->
 </div>
 </html>
