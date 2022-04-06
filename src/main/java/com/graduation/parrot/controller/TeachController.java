@@ -82,10 +82,10 @@ public class TeachController {
     public Map<String, String> teachFree(@RequestBody Map<String, String> teachFreeParameter) throws InterruptedException {
 
         String parrotQuestionTeach = teachFreeParameter.get("question");
-        String answerTeach1 = teachFreeParameter.get("answer1");
-        String parrotAnswerTeach1 = teachFreeParameter.get("parrotAnswer1");
-        String answerTeach2 = teachFreeParameter.get("answer2");
-        String parrotAnswerTeach2 = teachFreeParameter.get("parrotAnswer2");
+        String answerTeach1 = teachFreeParameter.get("condition1");
+        String parrotAnswerTeach1 = teachFreeParameter.get("answer1");
+        String answerTeach2 = teachFreeParameter.get("condition2");
+        String parrotAnswerTeach2 = teachFreeParameter.get("answer2");
 
         log.info(parrotQuestionTeach);
         log.info(answerTeach1);
