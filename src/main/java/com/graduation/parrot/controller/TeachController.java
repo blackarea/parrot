@@ -23,17 +23,15 @@ public class TeachController {
     public String teach()  {
 
         return "teach/teach";
-
     }
 
     @PostMapping("/teach")
     @ResponseBody
     public Map<String, String> teach(@RequestBody Map<String, String> teachParameter) throws InterruptedException {
+
         String questionTeach = teachParameter.get("question");
         String answerTeach = teachParameter.get("answer");
 
-        log.info(questionTeach);
-        log.info(answerTeach);
 
         WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teach"), new Draft_6455());
         webSocketUtil.connectBlocking();
@@ -50,31 +48,25 @@ public class TeachController {
 
     @GetMapping("/teach/polar")
     public String teachPolar() {
-
         return "teach/teachPolar";
     }
 
     @PostMapping("/teach/polar")
-    @ResponseBody
     public Map<String, String> teachPolar(@RequestBody Map<String, String> teachPolarParameter) throws InterruptedException {
 
-        String questionTeachPolar = teachPolarParameter.get("question");
-        String postiveTeachPolar = teachPolarParameter.get("postive");
-        String negativeTeachPolar = teachPolarParameter.get("negative");
-
-        log.info(questionTeachPolar);
-        log.info(postiveTeachPolar);
-        log.info(negativeTeachPolar);
+        String parrotQuestionTeach = teachPolarParameter.get("question");
+        String postiveAnswerTeach = teachPolarParameter.get("postive");
+        String negativeAnswerTeach = teachPolarParameter.get("negative");
 
         WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teachPolar"), new Draft_6455());
         webSocketUtil.connectBlocking();
-        webSocketUtil.send(questionTeachPolar + "/" + postiveTeachPolar + "/" + negativeTeachPolar);
+        webSocketUtil.send(parrotQuestionTeach + "," + postiveAnswerTeach + "," + negativeAnswerTeach);
         webSocketUtil.run();
         String pythonMessage = webSocketUtil.getPythonMessage();
         webSocketUtil.close();
 
         Map<String, String> responseTeachPolar = new HashMap<>();
-        responseTeachPolar.put("teach", pythonMessage);
+        responseTeachPolar.put("teachPolar", pythonMessage);
 
         return responseTeachPolar;
     }
@@ -85,6 +77,31 @@ public class TeachController {
         return "teach/teachFree";
     }
 
+    @PostMapping("/teach/free")
+    @ResponseBody
+    public Map<String, String> teachFree(@RequestBody Map<String, String> teachFreeParameter) throws InterruptedException {
+
+        String parrotQuestionTeach = teachFreeParameter.get("question");
+        String answerTeach1 = teachFreeParameter.get("answer1");
+        String parrotAnswerTeach1 = teachFreeParameter.get("parrotAnswer1");
+        String answerTeach2 = teachFreeParameter.get("answer2");
+        String parrotAnswerTeach2 = teachFreeParameter.get("parrotAnswer2");
+
+        log.info(parrotQuestionTeach);
+        log.info(answerTeach1);
+
+        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teachFree"), new Draft_6455());
+        webSocketUtil.connectBlocking();
+        webSocketUtil.send(parrotQuestionTeach + "," + answerTeach1 + "," + parrotAnswerTeach1 + "," + answerTeach2 + "," + parrotAnswerTeach2);
+        webSocketUtil.run();
+        String pythonMessage = webSocketUtil.getPythonMessage();
+        webSocketUtil.close();
+
+        Map<String, String> responseTeach = new HashMap<>();
+        responseTeach.put("teach", pythonMessage);
+
+        return responseTeach;
+    }
 
     @GetMapping("/mission")
     public String mission(){

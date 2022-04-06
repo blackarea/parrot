@@ -4,41 +4,77 @@
 
 <head>
     <style>
-        #chat input, #chat span{
+        #teachFree input, #teachFree span{
             display: block;
         }
     </style>
 
     <script>
-        function chat() {
-            let inputValue = document.getElementById("inputChat1").value;
+        function teachFree() {
+            let inputValue1 = document.getElementById("inputParrotQuestion").value;
+            let inputValue2 = document.getElementById("inputAnswer1").value;
+            let inputValue3 = document.getElementById("inputParrotAnswer1").value;
+            let inputValue4 = document.getElementById("inputAnswer2").value;
+            let inputValue5 = document.getElementById("inputParrotAnswer2").value;
             let data = {
-                chat : inputValue
+                question : inputValue1,
+                answer1 : inputValue2,
+                parrotAnswer1 : inputValue3,
+                answer2 : inputValue4,
+                parrotAnswer2 : inputValue5
             }
-            let chatDiv = document.getElementById("chat");
-            let receiveChat = document.createElement("span");
-            let pastSpan = document.createElement("span");
-            $('input').remove();
-            pastSpan.innerText = inputValue;
 
-            let newInput = document.createElement("input");
-            newInput.setAttribute("id", "inputChat1");
+            let teachDiv = document.getElementById("teachFree");
+            let receiveteach = document.createElement("span");
+            let parrotQuestion = document.createElement("span");
+            let answer1 = document.createElement("span");
+            let parrotAnswer1 = document.createElement("span");
+            let answer2 = document.createElement("span");
+            let parrotAnswer2 = document.createElement("span");
+
+            $('input').remove();
+            parrotQuestion.innerText = inputValue1;
+            answer1.innerText = inputValue2;
+            parrotAnswer1.innerText = inputValue3;
+            answer2.innerText = inputValue3;
+            parrotAnswer2.innerText = inputValue3;
+
+            let newInput1 = document.createElement("input");
+            let newInput2 = document.createElement("input");
+            let newInput3 = document.createElement("input");
+            let newInput4 = document.createElement("input");
+            let newInput5 = document.createElement("input");
+
+            newInput1.setAttribute("id", "inputParrotQuestion");
+            newInput2.setAttribute("id", "inputAnswer1");
+            newInput3.setAttribute("id", "inputParrotAnswer1");
+            newInput4.setAttribute("id", "inputAnswer2");
+            newInput5.setAttribute("id", "inputParrotAnswer2");
 
             $.ajax({
                 type:'POST',
-                url:'/app/chat',
+                url:'/teach/polar',
                 data:JSON.stringify(data),
                 contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
             }).done(function (response) {
-                receiveChat.innerText = response.chat;
+                receiveteach.innerText = response.teach;
             }).fail(function () {
                 console.log("fail");
-                receiveChat.innerText = "교육실패";
+                receiveteach.innerText = "교육실패";
             });
 
-            chatDiv.appendChild(pastSpan);
-            chatDiv.appendChild(receiveChat);
-            chatDiv.appendChild(newInput);
+            teachDiv.appendChild(parrotQuestion);
+            teachDiv.appendChild(answer1);
+            teachDiv.appendChild(parrotAnswer1);
+            teachDiv.appendChild(answer2);
+            teachDiv.appendChild(parrotAnswer2);
+            teachDiv.appendChild(receiveteach);
+            teachDiv.appendChild(newInput1);
+            teachDiv.appendChild(newInput2);
+            teachDiv.appendChild(newInput3);
+            teachDiv.appendChild(newInput4);
+            teachDiv.appendChild(newInput5);
+
         }
 
     </script>
@@ -46,10 +82,14 @@
 
 <div layout:fragment="content">
 
-    <div id="chat">
-        <button class="btn btn-info" onclick="chat()">전송</button>
+    <div id="teachFree">
+        <button class="btn btn-info" onclick="teachFree()">전송</button>
 
-        <input id="inputChat1">
+        <input id="inputParrotQuestion">
+        <input id="inputAnswer1">
+        <input id="inputParrotAnswer1">
+        <input id="inputAnswer2">
+        <input id="inputParrotAnswer2">
     </div>
 
 </div>

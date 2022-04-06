@@ -4,24 +4,24 @@
 
 <head>
     <style>
-        #teachPolar input, #teachPolar span{
+        #teach input, #teach span{
             display: block;
         }
     </style>
 
     <script>
-        function teachPolar() {
-            let inputValue1 = document.getElementById("inputQuestion").value;
-            let inputValue2 = document.getElementById("inputPostiveAnswer").value;
-            let inputValue3 = document.getElementById("inputNegativeAnswer").value;
+        function teach() {
+            let inputValue1 = document.getElementById("inputPolarQuestion").value;
+            let inputValue2 = document.getElementById("inputPolarPostive").value;
+            let inputValue3 = document.getElementById("inputPolarNegative").value;
             let data = {
                 question : inputValue1,
                 postive : inputValue2,
                 negative : inputValue3
             }
 
-            let teachPolarDiv = document.getElementById("teachPolar");
-            let receiveteachPolar = document.createElement("span");
+            let teachDiv = document.getElementById("teach");
+            let receiveteach = document.createElement("span");
             let pastSpan1 = document.createElement("span");
             let pastSpan2 = document.createElement("span");
             let pastSpan3 = document.createElement("span");
@@ -33,29 +33,29 @@
             let newInput1 = document.createElement("input");
             let newInput2 = document.createElement("input");
             let newInput3 = document.createElement("input");
-            newInput1.setAttribute("id", "inputQuestion");
-            newInput2.setAttribute("id", "inputPostiveAnswer");
-            newInput3.setAttribute("id", "inputNegativeAnswer");
+            newInput1.setAttribute("id", "inputPolarQuestion");
+            newInput2.setAttribute("id", "inputPolarPostive");
+            newInput3.setAttribute("id", "inputPolarNegative");
 
             $.ajax({
                 type:'POST',
-                url:'teach/polar',
+                url:'/teach/polar',
                 data:JSON.stringify(data),
                 contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
             }).done(function (response) {
-                receiveteachPolar.innerText = response.teachPolar;
+                receiveteach.innerText = response.teach;
             }).fail(function () {
                 console.log("fail");
-                receiveteachPolar.innerText = "교육실패";
+                receiveteach.innerText = "교육실패";
             });
 
-            teachPolarDiv.appendChild(pastSpan1);
-            teachPolarDiv.appendChild(pastSpan2);
-            teachPolarDiv.appendChild(pastSpan3);
-            teachPolarDiv.appendChild(receiveteachPolar);
-            teachPolarDiv.appendChild(newInput1);
-            teachPolarDiv.appendChild(newInput2);
-            teachPolarDiv.appendChild(newInput3);
+            teachDiv.appendChild(pastSpan1);
+            teachDiv.appendChild(pastSpan2);
+            teachDiv.appendChild(pastSpan3);
+            teachDiv.appendChild(receiveteach);
+            teachDiv.appendChild(newInput1);
+            teachDiv.appendChild(newInput2);
+            teachDiv.appendChild(newInput3);
         }
 
     </script>
@@ -63,12 +63,12 @@
 
 <div layout:fragment="content">
 
-    <div id="teachPolar">
-        <button class="btn btn-info" onclick="teachPolar()">전송</button>
+    <div id="teach">
+        <button class="btn btn-info" onclick="teach()">전송</button>
 
-        <input id="inputQuestion">
-        <input id="inputPostiveAnswer">
-        <input id="inputNegativeAnswer">
+        <input id="inputPolarQuestion">
+        <input id="inputPolarPostive">
+        <input id="inputPolarNegative">
     </div>
 
 </div>

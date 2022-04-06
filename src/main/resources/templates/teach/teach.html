@@ -33,7 +33,7 @@
 
             $.ajax({
                 type:'POST',
-                url:'teach',
+                url:'/teach',
                 data:JSON.stringify(data),
                 contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
             }).done(function (response) {
