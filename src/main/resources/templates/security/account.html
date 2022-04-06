@@ -26,33 +26,15 @@
 
 <div layout:fragment="content">
 
+    <a th:href="@{/account/activity/{login_id}(login_id=${login_id})}">내 활동</a>
+    <a th:href="@{/account/{login_id}(login_id=${login_id})}">계정 설정</a>
+
     <div>닉네임</div>
     <input id="username" name="username" th:value="${userResponseDto.username}">
     <div>이메일</div>
     <input id="email" name="email" th:value="${userResponseDto.email}">
     <button onclick="updateAll()">수정</button>
 
-    <div>내 게시글</div>
-    <div>
-        <table class="table table-bordered table-hover" style="width: 70%">
-            <thead class="table-light">
-            <tr>
-                <td>게시글번호</td>
-                <td>제목</td>
-                <td>작성자</td>
-                <td>작성일</td>
-            </tr>
-            </thead>
-
-            <tr th:each="boardListResponseDto : ${userBoardList}">
-                <td th:text="${boardListResponseDto.id}"></td>
-                <td><a th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
-                       th:text="${boardListResponseDto.title}"></a></td>
-                <td th:text="${boardListResponseDto.getAuthor}"></td>
-                <td th:text="${boardListResponseDto.createdDate}"></td>
-            </tr>
-        </table>
-    </div>
 </div>
 
 </html>

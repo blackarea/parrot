@@ -67,18 +67,18 @@ public class SecurityController {
         return "redirect:/";
     }
 
-    private void expireCookie(HttpServletResponse response) {
-        Cookie cookie = new Cookie("jwtToken", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+    @GetMapping("/account/activity/{login_id}")
+    public String activity(@PathVariable String login_id, Model model, @PageableDefault(size = 10) Pageable pageable,
+                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        model.addAttribute("userName", principalDetails.getUser().getName());
+        model.addAttribute("userActivityListDto", userService.getUserActivityPaging(login_id, pageable));
+        return "security/activity";
     }
 
     @GetMapping("/account/{login_id}")
-    public String account(@PathVariable String login_id, Model model, @PageableDefault(size = 10) Pageable pageable,
+    public String account(@PathVariable String login_id, Model model,
                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
         UserResponseDto userResponseDto = new UserResponseDto(principalDetails.getUser());
-        Page<BoardListResponseDto> userBoardList = userService.getUserBoardList(login_id, pageable);
-        model.addAttribute("userBoardList", userBoardList);
         model.addAttribute("userResponseDto", userResponseDto);
         return "security/account";
     }
@@ -93,6 +93,12 @@ public class SecurityController {
     public void updateAccount(@PathVariable String login_id, @RequestBody UserUpdateDto userUpdateDto, HttpServletResponse response) {
         userService.updateName(login_id, userUpdateDto.getUsername());
         userService.updateEmail(login_id, userUpdateDto.getEmail());
+    }
+
+    private void expireCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwtToken", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.dto.BoardListResponseDto;
-import com.graduation.parrot.domain.dto.CommentResponseDto;
+import com.graduation.parrot.domain.dto.QUserActivityDto;
+import com.graduation.parrot.domain.dto.UserActivityListDto;
 import com.graduation.parrot.domain.dto.UserSaveDto;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,9 +18,11 @@ import org.springframework.validation.FieldError;
 import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.graduation.parrot.domain.QBoard.board;
 import static com.graduation.parrot.domain.QComment.comment;
+import static com.graduation.parrot.domain.QRecommend.recommend;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -97,33 +99,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<BoardListResponseDto> getUserBoardList(String login_id, Pageable pageable) {
-        User user = userRepository.findByLogin_id(login_id)
-                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
+    public Page<UserActivityListDto> getUserActivityPaging(String login_id, Pageable pageable) {
 
-        List<BoardListResponseDto> userBoardList = queryFactory
-                .selectFrom(board)
-                .where(board.author.eq(user.getName()))
-                .orderBy(board.id.desc())
-                .fetch()
-                .stream().map(BoardListResponseDto::new).collect(Collectors.toList());
+        List<UserActivityListDto> boardList = queryFactory
+                .select(new QUserActivityDto(board.title, board.author))
+                .from(board)
+                .where(board.user.login_id.eq(login_id))
+                .fetch().stream().map(userActivityDto -> new UserActivityListDto("board", userActivityDto))
+                .collect(Collectors.toList());
 
-        return new PageImpl<>(userBoardList, pageable, userBoardList.size());
-    }
+        List<UserActivityListDto> commentList = queryFactory
+                .select(new QUserActivityDto(board.title, board.author))
+                .from(board)
+                .join(board.comments, comment)
+                .where(comment.user.login_id.eq(login_id))
+                .fetch().stream().map(userActivityDto -> new UserActivityListDto("comment", userActivityDto))
+                .collect(Collectors.toList());
 
-    @Override
-    public Page<CommentResponseDto> getUserCommentList(String login_id, Pageable pageable) {
-        User user = userRepository.findByLogin_id(login_id)
-                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
+        List<UserActivityListDto> recommendList = queryFactory
+                .select(new QUserActivityDto(board.title, board.author))
+                .from(board)
+                .join(board.recommends, recommend)
+                .where(recommend.user.login_id.eq(login_id))
+                .fetch().stream().map(userActivityDto -> new UserActivityListDto("recommend", userActivityDto))
+                .collect(Collectors.toList());
 
-        List<CommentResponseDto> userCommentList = queryFactory
-                .selectFrom(comment)
-                .where(comment.author.eq(user.getName()))
-                .orderBy(comment.id.desc())
-                .fetch()
-                .stream().map(CommentResponseDto::new).collect(Collectors.toList());
+        List<UserActivityListDto> allList = Stream.concat(boardList.stream(), commentList.stream()).collect(Collectors.toList());
+        allList.addAll(recommendList);
 
-        return new PageImpl<>(userCommentList, pageable, userCommentList.size());
+        return new PageImpl<>(allList, pageable, allList.size());
     }
 
     @Override

@@ -1,10 +1,17 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.Board;
+import com.graduation.parrot.domain.Comment;
+import com.graduation.parrot.domain.Recommend;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardListResponseDto;
+import com.graduation.parrot.domain.dto.QUserActivityDto;
+import com.graduation.parrot.domain.dto.UserActivityListDto;
 import com.graduation.parrot.repository.BoardRepository;
+import com.graduation.parrot.repository.CommentRepository;
+import com.graduation.parrot.repository.RecommendRepository;
 import com.graduation.parrot.repository.UserRepository;
+import com.querydsl.core.types.Expression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,6 +40,10 @@ class UserServiceTest {
     UserRepository userRepository;
     @Autowired
     BoardRepository boardRepository;
+    @Autowired
+    CommentRepository commentRepository;
+    @Autowired
+    RecommendRepository recommendRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @PersistenceContext
@@ -65,19 +76,21 @@ class UserServiceTest {
     }
 
     @Test
-    void userBoardListTest(){
-        User user = userRepository.save(User.builder().login_id("test1").password("test2").name("test3").build());
-        IntStream.rangeClosed(1, 5).forEach(i -> {
-            Board board = new Board("title"+i, "content" + i, user);
+    void getUserActivityPagingTest(){
+        User user = userRepository.save(User.builder().login_id("login").password("pwd").name("name").build());
+        User user2 = userRepository.save(User.builder().login_id("login2").password("pwd2").name("name2").build());
+        IntStream.rangeClosed(1, 2).forEach(i -> {
+            Board board = new Board("title"+i, "content" + i, user2);
             boardRepository.save(board);
+            Comment comment = new Comment("comment content" + i, user, board);
+            commentRepository.save(comment);
+            Recommend recommend = new Recommend(user, board, 1);
+            recommendRepository.save(recommend);
         });
-        Pageable pageable = PageRequest.of(0, 2, Sort.Direction.DESC, "board_id");
-        Page<BoardListResponseDto> userBoardList = userService.getUserBoardList(user.getLogin_id(), pageable);
-        assertThat(userBoardList.getTotalPages()).isEqualTo(3);
-        assertThat(userBoardList.getTotalElements()).isEqualTo(5);
-        BoardListResponseDto boardListResponseDto = userBoardList.getContent().get(0);
-        assertThat(boardListResponseDto.getTitle()).isEqualTo("title5");
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "board_id");
+        Page<UserActivityListDto> tests = userService.getUserActivityPaging("login", pageable);
+        assertThat(tests.getNumberOfElements()).isEqualTo(4);
+
     }
-
-
 }
