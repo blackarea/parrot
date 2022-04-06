@@ -1,24 +1,23 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.Board;
+import com.graduation.parrot.domain.Recommend;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
-import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.repository.BoardRepository;
+import com.graduation.parrot.repository.RecommendRepository;
 import com.graduation.parrot.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class BoardServiceTest {
+class RecommendServiceTest {
 
     @Autowired
     UserRepository userRepository;
@@ -26,15 +25,21 @@ class BoardServiceTest {
     BoardRepository boardRepository;
     @Autowired
     BoardService boardService;
+    @Autowired
+    RecommendRepository recommendRepository;
+    @Autowired
+    RecommendService recommendService;
 
     @BeforeEach
     public void before(){
         userRepository.deleteAll();
         boardRepository.deleteAll();
+        recommendRepository.deleteAll();
     }
-    
+
     @Test
-    public void boardUpdateTest(){
+    @DisplayName("추천")
+    void recommendTest(){
         User user = User.builder()
                 .login_id("login")
                 .password("pwd")
@@ -46,18 +51,20 @@ class BoardServiceTest {
                 .title("title")
                 .content("content")
                 .build();
-
         Long board_id = boardService.create(build, savedUser);
 
-        Long update_id = boardService.update(board_id, new BoardDto("title2", "content2"));
-        Board board = boardRepository.findById(update_id).get();
+        Board board = boardRepository.findById(board_id).get();
+        //추천
 
-        assertThat(board.getTitle()).isEqualTo("title2");
-        assertThat(board.getContent()).isEqualTo("content2");
+        boolean like = recommendService.like(user, board_id);
+        assertThat(like).isTrue();
+        Recommend foundRecommend = recommendRepository.findByUserAndBoard(user, board).get();
+        assertThat(foundRecommend.getPoint()).isEqualTo(1);
     }
 
     @Test
-    public void boardDeleteTest(){
+    @DisplayName("추천 취소")
+    void recommendCancelTest(){
         User user = User.builder()
                 .login_id("login")
                 .password("pwd")
@@ -69,15 +76,22 @@ class BoardServiceTest {
                 .title("title")
                 .content("content")
                 .build();
-
         Long board_id = boardService.create(build, savedUser);
+        Board board = boardRepository.findById(board_id).get();
 
-        boardService.delete(board_id);
-        //assertThat(boardRepository.count()).isEqualTo(0L);
+        //좋아요
+        recommendService.like(user, board_id);
+        //좋아요 취소
+        boolean like = recommendService.like(user, board_id);
+
+        assertThat(like).isFalse();
+        assertThat(board.getRecommendCount()).isEqualTo(0);
     }
 
+    @Transactional
     @Test
-    public void boardListTest(){
+    @DisplayName("비추천에서 추천으로")
+    void hateToLike(){
         User user = User.builder()
                 .login_id("login")
                 .password("pwd")
@@ -89,18 +103,14 @@ class BoardServiceTest {
                 .title("title")
                 .content("content")
                 .build();
+        Long board_id = boardService.create(build, savedUser);
+        Board board = boardRepository.findById(board_id).get();
 
-        boardService.create(build, savedUser);
+        recommendService.hate(user, board_id);
+        assertThat(board.getRecommendCount()).isEqualTo(-1);
 
-        BoardDto build2 = BoardDto.builder()
-                .title("title2")
-                .content("content2")
-                .build();
-        boardService.create(build2, savedUser);
-
-        Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "board_id");
-        Page<BoardListResponseDto> boardList = boardService.getBoardList(pageable);
-
-        assertThat(boardList.getTotalElements()).isEqualTo(2);
+        boolean like = recommendService.like(user, board_id);
+        assertThat(like).isTrue();
+        assertThat(board.getRecommendCount()).isEqualTo(1);
     }
 }

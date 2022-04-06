@@ -22,8 +22,12 @@ public class Board extends BaseTimeEntity{
 
     @Column(length = 1000)
     private String content;
-
     private String author;
+
+    @Column(columnDefinition = "integer default 0")
+    private int view;
+    @Column(name = "recommend_count", columnDefinition = "integer default 0")
+    private int recommendCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", updatable = false)
@@ -31,6 +35,9 @@ public class Board extends BaseTimeEntity{
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Recommend> recommends = new ArrayList<>();
 
     @Builder
     public Board(String title, String content, User user) {
@@ -48,5 +55,9 @@ public class Board extends BaseTimeEntity{
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void updateRecommendCount(int point){
+        this.recommendCount = recommendCount + point;
     }
 }
