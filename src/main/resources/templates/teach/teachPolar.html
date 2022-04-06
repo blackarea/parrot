@@ -11,12 +11,12 @@
 
     <script>
         function teach() {
-            let inputValue1 = document.getElementById("inputPolarQuestion").value;
-            let inputValue2 = document.getElementById("inputPolarPostive").value;
-            let inputValue3 = document.getElementById("inputPolarNegative").value;
+            let inputValue1 = document.getElementById("inputQuestion").value;
+            let inputValue2 = document.getElementById("inputPositive").value;
+            let inputValue3 = document.getElementById("inputNegative").value;
             let data = {
                 question : inputValue1,
-                postive : inputValue2,
+                positive : inputValue2,
                 negative : inputValue3
             }
 
@@ -34,7 +34,7 @@
             let newInput2 = document.createElement("input");
             let newInput3 = document.createElement("input");
             newInput1.setAttribute("id", "inputPolarQuestion");
-            newInput2.setAttribute("id", "inputPolarPostive");
+            newInput2.setAttribute("id", "inputPolarPositive");
             newInput3.setAttribute("id", "inputPolarNegative");
 
             $.ajax({
@@ -66,9 +66,9 @@
     <div id="teach">
         <button class="btn btn-info" onclick="teach()">전송</button>
 
-        <input id="inputPolarQuestion">
-        <input id="inputPolarPostive">
-        <input id="inputPolarNegative">
+        <input id="inputQuestion">
+        <input id="inputPositive">
+        <input id="inputNegative">
     </div>
 
 </div>

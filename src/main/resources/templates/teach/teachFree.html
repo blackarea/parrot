@@ -12,10 +12,10 @@
     <script>
         function teachFree() {
             let inputValue1 = document.getElementById("inputParrotQuestion").value;
-            let inputValue2 = document.getElementById("inputAnswer1").value;
-            let inputValue3 = document.getElementById("inputParrotAnswer1").value;
-            let inputValue4 = document.getElementById("inputAnswer2").value;
-            let inputValue5 = document.getElementById("inputParrotAnswer2").value;
+            let inputValue2 = document.getElementById("inputCondition1").value;
+            let inputValue3 = document.getElementById("inputAnswer1").value;
+            let inputValue4 = document.getElementById("inputCondition2").value;
+            let inputValue5 = document.getElementById("inputAnswer2").value;
             let data = {
                 question : inputValue1,
                 condition1 : inputValue2,
@@ -26,18 +26,18 @@
 
             let teachDiv = document.getElementById("teachFree");
             let receiveteach = document.createElement("span");
-            let parrotQuestion = document.createElement("span");
+            let question = document.createElement("span");
+            let condition1 = document.createElement("span");
             let answer1 = document.createElement("span");
-            let parrotAnswer1 = document.createElement("span");
+            let condition2 = document.createElement("span");
             let answer2 = document.createElement("span");
-            let parrotAnswer2 = document.createElement("span");
 
             $('input').remove();
-            parrotQuestion.innerText = inputValue1;
-            answer1.innerText = inputValue2;
-            parrotAnswer1.innerText = inputValue3;
+            question.innerText = inputValue1;
+            condition1.innerText = inputValue2;
+            answer1.innerText = inputValue3;
+            condition2.innerText = inputValue3;
             answer2.innerText = inputValue3;
-            parrotAnswer2.innerText = inputValue3;
 
             let newInput1 = document.createElement("input");
             let newInput2 = document.createElement("input");
@@ -46,14 +46,14 @@
             let newInput5 = document.createElement("input");
 
             newInput1.setAttribute("id", "inputParrotQuestion");
-            newInput2.setAttribute("id", "inputAnswer1");
-            newInput3.setAttribute("id", "inputParrotAnswer1");
-            newInput4.setAttribute("id", "inputAnswer2");
-            newInput5.setAttribute("id", "inputParrotAnswer2");
+            newInput2.setAttribute("id", "inputCondition1");
+            newInput3.setAttribute("id", "inputAnswer1");
+            newInput4.setAttribute("id", "inputCondition2");
+            newInput5.setAttribute("id", "inputAnswer2");
 
             $.ajax({
                 type:'POST',
-                url:'/teach/polar',
+                url:'/teach/free',
                 data:JSON.stringify(data),
                 contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
             }).done(function (response) {
@@ -63,11 +63,11 @@
                 receiveteach.innerText = "교육실패";
             });
 
-            teachDiv.appendChild(parrotQuestion);
+            teachDiv.appendChild(question);
+            teachDiv.appendChild(condition1);
             teachDiv.appendChild(answer1);
-            teachDiv.appendChild(parrotAnswer1);
+            teachDiv.appendChild(condition2);
             teachDiv.appendChild(answer2);
-            teachDiv.appendChild(parrotAnswer2);
             teachDiv.appendChild(receiveteach);
             teachDiv.appendChild(newInput1);
             teachDiv.appendChild(newInput2);
@@ -86,10 +86,10 @@
         <button class="btn btn-info" onclick="teachFree()">전송</button>
 
         <input id="inputParrotQuestion">
+        <input id="inputCondition1">
         <input id="inputAnswer1">
-        <input id="inputParrotAnswer1">
+        <input id="inputCondition2">
         <input id="inputAnswer2">
-        <input id="inputParrotAnswer2">
     </div>
 
 </div>

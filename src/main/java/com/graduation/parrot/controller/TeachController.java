@@ -10,10 +10,7 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-/* ws://localhost:8888/ws/chat
-ws://localhost:8888/ws/teach
-ws://localhost:8888/ws/teachPolar
-ws://localhost:8888/ws/teachFree*/
+/* ws://localhost:8888/ws/teachFree*/
 
 @Controller
 @Slf4j
@@ -55,20 +52,20 @@ public class TeachController {
     public Map<String, String> teachPolar(@RequestBody Map<String, String> teachPolarParameter) throws InterruptedException {
 
         String parrotQuestionTeach = teachPolarParameter.get("question");
-        String postiveAnswerTeach = teachPolarParameter.get("postive");
+        String positiveAnswerTeach = teachPolarParameter.get("positive");
         String negativeAnswerTeach = teachPolarParameter.get("negative");
 
-        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teachPolar"), new Draft_6455());
+        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teachpolar"), new Draft_6455());
         webSocketUtil.connectBlocking();
-        webSocketUtil.send(parrotQuestionTeach + "," + postiveAnswerTeach + "," + negativeAnswerTeach);
+        webSocketUtil.send(parrotQuestionTeach + "," + positiveAnswerTeach + "," + negativeAnswerTeach);
         webSocketUtil.run();
         String pythonMessage = webSocketUtil.getPythonMessage();
         webSocketUtil.close();
 
-        Map<String, String> responseTeachPolar = new HashMap<>();
-        responseTeachPolar.put("teachPolar", pythonMessage);
+        Map<String, String> responseTeach = new HashMap<>();
+        responseTeach.put("teachPolar", pythonMessage);
 
-        return responseTeachPolar;
+        return responseTeach;
     }
 
     @GetMapping("/teach/free")
@@ -90,7 +87,7 @@ public class TeachController {
         log.info(parrotQuestionTeach);
         log.info(answerTeach1);
 
-        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teachFree"), new Draft_6455());
+        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teachfree"), new Draft_6455());
         webSocketUtil.connectBlocking();
         webSocketUtil.send(parrotQuestionTeach + "," + answerTeach1 + "," + parrotAnswerTeach1 + "," + answerTeach2 + "," + parrotAnswerTeach2);
         webSocketUtil.run();
