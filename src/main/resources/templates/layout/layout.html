@@ -11,16 +11,23 @@
             integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
     <script th:src="@{/js/bootstrap.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style>
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
         hr {
             color: white;
             height: 10px;
             width: 200px;
             border: 0;
             margin-top: -5px;
+        }
+        tr,td{
+            margin: 0px;
+            padding: 0px;
         }
 
         .header {
@@ -31,7 +38,9 @@
             overflow: auto;
             padding: 0;
             margin: 0;
-            background: #0a0024;
+            transform : rotate(0.04deg);
+            background:#444444;
+            font-family:NanumSquare;
         }
 
         .title {
@@ -42,13 +51,12 @@
 
         .list {
             display: flex;
-            margin: auto;
-            width: 230px;
             height: 400px;
         }
 
         .header a {
             color: white;
+            display: flex;
             text-decoration: none !important
         }
         .line{
@@ -56,67 +64,83 @@
         #parrotgg{
             font-size: 22px;
         }
+        #sidebar:hover tbody tr:hover{
+            background: #FFB830;
+            border: 0px;
+            margin:0px;
+            padding:0px;
+        }
+
+        .chat{
+            display: flex;
+
+            align-items: center;
+        }
+        ul,li{
+            margin:0px;
+            padding:0px;
+        }
     </style>
 </head>
 
 <body>
 
-<div class="header">
-    <div class="list">
-        <ul class="nav flex-column mb-auto">
-            <div class="title">
-                <a id="parrotgg" th:href="@{/}">parrot.gg</a>
-            </div>
-            <li class="border-top my-3"></li>
-            <ul class="list-unstyled ps-0">
-                <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed text-light" onclick="location.href='/chat'"
-                            data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                        <a class="link-secondary rounded">대화하기</a>
-                    </button>
-                </li>
 
-                <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded text-light"
-                            data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
-                        <a class="link-secondary rounded">가르치기</a>
+
+<div class="header">
+    <a id="parrotgg"style="font-weight:bold; margin: 20px" class="text-color light" th:href="@{/}">parrot.gg</a>
+    <div class="list" style="width:270px">
+        <ul class="nav">
+            <ul class="list-unstyled">
+                <table id="sidebar" class="table table-hover" style="margin:0px">
+                <tr>
+                    <td style="border:none;width:270px">
+                        <li>
+                            <div class="chat" style="height: 50px; border:none" >
+                            <button style="background:transparent;border:none"><a style="color:#fff; font-size:17px; margin-left:20px" onclick="location.href='/chat'">대화하기</a></button>
+                            </div>
+                        </li>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="border:none">
+                        <li>
+                    <div class="chat" style="height: 50px; border:none" >
+                    <button type="button"  style="background:transparent;border:none" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
+                        <a style="color:#fff; font-weight:bold; font-size:17px; margin-left:20px">가르치기</a>
                     </button>
+                    </div>
                     <div class="collapse show" id="dashboard-collapse" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small mx-3">
-                            <li class="my-3"><a th:href="@{/teach}" class="link-secondary rounded">● 기본 가르치기</a></li>
-                            <li class="my-3"><a th:href="@{/teach/polar}" class="link-secondary rounded">● 긍정부정 가르치기</a></li>
-                            <li class="my-3"><a th:href="@{/teach/free}" class="link-secondary rounded">● 자유질문 가르치기</a></li>
-                            <li class="my-3"><a th:href="@{/mission}" class="link-secondary rounded">● 나쁜말 미션</a></li>
+                            <li class="my-3"><a th:href="@{/teach}" style="color:#E8E8E8">&nbsp&nbsp 기본 가르치기</a></li>
+                            <li class="my-3"><a th:href="@{/teach/polar}" style="color:#E8E8E8">&nbsp&nbsp 긍정부정 가르치기</a></li>
+                            <li class="my-3"><a th:href="@{/teach/free}" style="color:#E8E8E8">&nbsp&nbsp 자유질문 가르치기</a></li>
+                            <li class="my-3"><a th:href="@{/mission}" style="color:#E8E8E8">&nbsp&nbsp 나쁜말 미션</a></li>
                         </ul>
                     </div>
-                </li>
-
-                <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed text-light" onclick="location.href='/boardlist'"
-                            data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                        <a class="link-secondary rounded">광장가기</a>
-                    </button>
-                </li>
-
+                        </li>
+                    </td>
+                </tr>
+                    <tr>
+                        <td style="border:none">
+                            <li>
+                            <div class="chat" style="height: 50px;border:none">
+                            <button style="background:transparent;border:none"><a style="color:#fff; font-size:17px; margin-left:20px" onclick="location.href='/boardlist'">광장가기</a></button>
+                            </div>
+                            </li>
+                        </td>
+                    </tr>
+                </table>
                 <div class="line">
-                <li class="border-top my-3"></li>
+                <!--<li class="border-top my-3"></li>-->
                 </div>
-
-                <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed text-light"
-                            data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                        계정
-                    </button>
-                    <div class="collapse" id="account-collapse">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small mx-3">
-                            <li><a href="#" class="link-dark rounded">회원가입</a></li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
         </ul>
     </div>
+
 </div>
+
 
 <!--<header th:replace="fragments/header :: headerFragment"></header>-->
 <div layout:fragment="content" style="margin-left: 280px"></div>
