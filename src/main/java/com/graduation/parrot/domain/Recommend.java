@@ -15,6 +15,7 @@ public class Recommend {
     @Column(name = "recommend_id")
     private Long id;
 
+    @Column(columnDefinition = "integer default 0", updatable = false)
     private int point;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,7 +33,4 @@ public class Recommend {
         this.point = point;
     }
 
-    public void updatePoint(int point){
-        this.point = point;
-    }
 }

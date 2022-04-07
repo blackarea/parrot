@@ -31,9 +31,9 @@
         }
 
         .recommendButton{
-            width:60px;
-            border-bottom-right-radius: 5px;
-            border-top-right-radius: 5px;
+            width: 60px;
+            height: 50px;
+            border-radius: 5px;
             display:flex;
             justify-content: center;
             align-items: center;
@@ -331,22 +331,34 @@
         };
 
         function like(){
+            let recommendValue = document.getElementById('recommendCount');
             $.ajax({
                 type: 'POST',
                 url: '/like/' + [[${boardResponseDto.id}]]
             }).done(function (response) {
-                window.location.replace("/board/" + [[${boardResponseDto.id}]]);
+                console.log(response);
+                if(response.canRecommend == true){
+                    recommendValue.innerText = response.recommendCount;
+                }else{
+                    alert("추천을 수정할 수 없습니다.");
+                }
             }).fail(function () {
                 console.log("like fail");
             });
         };
 
         function hate() {
+            let recommendValue = document.getElementById('recommendCount');
             $.ajax({
                 type: 'POST',
                 url: '/hate/' + [[${boardResponseDto.id}]]
             }).done(function (response) {
-                window.location.replace("/board/" + [[${boardResponseDto.id}]]);
+                console.log(response);
+                if(response.canRecommend == true){
+                    recommendValue.innerText = response.recommendCount;
+                }else{
+                    alert("추천을 수정할 수 없습니다.");
+                }
             }).fail(function () {
                 console.log("hate fail");
             });
@@ -390,8 +402,8 @@
             <div class="recommend">
 
                 <div class="up-down">
-                    <div class="up" style="display:flex">
-                        <div class="input-group" style="margin-right:5px">
+                    <div style="display:flex">
+                        <div class="input-group">
                             <button onclick="like()" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
                                     style="width:80px;height:50px" class="btn btn-outline-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -401,11 +413,11 @@
                                 </svg>
                                 추천
                             </button>
-                            <div class="recommendButton" th:text="${boardResponseDto.recommendCount}" style="background-color:#0067a3">
-
-                            </div>
                         </div>
-                        <div class="input-group" style="margin-left:5px">
+                        <div id="recommendCount" class="recommendButton" th:text="${boardResponseDto.recommendCount}" style="background-color:#0067a3">
+
+                        </div>
+                        <div class="input-group">
                             <button onclick="hate()" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
                                     style="width:80px;height:50px" class="btn btn-outline-secondary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -415,11 +427,8 @@
                                 </svg>
                                 비추
                             </button>
-                            <div class="recommendButton" th:text="${boardResponseDto.recommendCount}" style="background-color:#8e8e93">
-                            </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="report" style="height:60px">
