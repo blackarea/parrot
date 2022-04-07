@@ -217,8 +217,9 @@
         }
 
         .commentDiv{
-            margin-right: 15px;
             display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
         }
 
         .commentAuthor{
@@ -305,6 +306,8 @@
                         commentDelete.addEventListener("click", function () {
                             deleteComment(item.id);
                         })
+                    }else{
+                        let comment = document.createElement('span');
                     }
 
                     commentLi.appendChild(divRecommend);
@@ -475,52 +478,6 @@
 
         </div>
 
-        <!--<div class="container">
-            <h1 class="mb-3">게시글</h1>
-
-            <div>
-                <div class="mb-3">
-                    <label class="fw-bold" for="id">글 번호</label>
-                    <input class="form-control" id="id" th:value="${boardResponseDto.id}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label class="fw-bold" for="title">제목</label>
-                    <input type="text" class="form-control" id="title" th:value="${boardResponseDto.title}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label class="fw-bold" for="author">작성자</label>
-                    <input type="text" class="form-control" id="author" th:value="${boardResponseDto.author}" readonly>
-                </div>
-
-                <div class="mb-3">
-                    <label class="fw-bold" for="content">내용</label>
-                    <p class="form-control" id="content" th:text="${boardResponseDto.content}"></p>
-                </div>
-
-                <a th:href="@{/boardlist}" role="button" class="btn btn-secondary">글목록</a>
-                <div th:if="${userResponseDto.id == boardResponseDto.author_id}">
-                    <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" type="button" class="btn btn-primary" id="btn-save">수정</a>
-                    <form th:action="@{/board/delete/{id}(id=${boardResponseDto.id})}" th:method="delete">
-                        <button class="btn btn-danger" type="submit">삭제</button>
-                    </form>
-                </div>
-            </div>
-
-            <br>
-            <div>
-                <ul id="commentUl" class="list-group">
-
-                </ul>
-                <br>
-
-                <div th:text="${userResponseDto.username}"></div>
-                <textarea id="commentContent" class="form-control" name="content"></textarea>
-                <button class="btn btn-primary" th:onclick="|javascript:commentCreate('${boardResponseDto.id}')|">댓글 작성</button>
-            </div>
-
-        </div>-->
     </div>
 </div>
 </html>

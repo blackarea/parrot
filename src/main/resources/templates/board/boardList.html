@@ -274,7 +274,7 @@
                                 </li>
 
                                 <li class="page-item" th:if="${start > 1}">
-                                    <a th:href="@{/boardlist(page=${(boardList.getTotalPages()/10)*10-10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                    <a th:href="@{/boardlist(page=${((boardList.number/10)*10)-10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                        class="page-link" th:text="'<'"></a>
                                 </li>
 

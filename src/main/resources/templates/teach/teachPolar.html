@@ -2,7 +2,73 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
+<head>
+    <style>
+        #teach input, #teach span{
+            display: block;
+        }
+    </style>
+
+    <script>
+        function teach() {
+            let inputValue1 = document.getElementById("inputQuestion").value;
+            let inputValue2 = document.getElementById("inputPositive").value;
+            let inputValue3 = document.getElementById("inputNegative").value;
+            let data = {
+                question : inputValue1,
+                positive : inputValue2,
+                negative : inputValue3
+            }
+
+            let teachDiv = document.getElementById("teach");
+            let receiveTeach = document.createElement("span");
+            let pastSpan1 = document.createElement("span");
+            let pastSpan2 = document.createElement("span");
+            let pastSpan3 = document.createElement("span");
+            $('input').remove();
+            pastSpan1.innerText = inputValue1;
+            pastSpan2.innerText = inputValue2;
+            pastSpan3.innerText = inputValue3;
+
+            let newInput1 = document.createElement("input");
+            let newInput2 = document.createElement("input");
+            let newInput3 = document.createElement("input");
+            newInput1.setAttribute("id", "inputPolarQuestion");
+            newInput2.setAttribute("id", "inputPolarPositive");
+            newInput3.setAttribute("id", "inputPolarNegative");
+
+            $.ajax({
+                type:'POST',
+                url:'/teach/polar',
+                data:JSON.stringify(data),
+                contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
+            }).done(function (response) {
+                receiveTeach.innerText = response.teach;
+            }).fail(function (e) {
+                receiveTeach.innerText = "교육실패";
+            });
+
+            teachDiv.appendChild(pastSpan1);
+            teachDiv.appendChild(pastSpan2);
+            teachDiv.appendChild(pastSpan3);
+            teachDiv.appendChild(receiveTeach);
+            teachDiv.appendChild(newInput1);
+            teachDiv.appendChild(newInput2);
+            teachDiv.appendChild(newInput3);
+        }
+
+    </script>
+</head>
+
 <div layout:fragment="content">
+
+    <div id="teach">
+        <button class="btn btn-info" onclick="teach()">전송</button>
+
+        <input id="inputQuestion">
+        <input id="inputPositive">
+        <input id="inputNegative">
+    </div>
 
 </div>
 
