@@ -4,9 +4,48 @@
 
 <head>
     <style>
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+    @font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;}
+
+        .page ul li {
+            list-style-type: none;
+            float: left;
+            margin: 10px;
+        }
+
+
         #chat input, #chat span{
             display: block;
         }
+        .body{
+            font-family:'NanumSquare';
+        }
+        .top{
+            height:60px;
+        }
+        #chatlog{
+            height: 600px;
+            background:#f9f9f9;
+        }
+        #chat{
+            height: 70px;
+            background:#f5f5f5;
+        }
+        .log{
+            height: 100px;
+
+        }
+        .leftbox{
+            background:#fff;
+            width:100%;
+            height:50px;
+
+        }
+
     </style>
 
     <script>
@@ -46,12 +85,54 @@
 
 <div layout:fragment="content">
 
-    <div id="chat">
+    <div class="body" style="margin: auto; width: 830px; padding-top:70px">
+
+        <div class="top">
+
+                <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#대화하기</span>
+        </div>
+
+
+
+        <div id="chatlog">
+            <div class="log">
+                <div class="leftbox">
+                    <span>123</span>
+                </div>
+            </div>
+
+            <div class="log">
+
+            </div>
+
+            <div class="log">
+
+            </div>
+
+            <div class="log">
+
+            </div>
+
+            <div class="log">
+
+            </div>
+
+            <div class="log">
+
+            </div>
+        </div>
+        <div id="chat">
+
+        </div>
+
+
+
+    <!--<div id="chat">
         <button class="btn btn-info" onclick="chat()">전송</button>
 
         <input id="inputChat">
+    </div>-->
     </div>
-
 </div>
 
 </html>
