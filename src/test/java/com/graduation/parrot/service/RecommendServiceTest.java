@@ -56,61 +56,7 @@ class RecommendServiceTest {
         Board board = boardRepository.findById(board_id).get();
         //추천
 
-        boolean like = recommendService.like(user, board_id);
-        assertThat(like).isTrue();
-        Recommend foundRecommend = recommendRepository.findByUserAndBoard(user, board).get();
-        assertThat(foundRecommend.getPoint()).isEqualTo(1);
+        //todo
     }
 
-    @Test
-    @DisplayName("추천 취소")
-    void recommendCancelTest(){
-        User user = User.builder()
-                .login_id("login")
-                .password("pwd")
-                .name("name")
-                .build();
-        User savedUser = userRepository.save(user);
-
-        BoardDto build = BoardDto.builder()
-                .title("title")
-                .content("content")
-                .build();
-        Long board_id = boardService.create(build, savedUser);
-        Board board = boardRepository.findById(board_id).get();
-
-        //좋아요
-        recommendService.like(user, board_id);
-        //좋아요 취소
-        boolean like = recommendService.like(user, board_id);
-
-        assertThat(like).isFalse();
-        assertThat(board.getRecommendCount()).isEqualTo(0);
-    }
-
-    @Transactional
-    @Test
-    @DisplayName("비추천에서 추천으로")
-    void hateToLike(){
-        User user = User.builder()
-                .login_id("login")
-                .password("pwd")
-                .name("name")
-                .build();
-        User savedUser = userRepository.save(user);
-
-        BoardDto build = BoardDto.builder()
-                .title("title")
-                .content("content")
-                .build();
-        Long board_id = boardService.create(build, savedUser);
-        Board board = boardRepository.findById(board_id).get();
-
-        recommendService.hate(user, board_id);
-        assertThat(board.getRecommendCount()).isEqualTo(-1);
-
-        boolean like = recommendService.like(user, board_id);
-        assertThat(like).isTrue();
-        assertThat(board.getRecommendCount()).isEqualTo(1);
-    }
 }
