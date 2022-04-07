@@ -25,7 +25,7 @@
             }
 
             let teachDiv = document.getElementById("teachFree");
-            let receiveteach = document.createElement("span");
+            let receiveTeach = document.createElement("span");
             let question = document.createElement("span");
             let condition1 = document.createElement("span");
             let answer1 = document.createElement("span");
@@ -57,10 +57,10 @@
                 data:JSON.stringify(data),
                 contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
             }).done(function (response) {
-                receiveteach.innerText = response.teach;
+                receiveTeach.innerText = response.teach;
             }).fail(function () {
                 console.log("fail");
-                receiveteach.innerText = "교육실패";
+                receiveTeach.innerText = "교육실패";
             });
 
             teachDiv.appendChild(question);
@@ -68,7 +68,7 @@
             teachDiv.appendChild(answer1);
             teachDiv.appendChild(condition2);
             teachDiv.appendChild(answer2);
-            teachDiv.appendChild(receiveteach);
+            teachDiv.appendChild(receiveTeach);
             teachDiv.appendChild(newInput1);
             teachDiv.appendChild(newInput2);
             teachDiv.appendChild(newInput3);
