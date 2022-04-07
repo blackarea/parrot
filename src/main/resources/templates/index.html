@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
             integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+
     <link rel="stylesheet" th:href="@{/css/custom.css}">
     <script th:src="@{/js/bootstrap.js}"></script>
 
@@ -23,6 +23,7 @@
 
     </script>
     <style>
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
     @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
     @font-face {
     font-family: 'NanumSquareRound';
@@ -142,6 +143,20 @@
         a {
             text-decoration: none !important
         }
+        .bi-chat-heart{
+            color:#444444;
+            font-size: 6em;
+        }
+
+        .bi-qr-code{
+            color:#444444;
+            font-size: 6em;
+        }
+        .bi-book{
+            color:#444444;
+            font-size: 6em;
+        }
+
 
 
     </style>
@@ -199,10 +214,10 @@
                     <span style="font-size:40px;color:#444444">Made by<span style="font-size:60px">&nbspololit</span></span>
                 </div>
                 <div class="text">
-                    <p id="sidecoment" style="font-size:23px;color:#444444">앵무에게 말을 걸어보세요</p>
+                    <p id="sidecoment" style="font-size:23px;color:#444444">기존과는 다른 Ai챗봇</p>
                 </div>
                 <form class="d-flex">
-                    <input class="form-control me-2"style="border-radius: 2em; height:42px" type="search" placeholder="" aria-label="당신만의 앵무새">
+                    <input class="form-control me-2"style="border-radius: 2em; height:42px" type="search" placeholder="앵무에게 말을 걸어 보세요" aria-label="당신만의 앵무새">
 
                 </form>
             </div>
@@ -217,12 +232,9 @@
 
 
             <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16rem" height="10rem" fill="currentColor"
-                     class="bi bi-chat-heart" viewBox="1 0 16 18">
-                    <path fill-rule="evenodd"
-                          d="M2.965 12.695a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2Zm-.8 3.108.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125ZM8 5.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
-                </svg>
-
+                <div style="text-align:center">
+                <i class="bi bi-chat-heart"></i>
+                </div>
                 <div class="card-body">
                     <h5 style="font-weight:bold">애증이 있는 채팅 봇</h5>
                     <hr style="margin-top: 10px; margin-bottom: 10px;margin-left: auto; margin-right: auto">
@@ -232,17 +244,9 @@
 
             </div>
 
-
-            <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
+            <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
                 <div style="text-align:center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16rem" height="10rem" fill="currentColor"
-                         class="bi bi-book" viewBox="1 -2.5 16 20">
-                        <path d="M2 2h2v2H2V2Z"/>
-                        <path d="M6 0v6H0V0h6ZM5 1H1v4h4V1ZM4 12H2v2h2v-2Z"/>
-                        <path d="M6 10v6H0v-6h6Zm-5 1v4h4v-4H1Zm11-9h2v2h-2V2Z"/>
-                        <path d="M10 0v6h6V0h-6Zm5 1v4h-4V1h4ZM8 1V0h1v2H8v2H7V1h1Zm0 5V4h1v2H8ZM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8H6Zm0 0v1H2V8H1v1H0V7h3v1h3Zm10 1h-1V7h1v2Zm-1 0h-1v2h2v-1h-1V9Zm-4 0h2v1h-1v1h-1V9Zm2 3v-1h-1v1h-1v1H9v1h3v-2h1Zm0 0h3v1h-2v1h-1v-2Zm-4-1v1h1v-2H7v1h2Z"/>
-                        <path d="M7 12h1v3h4v1H7v-4Zm9 2v2h-3v-1h2v-1h1Z"/>
-                    </svg>
+                    <i class="bi bi-qr-code"></i>
                 </div>
                 <div class="card-body">
                     <h5 style="font-weight:bold">App & Web지원</h5>
@@ -254,10 +258,9 @@
 
 
             <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16rem" height="10rem" fill="currentColor"
-                     class="bi bi-book" viewBox="1 -1 16 18">
-                    <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                </svg>
+                <div style="text-align:center">
+                <i class="bi bi-book"></i>
+                </div>
                 <div class="card-body">
                     <h5 style="font-weight:bold">자신만의 앵무새</h5>
                     <hr style="margin-top: 10px; margin-bottom: 10px;">
@@ -267,13 +270,11 @@
             </div>
         </div>
         <div class="presentation" style="margin-bottom:20px">
-            <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16rem" height="10rem" fill="currentColor"
-                     class="bi bi-chat-heart" viewBox="1 0 16 18">
-                    <path fill-rule="evenodd"
-                          d="M2.965 12.695a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2Zm-.8 3.108.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125ZM8 5.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
-                </svg>
 
+            <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
+                <div style="text-align:center">
+                    <i class="bi bi-chat-heart"></i>
+                </div>
                 <div class="card-body">
                     <h5 style="font-weight:bold">애증이 있는 채팅 봇</h5>
                     <hr style="margin-top: 10px; margin-bottom: 10px;margin-left: auto; margin-right: auto">
@@ -283,17 +284,9 @@
 
             </div>
 
-
-            <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
+            <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
                 <div style="text-align:center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16rem" height="10rem" fill="currentColor"
-                         class="bi bi-book" viewBox="1 -2.5 16 20">
-                        <path d="M2 2h2v2H2V2Z"/>
-                        <path d="M6 0v6H0V0h6ZM5 1H1v4h4V1ZM4 12H2v2h2v-2Z"/>
-                        <path d="M6 10v6H0v-6h6Zm-5 1v4h4v-4H1Zm11-9h2v2h-2V2Z"/>
-                        <path d="M10 0v6h6V0h-6Zm5 1v4h-4V1h4ZM8 1V0h1v2H8v2H7V1h1Zm0 5V4h1v2H8ZM6 8V7h1V6h1v2h1V7h5v1h-4v1H7V8H6Zm0 0v1H2V8H1v1H0V7h3v1h3Zm10 1h-1V7h1v2Zm-1 0h-1v2h2v-1h-1V9Zm-4 0h2v1h-1v1h-1V9Zm2 3v-1h-1v1h-1v1H9v1h3v-2h1Zm0 0h3v1h-2v1h-1v-2Zm-4-1v1h1v-2H7v1h2Z"/>
-                        <path d="M7 12h1v3h4v1H7v-4Zm9 2v2h-3v-1h2v-1h1Z"/>
-                    </svg>
+                    <i class="bi bi-qr-code"></i>
                 </div>
                 <div class="card-body">
                     <h5 style="font-weight:bold">App & Web지원</h5>
@@ -305,10 +298,9 @@
 
 
             <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16rem" height="10rem" fill="currentColor"
-                     class="bi bi-book" viewBox="1 -1 16 18">
-                    <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                </svg>
+                <div style="text-align:center">
+                    <i class="bi bi-book"></i>
+                </div>
                 <div class="card-body">
                     <h5 style="font-weight:bold">자신만의 앵무새</h5>
                     <hr style="margin-top: 10px; margin-bottom: 10px;">

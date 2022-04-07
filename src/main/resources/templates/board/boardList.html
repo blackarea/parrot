@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout}">
 
-    <link rel="stylesheet" th:href="@{/css/custom.css}">
+<link rel="stylesheet" th:href="@{/css/custom.css}">
 <head>
 
     <style>
@@ -13,6 +13,9 @@
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
     font-weight: normal;
     font-style: normal;}
+
+
+
         .page ul li {
             list-style-type: none;
             float: left;
@@ -42,6 +45,7 @@
             text-decoration-line : none;
             color: #000000;
         }
+
         input{
             width:100px;
             height: 30px;
@@ -71,9 +75,35 @@
         .assign{
             text-align:right;
         }
-        .topbar{
+
+        .top-bar{
 
             margin: 0;
+            background:#fff;
+        }
+
+        .bi-heart-fill{
+
+            color:#D8D8D8;
+        }
+        .bi-heart-fill:hover{
+
+            color:#ffb830;
+        }
+        .bi-pencil-square{
+            color:#7c7c7c;
+            font-size: 2em;
+        }
+        .bi-pencil-square:hover{
+            color:#ffb830;
+            font-size: 2em;
+        }
+        .bi-search{
+            color:#7c7c7c;
+        }
+        .bi-megaphone-fill{
+            color:#444444;
+            font-size: 25px;
         }
 
 
@@ -82,67 +112,68 @@
 
 <div layout:fragment="content">
 
-    <div class="body" style="margin: auto; width: 830px; padding-top:70px">
 
-        <div class="main">
 
-            <div class="top">
-                <div class="topbar">
-                    <div style="width: 850px;height:60px">
-                        <span id="plaza" style="font-size: 30px;margin-left:20px;color:#444444;font-weight:bold;font-family:'NanumSquareRound'">#이야기 광장</span>
+        <div class="body" style="margin: auto; width: 830px; padding-top:70px">
+
+            <div class="main">
+
+                <div class="top">
+                    <div class="top-bar" style="height:60px;width:830px;display:flex">
+                        <span id="create" style="font-size: 30px;margin-left:10px;color:#444444;font-weight:bold">#이야기 광장</span>
+
                     </div>
 
+                    <hr style="color:#A5A5A5;margin-left:10px;margin-right:10px;width: 830px">
 
-                <div class="assign">
-                    <button sec:authorize="isAuthenticated()" onclick="location.href='/board/create'" class="serachimg" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                    </svg></button>
 
-                </div>
+                    <div class="assign">
+                        <button sec:authorize="isAuthenticated()" onclick="location.href='/board/create'" class="serachimg" type="submit">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
 
-                <div class="row" style="margin-top: 20px">
-                    <!--최신글 인기글-->
-                    <div class="col" style="display: flex; justify-content: flex-start">
-                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio1">전체글</label>
+                    </div>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio2">인기글</label>
+                    <div class="row">
+                        <!--최신글 인기글-->
+                        <div class="col" style="display: flex; justify-content: flex-start">
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                                <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio1">전체글</label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio3">최신글</label>
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                                <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio2">인기글</label>
+
+                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                                <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio3">최신글</label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col" style="display: flex; justify-content: flex-end">
+                        <div class="col" style="display: flex; justify-content: flex-end">
+                            <!--검색-->
+                            <div class="search">
+                                <form method="get" style="display: flex" th:action="@{/boardlist}">
+
+                                    <select class="form-select" id="type" name="type" style="width:80px">
+                                        <option value="all">전체</option>
+                                        <option value="title">제목</option>
+                                        <option value="content">내용</option>
+                                        <option value="user">작성자</option>
+                                    </select>
+
+                                    <div class="input-group" style="border:1px solid #d6d6d6; border-radius: 2em; margin-left:10px; background-color:#FFFFFF">
+                                        <input type="text" class="form-control" placeholder="게시물 검색" aria-label="Search" style="width: 180px; border:0;solid: black;"
+                                               id="searchKeyword" name="searchKeyword" th:value="${param.searchKeyword}">
+                                        <button class="serachimg" type="submit"><i class="bi bi-search"></i></button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
                         <!--검색-->
-                        <div class="search">
-                            <form method="get" style="display: flex" th:action="@{/boardlist}">
-
-                                <select class="form-select" id="type" name="type" style="width:80px">
-                                    <option value="all">전체</option>
-                                    <option value="title">제목</option>
-                                    <option value="content">내용</option>
-                                    <option value="user">작성자</option>
-                                </select>
-
-                                <div class="input-group" style="border:1px solid #d6d6d6; border-radius: 2em; margin-left:10px; background-color:#FFFFFF">
-                                    <input type="text" class="form-control" placeholder="게시물 검색" aria-label="Search" style="width: 180px; border:0;solid: black;"
-                                           id="searchKeyword" name="searchKeyword" th:value="${param.searchKeyword}">
-                                    <button class="serachimg" type="submit"><svg xmlns="http://www.w3.org/2000/svg" style="vertical-align:center" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                    </svg></button>
-                                </div>
-
-                            </form>
-                        </div>
                     </div>
 
-                    <!--검색-->
-                </div>
-                </div>
                     <!--테이블-->
                     <div class="row" style="margin-top: 20px">
                         <div class="col">
@@ -154,12 +185,7 @@
                                             <div class="row">
                                                 <div class="col-sm-1"
                                                      style="text-align: center; margin-bottom: auto; margin-top: auto">
-                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                         style="vercital-align:bottom" width="30" height="30"
-                                                         fill="currentColor" class="bi bi-megaphone-fill"
-                                                         viewBox="0 0 16 16">
-                                                        <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"/>
-                                                    </svg>
+                                                    <i class="bi bi-megaphone-fill"></i>
                                                 </div>
                                                 <div class="col-sm-11">
                                                     <div class="row">
@@ -193,15 +219,10 @@
                                                 <div class="col-sm-1" style="text-align:center; margin-top:auto; margin-bottom:auto">
 
                                                     <div class="row">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
-                                                                 height="20" fill="currentColor"
-                                                                 class="bi bi-heart-fill" viewBox="0 0 16 16">
-                                                                <path fill-rule="evenodd"
-                                                                      style="fill:rgb(68,68,68);fill-rule:nonzero;"d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                                                            </svg>
+                                                        <i class="bi bi-heart-fill"></i>
                                                     </div>
                                                     <div class="row">
-                                                            <span th:text="${boardListResponseDto.recommendCount}" style="font-weight:bold"></span>
+                                                        <span th:text="${boardListResponseDto.recommendCount}" style="font-weight:bold;color:#7C7C7C"></span>
                                                     </div>
                                                 </div>
                                                 <!--중앙과 오른쪽-->
@@ -211,7 +232,7 @@
                                                             <!--윗 줄(제목)-->
                                                             <div class="row" style="height: 24px">
                                                                 <div class="col" id="boardtitle">
-                                                                    <a style="font-size: 16px; vertical-align:top"
+                                                                    <a style="font-size: 16px; vertical-align:top; font-weight:bold; color:#444444"
                                                                        th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
                                                                        th:text="${boardListResponseDto.title}"></a>
                                                                 </div>
@@ -219,7 +240,7 @@
                                                             <!--아랫 줄-->
                                                             <div class="row" style="height: 24px">
                                                                 <div class="col">
-                                                                    <span style="font-size: 14px;">게시물 번호</span>
+                                                                    <span style="font-size: 14px;color:#444444">게시물 번호</span>
                                                                     <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
                                                                           th:text="${boardListResponseDto.view}"></span>
                                                                     <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
@@ -241,7 +262,7 @@
                     </div>
 
                     <!--페이지이동-->
-                    <div class="row">
+                    <div class="row" style="margin-bottom:50px">
                         <div class="col">
                             <ul class="pagination justify-content-center pagination-sm" style="display:flex"
                                 th:with="start=${(boardList.number/10)*10+1},
@@ -278,7 +299,6 @@
 
             </div>
         </div>
-
-    </div>
+</div>
 
 </html>

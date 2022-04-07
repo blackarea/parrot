@@ -37,6 +37,14 @@
         border:none;
         background-color:transparent;
     }
+    .bi-card-image{
+        color:#7c7c7c;
+        font-size: 20px;
+    }
+    .bi-card-image:hover{
+        color:#ffb830;
+        font-size: 20px;
+    }
 
 </style>
 </head>
@@ -49,16 +57,16 @@
 
             <div class="top">
                     <div style="height:60px;display:flex">
-                            <span id="create" style="font-size: 30px;margin-left:10px;color:#444444;font-weight:bold;font-family:'NanumSquareRound'">#글 등록</span>
+                            <span id="create" style="font-size: 30px;margin-left:10px;color:#444444;font-weight:bold">#글 등록</span>
                     </div>
 
             </div>
 
-            <hr style="color:#000;margin-left:10px;margin-right:10px;width: 830px">
+            <hr style="color:#A5A5A5;margin-left:10px;margin-right:10px;width: 830px">
 
             <div class="section" style="margin-left:10px;margin-right:10px;height:40px;width:830px">
                 <input input id="title" type="text" class="form-control" placeholder="제목을 입력하세요" style="height:40px;color:#444444;border-radius:0">
-                <div style="height:100px;background:#f1f1f1;margin-bottom:10px;margin-top:10px;border: 1px solid #ced4da">
+                <div style="height:100px;background:#f1f1f1;margin-bottom:10px;margin-top:10px;border: 1px solid #f7f7f7">
                     <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
 
                             <span style="font-size:14px">※무분별한 욕설 및 인종차별 언행은 계정정지의 대상입니다.</span>
@@ -67,14 +75,11 @@
 
                     </div>
                 </div>
-                <div class="textedit" style="height:60px;background:#f9f9f9;border: 1px solid #ced4da;margin-bottom:-1px;">
+                <div class="textedit" style="height:60px;background:#f9f9f9;border: 1px solid #e5e5e5;margin-bottom:-1px;">
 
                         <div style="display:flex;flex-direction: column;align-items:center;margin-left:20px">
                         <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
-                            <path  style="fill:rgb(99,99,99);fill-rule:nonzero;" d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                            <path  style="fill:rgb(99,99,99);fill-rule:nonzero;" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
-                            </svg>
+                            <i class="bi bi-card-image"></i>
                         </button>
 
                         <span style="font-size:11px">이미지</span>
@@ -82,30 +87,21 @@
 
                         <div style="display:flex;flex-direction: column;align-items:center;margin-left:20px">
                             <button>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
-                                    <path style="fill:rgb(99,99,99);fill-rule:nonzero;" d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                    <path style="fill:rgb(99,99,99);fill-rule:nonzero;" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
-                                </svg>
+                                <i class="bi bi-card-image"></i>
                             </button>
                             <span style="font-size:11px">이미지</span>
                         </div>
 
                         <div style="display:flex;flex-direction: column;align-items:center;margin-left:20px">
                             <button>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
-                                    <path style="fill:rgb(99,99,99);fill-rule:nonzero;" d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                    <path style="fill:rgb(99,99,99);fill-rule:nonzero;" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
-                                </svg>
+                                <i class="bi bi-card-image"></i>
                             </button>
                             <span style="font-size:11px">이미지</span>
                         </div>
 
                         <div style="display:flex;flex-direction: column;align-items:center;margin-left:20px;border-color:#E5E5E5">
                             <button>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="23" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
-                                    <path style="fill:rgb(99,99,99);fill-rule:nonzero;" d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                                    <path style="fill:rgb(99,99,99);fill-rule:nonzero;" d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
-                                </svg>
+                                <i class="bi bi-card-image"></i>
                             </button>
                             <span style="font-size:11px">이미지</span>
                         </div>
