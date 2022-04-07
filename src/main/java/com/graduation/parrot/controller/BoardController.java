@@ -31,7 +31,7 @@ public class BoardController {
     private final CommentService commentService;
 
     @GetMapping("/")
-    public String index(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
+    public String index(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
         if (principalDetails != null) {
             model.addAttribute("login_id", principalDetails.getUser().getLogin_id());
         }
@@ -40,17 +40,16 @@ public class BoardController {
 
     @GetMapping("/boardlist")
     public String boardList(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 15) Pageable pageable,
-                        @RequestParam(defaultValue = "all")String type, String searchKeyword) {
+                            @RequestParam(defaultValue = "all") String type, String searchKeyword) {
 
         if (principalDetails != null) {
             model.addAttribute("userName", principalDetails.getUser().getName());
         }
 
-        if(searchKeyword == null) {
+        if (searchKeyword == null) {
             model.addAttribute("boardList", boardService.getBoardList(pageable));
-        }
-        else {
-            model.addAttribute("boardList",boardService.getBoardListPagingSearch(pageable,type,searchKeyword));
+        } else {
+            model.addAttribute("boardList", boardService.getBoardListPagingSearch(pageable, type, searchKeyword));
         }
 
         return "board/boardList";
@@ -77,7 +76,7 @@ public class BoardController {
         return "board/createBoard";
     }
 
-    @PostMapping("/board/create")
+    @PostMapping("/board")
     public String createBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         boardService.create(boardDto, principalDetails.getUser());
         return "redirect:/boardlist";
@@ -89,19 +88,19 @@ public class BoardController {
         return "board/updateBoard";
     }
 
-    @PutMapping("/board/update/{id}")
+    @PutMapping("/board/{id}")
     public String updateBoard(@PathVariable Long id, BoardDto boardDto) {
         boardService.update(id, boardDto);
-        return "redirect:/boardlist";
+        return "redirect:/board/" + id;
     }
 
-    @DeleteMapping("/board/delete/{id}")
+    @DeleteMapping("/board/{id}")
     public String deleteBoard(@PathVariable Long id) {
         boardService.delete(id);
         return "redirect:/boardlist";
     }
 
-    private void viewCountUp(Long board_id, HttpServletRequest request, HttpServletResponse response){
+    private void viewCountUp(Long board_id, HttpServletRequest request, HttpServletResponse response) {
         Cookie oldCookie = null;
         Cookie[] cookies = request.getCookies();
 
@@ -124,7 +123,7 @@ public class BoardController {
             }
         } else {
             boardService.updateView(board_id);
-            Cookie newCookie = new Cookie("postView","[" + board_id + "]");
+            Cookie newCookie = new Cookie("postView", "[" + board_id + "]");
             newCookie.setPath("/");
             newCookie.setMaxAge(60 * 60); //1시간
             newCookie.setHttpOnly(true);

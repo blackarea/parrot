@@ -7,13 +7,14 @@
 <head>
 
     <style>
-    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-    @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;}
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
 
         .page ul li {
@@ -25,8 +26,8 @@
         .body {
             margin-right: auto;
             margin-left: auto;
-            font-family:NanumSquare;
-            transform : rotate(0.04deg);
+            font-family: NanumSquare;
+            transform: rotate(0.04deg);
         }
 
 
@@ -39,68 +40,80 @@
         .body {
             display: flex;
         }
-        a{
-            text-decoration-line : none;
+
+        a {
+            text-decoration-line: none;
             color: #000000;
         }
 
-        input{
-            width:100px;
+        input {
+            width: 100px;
             height: 30px;
             outline: none;
             margin-left: 12px;
-            font-size:20px;
+            font-size: 20px;
         }
-        .input-group{
+
+        .input-group {
             height: 35px
         }
-        .serachimg{
-            background-color:transparent;
-            border:0;
+
+        .serachimg {
+            background-color: transparent;
+            border: 0;
             margin-right: 10px;
         }
-        .form-select{
+
+        .form-select {
             width: 100px;
             height: 35px;
         }
-        #boardtitle a{
+
+        #boardtitle a {
             font-size: 15px;
         }
-        .btn-group{
-            width:230px;
+
+        .btn-group {
+            width: 230px;
             height: 35px;
         }
-        .assign{
-            text-align:right;
+
+        .assign {
+            text-align: right;
         }
 
-        .top-bar{
+        .top-bar {
 
             margin: 0;
-            background:#fff;
+            background: #fff;
         }
 
-        .bi-heart-fill{
+        .bi-heart-fill {
 
-            color:#D8D8D8;
+            color: #D8D8D8;
         }
-        .bi-heart-fill:hover{
 
-            color:#ffb830;
+        .bi-heart-fill:hover {
+
+            color: #ffb830;
         }
-        .bi-pencil-square{
-            color:#7c7c7c;
+
+        .bi-pencil-square {
+            color: #7c7c7c;
             font-size: 2em;
         }
-        .bi-pencil-square:hover{
-            color:#ffb830;
+
+        .bi-pencil-square:hover {
+            color: #ffb830;
             font-size: 2em;
         }
-        .bi-search{
-            color:#7c7c7c;
+
+        .bi-search {
+            color: #7c7c7c;
         }
-        .bi-megaphone-fill{
-            color:#444444;
+
+        .bi-megaphone-fill {
+            color: #444444;
             font-size: 25px;
         }
 
@@ -111,190 +124,197 @@
 <div layout:fragment="content">
 
 
+    <div class="body" style="margin: auto; width: 830px; padding-top:70px">
 
-        <div class="body" style="margin: auto; width: 830px; padding-top:70px">
+        <div class="main">
 
-            <div class="main">
+            <div class="top">
+                <div class="top-bar" style="height:60px;width:830px;display:flex">
+                    <span id="create"
+                          style="font-size: 30px;margin-left:10px;color:#444444;font-weight:bold">#이야기 광장</span>
 
-                <div class="top">
-                    <div class="top-bar" style="height:60px;width:830px;display:flex">
-                        <span id="create" style="font-size: 30px;margin-left:10px;color:#444444;font-weight:bold">#이야기 광장</span>
 
+                </div>
+
+                <div class="assign">
+                    <button sec:authorize="isAuthenticated()" onclick="location.href='/board/create'" class="serachimg"
+                            type="submit">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+
+                </div>
+
+
+                <div class="row">
+                    <!--최신글 인기글-->
+                    <div class="col" style="display: flex; justify-content: flex-start">
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                                   checked>
+                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio1">전체글</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio2">인기글</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio3">최신글</label>
+                        </div>
                     </div>
 
-
-                    <div class="assign">
-                        <button sec:authorize="isAuthenticated()" onclick="location.href='/board/create'" class="serachimg" type="submit">
-                            <i class="bi bi-pencil-square"></i>
-                        </button>
-
-                    </div>
-
-                    <div class="row">
-                        <!--최신글 인기글-->
-                        <div class="col" style="display: flex; justify-content: flex-start">
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio1">전체글</label>
-
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio2">인기글</label>
-
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio3">최신글</label>
-                            </div>
-                        </div>
-
-                        <div class="col" style="display: flex; justify-content: flex-end">
-                            <!--검색-->
-                            <div class="search">
-                                <form method="get" style="display: flex" th:action="@{/boardlist}">
-
-                                    <select class="form-select" id="type" name="type" style="width:80px">
-                                        <option value="all">전체</option>
-                                        <option value="title">제목</option>
-                                        <option value="content">내용</option>
-                                        <option value="user">작성자</option>
-                                    </select>
-
-                                    <div class="input-group" style="border:1px solid #d6d6d6; border-radius: 2em; margin-left:10px; background-color:#FFFFFF">
-                                        <input type="text" class="form-control" placeholder="게시물 검색" aria-label="Search" style="width: 180px; border:0;solid: black;"
-                                               id="searchKeyword" name="searchKeyword" th:value="${param.searchKeyword}">
-                                        <button class="serachimg" type="submit"><i class="bi bi-search"></i></button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-
+                    <div class="col" style="display: flex; justify-content: flex-end">
                         <!--검색-->
+                        <div class="search">
+                            <form method="get" style="display: flex" th:action="@{/boardlist}">
+
+                                <select class="form-select" id="type" name="type" style="width:80px">
+                                    <option value="all">전체</option>
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                    <option value="user">작성자</option>
+                                </select>
+
+                                <div class="input-group"
+                                     style="border:1px solid #d6d6d6; border-radius: 2em; margin-left:10px; background-color:#FFFFFF">
+                                    <input type="text" class="form-control" placeholder="게시물 검색" aria-label="Search"
+                                           style="width: 180px; border:0;solid: black;"
+                                           id="searchKeyword" name="searchKeyword" th:value="${param.searchKeyword}">
+                                    <button class="serachimg" type="submit"><i class="bi bi-search"></i></button>
+                                </div>
+
+                            </form>
+                        </div>
                     </div>
 
-                    <!--테이블-->
-                    <div class="row" style="margin-top: 20px">
-                        <div class="col">
-                            <table class="table table-hover">
-                                <!--공지-->
-                                <tr style="background-color:#efefef">
-                                    <td>
-                                        <div class="container" style="width: 810px">
-                                            <div class="row">
-                                                <div class="col-sm-1"
-                                                     style="text-align: center; margin-bottom: auto; margin-top: auto">
-                                                    <i class="bi bi-megaphone-fill"></i>
-                                                </div>
-                                                <div class="col-sm-11">
-                                                    <div class="row">
-                                                        <div>
-                                                            <div class="row" style="height: 24px">
-                                                                <div class="col">
-                                                                    <span style="font-size: 15px; vertical-align:top; font-weight:bold; color:#000">공지사항 욕설,비방,분탕 싹 다 쳐내 [2]</span>
-                                                                </div>
+                    <!--검색-->
+                </div>
+
+                <!--테이블-->
+                <div class="row" style="margin-top: 20px">
+                    <div class="col">
+                        <table class="table table-hover">
+                            <!--공지-->
+                            <tr style="background-color:#efefef">
+                                <td>
+                                    <div class="container" style="width: 810px">
+                                        <div class="row">
+                                            <div class="col-sm-1"
+                                                 style="text-align: center; margin-bottom: auto; margin-top: auto">
+                                                <i class="bi bi-megaphone-fill"></i>
+                                            </div>
+                                            <div class="col-sm-11">
+                                                <div class="row">
+                                                    <div>
+                                                        <div class="row" style="height: 24px">
+                                                            <div class="col">
+                                                                <span style="font-size: 15px; vertical-align:top; font-weight:bold; color:#000">공지사항 욕설,비방,분탕 싹 다 쳐내 [2]</span>
                                                             </div>
-                                                            <div class="row" style="height: 24px">
-                                                                <div class="col">
-                                                                    <span style="font-size: 14px">게시물 번호</span>
-                                                                    <span style="margin-left:10px; font-size: 14px">조회수 831</span>
-                                                                    <span style="margin-left:10px; font-size: 14px;">2022-03-27 04:27</span>
-                                                                    <span style="font-size: 15px; float:right; font-weight:bold; font-color:#666666">운영자</span>
-                                                                </div>
+                                                        </div>
+                                                        <div class="row" style="height: 24px">
+                                                            <div class="col">
+                                                                <span style="font-size: 14px">게시물 번호</span>
+                                                                <span style="margin-left:10px; font-size: 14px">조회수 831</span>
+                                                                <span style="margin-left:10px; font-size: 14px;">2022-03-27 04:27</span>
+                                                                <span style="font-size: 15px; float:right; font-weight:bold; font-color:#666666">운영자</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
-                                <!--게시글-->
-                                <tr th:each="boardListResponseDto : ${boardList}">
-                                    <td>
-                                        <div class="container" style="width: 810px;">
-                                            <div class="row">
-                                                <!--왼쪽 (그림, 추천수)-->
-                                                <div class="col-sm-1" style="text-align:center; margin-top:auto; margin-bottom:auto">
+                                    </div>
+                                </td>
+                            </tr>
+                            <!--게시글-->
+                            <tr th:each="boardListResponseDto : ${boardList}">
+                                <td>
+                                    <div class="container" style="width: 810px;">
+                                        <div class="row">
+                                            <!--왼쪽 (그림, 추천수)-->
+                                            <div class="col-sm-1"
+                                                 style="text-align:center; margin-top:auto; margin-bottom:auto">
 
-                                                    <div class="row">
-                                                        <i class="bi bi-heart-fill"></i>
-                                                    </div>
-                                                    <div class="row">
-                                                        <span th:text="${boardListResponseDto.recommendCount}" style="font-weight:bold;color:#7C7C7C"></span>
-                                                    </div>
+                                                <div class="row">
+                                                    <i class="bi bi-heart-fill"></i>
                                                 </div>
-                                                <!--중앙과 오른쪽-->
-                                                <div class="col-sm-11">
-                                                    <div class="row">
-                                                        <div>
-                                                            <!--윗 줄(제목)-->
-                                                            <div class="row" style="height: 24px">
-                                                                <div class="col" id="boardtitle">
-                                                                    <a style="font-size: 16px; vertical-align:top; font-weight:bold; color:#444444"
-                                                                       th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
-                                                                       th:text="${boardListResponseDto.title}"></a>
-                                                                </div>
+                                                <div class="row">
+                                                    <span th:text="${boardListResponseDto.recommendCount}"
+                                                          style="font-weight:bold;color:#7C7C7C"></span>
+                                                </div>
+                                            </div>
+                                            <!--중앙과 오른쪽-->
+                                            <div class="col-sm-11">
+                                                <div class="row">
+                                                    <div>
+                                                        <!--윗 줄(제목)-->
+                                                        <div class="row" style="height: 24px">
+                                                            <div class="col" id="boardtitle">
+                                                                <a style="font-size: 16px; vertical-align:top; font-weight:bold; color:#444444"
+                                                                   th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
+                                                                   th:text="${boardListResponseDto.title}"></a>
                                                             </div>
-                                                            <!--아랫 줄-->
-                                                            <div class="row" style="height: 24px">
-                                                                <div class="col">
-                                                                    <span style="font-size: 14px;color:#444444">게시물 번호</span>
-                                                                    <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
-                                                                          th:text="${boardListResponseDto.view}"></span>
-                                                                    <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
-                                                                          th:text="${boardListResponseDto.createdDate}"></span>
-                                                                    <span style="font-size: 14px; float:right; font-weight:bold"
-                                                                          th:text="${boardListResponseDto.getAuthor}"></span>
-                                                                </div>
+                                                        </div>
+                                                        <!--아랫 줄-->
+                                                        <div class="row" style="height: 24px">
+                                                            <div class="col">
+                                                                <span style="font-size: 14px;color:#444444">게시물 번호</span>
+                                                                <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
+                                                                      th:text="${boardListResponseDto.view}"></span>
+                                                                <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
+                                                                      th:text="${boardListResponseDto.createdDate}"></span>
+                                                                <span style="font-size: 14px; float:right; font-weight:bold"
+                                                                      th:text="${boardListResponseDto.getAuthor}"></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
 
-                            </table>
-                        </div>
-                    </div>
-
-                    <!--페이지이동-->
-                    <div class="row" style="margin-bottom:50px">
-                        <div class="col">
-                            <ul class="pagination justify-content-center pagination-sm" style="display:flex"
-                                th:with="start=${(boardList.number/10)*10+1},
-                                end=${start + 9 < boardList.getTotalPages() ? start + 9 : boardList.getTotalPages()}">
-
-                                <li class="page-item" th:if="${boardList.number != 0}">
-                                    <a th:href="@{/boardlist(searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                                       class="page-link" th:text="'<<'"></a>
-                                </li>
-
-                                <li class="page-item" th:if="${start > 1}">
-                                    <a th:href="@{/boardlist(page=${((boardList.number/10)*10)-10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                                       class="page-link" th:text="'<'"></a>
-                                </li>
-
-                                <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
-                                    <a th:href="@{/boardlist(page=${page - 1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                                       class="page-link" th:text="${page}">1</a>
-                                </li>
-
-                                <li class="page-item" th:if="${end < boardList.getTotalPages()}">
-                                    <a th:href="@{/boardlist(page=${(boardList.number/10)*10+10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                                       class="page-link" th:text="'>'"></a>
-                                </li>
-
-                                <li class="page-item" th:if="${boardList.number != boardList.getTotalPages()-1}">
-                                    <a th:href="@{/boardlist(page=${boardList.getTotalPages()-1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
-                                       class="page-link" th:text="'>>'"></a>
-                                </li>
-                            </ul>
-                        </div>
+                        </table>
                     </div>
                 </div>
 
+                <!--페이지이동-->
+                <div class="row" style="margin-bottom:50px">
+                    <div class="col">
+                        <ul class="pagination justify-content-center pagination-sm" style="display:flex"
+                            th:with="start=${(boardList.number/10)*10+1},
+                                end=${start + 9 < boardList.getTotalPages() ? start + 9 : boardList.getTotalPages()}">
+
+                            <li class="page-item" th:if="${boardList.number != 0}">
+                                <a th:href="@{/boardlist(searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                   class="page-link" th:text="'<<'"></a>
+                            </li>
+
+                            <li class="page-item" th:if="${start > 1}">
+                                <a th:href="@{/boardlist(page=${((boardList.number/10)*10)-10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                   class="page-link" th:text="'<'"></a>
+                            </li>
+
+                            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                                <a th:href="@{/boardlist(page=${page - 1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                   class="page-link" th:text="${page}">1</a>
+                            </li>
+
+                            <li class="page-item" th:if="${end < boardList.getTotalPages()}">
+                                <a th:href="@{/boardlist(page=${(boardList.number/10)*10+10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                   class="page-link" th:text="'>'"></a>
+                            </li>
+
+                            <li class="page-item" th:if="${boardList.number != boardList.getTotalPages()-1}">
+                                <a th:href="@{/boardlist(page=${boardList.getTotalPages()-1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                   class="page-link" th:text="'>>'"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
+
         </div>
+    </div>
 </div>
 
 </html>
