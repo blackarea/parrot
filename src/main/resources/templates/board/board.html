@@ -182,34 +182,47 @@
             align-items: center;
 
         }
+        a{
+            text-decoration: none !important;
+        }
 
-        /*댓글 추천 업*/
+
+
+        /*댓글 추천 다운*/
         .bi-caret-down-fill {
             font-size: 17px;
         }
 
-        /*댓글 추천 다운*/
+        /*댓글 추천 업*/
         .bi-caret-up-fill {
             font-size: 17px;
         }
 
         /*JS 시작*/
+
         /*테이블 tr*/
         .commentTr {
-            margin-bottom: -1px;
+            border:1px solid #e5e5e5;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+
         }
 
         /*테이블 추천 td*/
         .commentRecommendTd {
-            margin-bottom: -1px;
+            padding-top:10px;
+            padding-bottom:10px;
             text-align: center;
-            width: 40px;
-            display: block;
+            width: 70px;
+            padding:-30px;
         }
+
 
         /*테이블 내용(이름 날짜 내용..) td*/
         .commentContentTd {
-            margin-bottom: -1px;
+
+
         }
 
         /*위 테이블 내용 td안에 있는 div*/
@@ -227,14 +240,16 @@
 
         .commentDate {
             font-size: 14px;
+            color:#7f7f7f;
         }
 
         .commentContent {
+            font-size: 15px;
         }
 
         /*댓글 수정, 삭제 버튼*/
         .commentButton {
-            color: #828282;
+            color:#7f7f7f;
             font-size: 14px;
             margin-right: 10px;
         }
@@ -413,77 +428,54 @@
             <div class="recommend">
 
                 <div class="up-down">
-                    <div class="up" style="display:flex">
+                    <div class="up" style="display:flex; align-items:center">
 
-                        <div class="input-group" style="margin-right:20px">
-                            <button onclick="like()" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseExample"
-                                    style="width:50px;height:40px;display:flex;justify-content:center"
-                                    class="btn btn-outline-primary">
-                                <i class="bi bi-caret-up-fill"></i>
-                            </button>
-                            <div class="recommendButton" th:text="${boardResponseDto.recommendCount}"
-                                 style="background-color:#F99900; width:40px;height:40px">
-                            </div>
-                        </div>
+                        <button onclick="like()" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExample"
+                                style="width:50px;height:40px;display:flex;justify-content:center"
+                                class="btn btn-primary">
+                            <i class="bi bi-caret-up-fill" id="upbutton"></i>
+                        </button>
+
+                        <span style="font-size:20px;font-weight:bold;color:#696969;margin-left:20px;margin-right:20px">0</span>
+
+                        <button onclick="hate()" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExample"
+                                style="width:50px;height:40px;display:flex;justify-content:center"
+                                class="btn btn-secondary">
+                            <i class="bi bi-caret-down-fill" id="downbutton"></i>
+                        </button>
 
 
-                        <div class="input-group">
-                            <button onclick="hate()" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseExample"
-                                    style="width:50px;height:40px;display:flex;justify-content:center"
-                                    class="btn btn-outline-secondary">
-                                <i class="bi bi-caret-down-fill"></i>
-                            </button>
-                            <div class="recommendButton" th:text="${boardResponseDto.recommendCount}"
-                                 style="background-color:#6d6d6d; width:40px;height:40px">
-                            </div>
-
-                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="report">
-                <div style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:20px">
+                <div style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
                     <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" style="font-size:15px; color: #7f7f7f">수정하기</a>
                     <form th:action="@{/board/{id}(id=${boardResponseDto.id})}" th:method="delete">
-                        <button type="submit" style="font-size:15px; color: #7f7f7f; margin-right:10px">삭제하기</button>
+                        <button type="submit" style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">삭제하기</button>
                     </form>
                 </div>
 
             </div>
 
-            <div class="comment">
-                <div class="accordion" id="accordionExample" style="border:none">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    style="background:#fff"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                댓글쓰기
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                             data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="input-group mb-2 mt-2">
-                                    <input id="commentCreate" type="text" class="form-control"
-                                           placeholder="욕설, 비방, 과도한 표현은 제재의 대상이 될 수있습니다."
-                                           aria-label="Recipient's username" aria-describedby="button-addon2"
-                                           style="border: 1px solid #ced4da">
-                                    <button class="btn btn-outline-secondary" onclick="commentCreate()" type="button"
-                                            id="button-addon2">글쓰기
-                                    </button>
+            <div class="comment" style="margin-top:20px">
+
+
+               <div class="input-group" style="height:100px">
+                    <textarea id="commentCreate" type="text" class="form-control"
+                           placeholder="욕설, 비방, 과도한 표현은 제재의 대상이 될 수 있습니다."
+                           aria-label="Recipient's username" aria-describedby="button-addon2"
+                              style="border: 1px solid #ced4da;resize: none"></textarea>
+                                <button class="btn btn-outline-primary" onclick="commentCreate()" type="button"
+                                        id="button-addon2">글쓰기
+                                </button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-
-                <div class="comment-view">
-                    <table class="table table-hover" id="commentTable">
+                <div class="comment-view" style="margin-bottom:50px">
+                    <table id="commentTable">
 
                     </table>
                 </div>

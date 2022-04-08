@@ -90,7 +90,7 @@
 
         .bi-heart-fill {
 
-            color: #D8D8D8;
+            color: #7f7f7f;
         }
 
         .bi-heart-fill:hover {
@@ -99,7 +99,7 @@
         }
 
         .bi-pencil-square {
-            color: #7c7c7c;
+            color: #7f7f7f;
             font-size: 2em;
         }
 
@@ -118,6 +118,7 @@
         }
 
 
+
     </style>
 </head>
 
@@ -129,16 +130,13 @@
         <div class="main">
 
             <div class="top">
-                <div class="top-bar" style="height:60px;width:830px;display:flex">
+                <div class="top-bar" style="height:60px; align-items:center">
+
                     <span id="create"
                           style="font-size: 30px;margin-left:10px;color:#444444;font-weight:bold">#이야기 광장</span>
 
-
-                </div>
-
-                <div class="assign">
                     <button sec:authorize="isAuthenticated()" onclick="location.href='/board/create'" class="serachimg"
-                            type="submit">
+                            type="submit" style="float:right">
                         <i class="bi bi-pencil-square"></i>
                     </button>
 
