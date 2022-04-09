@@ -16,7 +16,6 @@
         }
 
 
-
         #header {
             width: 800px;
             background: #f7f7f7;
@@ -34,6 +33,14 @@
             align-items: center;
         }
 
+        .recommendCount{
+            font-size:20px;
+            font-weight:bold;
+            color:#696969;
+            margin-left:20px;
+            margin-right:20px;
+        }
+
         .recommendButton {
             border-bottom-right-radius: 5px;
             border-top-right-radius: 5px;
@@ -47,7 +54,6 @@
             width: 800px;
             height: 60px;
             background-color: #f7f7f7;
-
         }
 
         .article {
@@ -182,11 +188,10 @@
             align-items: center;
 
         }
-        a{
+
+        a {
             text-decoration: none !important;
         }
-
-
 
         /*댓글 추천 다운*/
         .bi-caret-down-fill {
@@ -202,7 +207,7 @@
 
         /*테이블 tr*/
         .commentTr {
-            border:1px solid #e5e5e5;
+            border: 1px solid #e5e5e5;
             border-left: none;
             border-right: none;
             border-top: none;
@@ -211,11 +216,11 @@
 
         /*테이블 추천 td*/
         .commentRecommendTd {
-            padding-top:10px;
-            padding-bottom:10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
             text-align: center;
             width: 70px;
-            padding:-30px;
+            padding: -30px;
         }
 
 
@@ -240,7 +245,7 @@
 
         .commentDate {
             font-size: 14px;
-            color:#7f7f7f;
+            color: #7f7f7f;
         }
 
         .commentContent {
@@ -249,21 +254,33 @@
 
         /*댓글 수정, 삭제 버튼*/
         .commentButton {
-            color:#7f7f7f;
+            color: #7f7f7f;
             font-size: 14px;
             margin-right: 10px;
+        }
+
+        .commentTextarea{
+            resize: none;
+            width: 730px;
+            height: 70px;
         }
     </style>
     <script th:inline="javascript">
         $(function () {
             printCommentList();
+            printBoard();
+            recommendCheck();
         });
+
+        function printBoard() {
+            $('#contents').html([[${boardResponseDto.content}]]);
+        }
 
         function printCommentList() {
             let url = "/board/" + [[${boardResponseDto.id}]] + "/comment";
             $.get(url, function (response) {
                 let table = document.getElementById('commentTable');
-                $('.comment-contents').remove();
+                $('.commentTr').remove();
                 $.each(response, function (index, item) {
                     let commentTr = document.createElement('tr');
                     commentTr.setAttribute("class", "commentTr");
@@ -309,21 +326,19 @@
                     if (item.author == [[${userResponseDto.username}]]) {
                         let commentUpdate = document.createElement('span');
                         let commentDelete = document.createElement('span');
-                        commentUpdate.setAttribute("class", "commentButton");
-                        commentDelete.setAttribute("class", "commentButton");
+                        commentUpdate.setAttribute("class", "commentButton " + item.id);
+                        commentDelete.setAttribute("class", "commentButton " + item.id);
 
                         commentUpdate.innerText = "수정";
                         commentDelete.innerText = "삭제";
                         commentContentDiv.appendChild(commentUpdate);
                         commentContentDiv.appendChild(commentDelete);
                         commentUpdate.addEventListener("click", function () {
-                            updateComment(item.id);
+                            updateComment(item.id, commentContent);
                         });
                         commentDelete.addEventListener("click", function () {
                             deleteComment(item.id);
                         })
-                    } else {
-                        let comment = document.createElement('span');
                     }
 
                     commentContentTd.appendChild(commentContentDiv);
@@ -336,8 +351,26 @@
             })
         };
 
+        function recommendCheck(){
+            $.ajax({
+                type: 'POST',
+                url: '/recommendcheck/' + [[${boardResponseDto.id}]]
+            }).done(function (response) {
+                if(response.recommend == 'yes'){
+                    if(response.point == '1'){
+                        let likeButton = document.getElementById('boardLikeButton');
+                        likeButton.setAttribute("style", 'background-color: #FFB830; color:white; width:50px')
+                    }else {
+                        let hateButton = document.getElementById('boardHateButton');
+                        hateButton.setAttribute("style", 'background-color: #6c757d; color:white; width:50px')
+                    }
+                }
+            });
+        }
+
         function commentCreate() {
             let commentContent = document.getElementById("commentCreate").value;
+            $('#commentCreate').val('');
             let data = {
                 chat: commentContent
             }
@@ -349,13 +382,48 @@
                 contentType: "application/json;charset=UTF-8",
             }).done(function (response) {
                 printCommentList();
+                changeCommentCount();
             }).fail(function () {
                 console.log("fail");
             });
         };
 
-        function updateComment() {
+        function updateComment(id, commentContentDiv) {
+            let updateTextarea = document.createElement('textarea');
+            updateTextarea.value = commentContentDiv.innerText;
+            updateTextarea.setAttribute('class', 'commentTextarea');
 
+            let tempText = commentContentDiv.innerText;
+            commentContentDiv.innerText = '';
+            $('.'+id).remove();
+
+            let commentUpdate = document.createElement('span');
+            let commentCancel = document.createElement('span');
+            commentUpdate.setAttribute("class", "commentButton " + id);
+            commentCancel.setAttribute("class", "commentButton " + id);
+
+            commentUpdate.innerText = "수정";
+            commentCancel.innerText = "취소";
+            commentUpdate.addEventListener("click", function () {
+                let data = {
+                    commentContent : updateTextarea.value
+                }
+                $.ajax({
+                    type: 'PUT',
+                    url: '/board/' + [[${boardResponseDto.id}]] + '/comment/' + id,
+                    data: JSON.stringify(data),
+                    contentType: "application/json;charset=UTF-8",
+                }).done(function (response) {
+                    printCommentList();
+                });
+            });
+            commentCancel.addEventListener("click", function () {
+                printCommentList();
+            })
+
+            commentContentDiv.appendChild(updateTextarea);
+            commentContentDiv.appendChild(commentUpdate);
+            commentContentDiv.appendChild(commentCancel);
         };
 
         function deleteComment(comment_id) {
@@ -364,29 +432,49 @@
                 url: '/board/' + [[${boardResponseDto.id}]] + '/comment/' + comment_id,
             }).done(function (response) {
                 printCommentList();
+                changeCommentCount();
             }).fail(function () {
             });
         };
 
+        function changeCommentCount() {
+            $.ajax({
+                type: 'GET',
+                url: '/board/' + [[${boardResponseDto.id}]] + '/comment'
+            }).done(function (response) {
+                document.getElementById('commentCountSpan').innerText = response.length;
+            });
+        }
+
         function like() {
+            let recommendCountSpan = document.getElementById('recommendCount');
+
             $.ajax({
                 type: 'POST',
                 url: '/like/' + [[${boardResponseDto.id}]]
             }).done(function (response) {
-                window.location.replace("/board/" + [[${boardResponseDto.id}]]);
-            }).fail(function () {
-                console.log("like fail");
+                if(response.canRecommend == true){
+                    recommendCountSpan.innerText = response.recommendCount;
+                }else{
+                    alert('추천을 수정할 수 없습니다.');
+                }
+                recommendCheck();
             });
         };
 
         function hate() {
+            let recommendCountSpan = document.getElementById('recommendCount');
+
             $.ajax({
                 type: 'POST',
                 url: '/hate/' + [[${boardResponseDto.id}]]
             }).done(function (response) {
-                window.location.replace("/board/" + [[${boardResponseDto.id}]]);
-            }).fail(function () {
-                console.log("hate fail");
+                if(response.canRecommend == true){
+                    recommendCountSpan.innerText = response.recommendCount;
+                }else{
+                    alert('추천을 수정할 수 없습니다.');
+                }
+                recommendCheck();
             });
         };
 
@@ -411,68 +499,64 @@
 
                         <div class="bottomright">
                             <span id="view">조회&nbsp<span th:text="${boardResponseDto.view}"></span></span>
-                            <span id="commentCount">댓글&nbsp<span>142567</span></span>
+                            <span id="commentCount">댓글&nbsp
+                                <span id="commentCountSpan" th:text="${boardResponseDto.commentCount}"></span></span>
                         </div>
                     </div>
                 </div>
             </div>
 
-
             <div class="main">
                 <div id="contents">
-                    <span th:text="${boardResponseDto.content}"></span>
+
                 </div>
             </div>
             <hr id="line2">
 
             <div class="recommend">
-
                 <div class="up-down">
-                    <div class="up" style="display:flex; align-items:center">
+                    <button id="boardLikeButton" onclick="like()" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample"
+                            style="width:50px;height:40px;display:flex;justify-content:center"
+                            class="btn btn-outline-primary">
+                        <i class="bi bi-caret-up-fill"></i>
+                    </button>
 
-                        <button onclick="like()" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseExample"
-                                style="width:50px;height:40px;display:flex;justify-content:center"
-                                class="btn btn-primary">
-                            <i class="bi bi-caret-up-fill" id="upbutton"></i>
-                        </button>
+                    <span id="recommendCount" class="recommendCount" th:text="${boardResponseDto.recommendCount}"></span>
 
-                        <span style="font-size:20px;font-weight:bold;color:#696969;margin-left:20px;margin-right:20px">0</span>
-
-                        <button onclick="hate()" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseExample"
-                                style="width:50px;height:40px;display:flex;justify-content:center"
-                                class="btn btn-secondary">
-                            <i class="bi bi-caret-down-fill" id="downbutton"></i>
-                        </button>
-
-
-                    </div>
+                    <button id="boardHateButton" onclick="hate()" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseExample"
+                            style="width:50px;height:40px;display:flex;justify-content:center"
+                            class="btn btn-outline-secondary">
+                        <i class="bi bi-caret-down-fill"></i>
+                    </button>
                 </div>
             </div>
 
             <div class="report">
                 <div style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
-                    <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}" style="font-size:15px; color: #7f7f7f">수정하기</a>
+                    <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}"
+                       style="font-size:15px; color: #7f7f7f">수정하기</a>
                     <form th:action="@{/board/{id}(id=${boardResponseDto.id})}" th:method="delete">
-                        <button type="submit" style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">삭제하기</button>
+                        <button type="submit"
+                                style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
+                            삭제하기
+                        </button>
                     </form>
                 </div>
 
             </div>
 
             <div class="comment" style="margin-top:20px">
-
-
-               <div class="input-group" style="height:100px">
+                <div class="input-group" style="height:100px">
                     <textarea id="commentCreate" type="text" class="form-control"
-                           placeholder="욕설, 비방, 과도한 표현은 제재의 대상이 될 수 있습니다."
-                           aria-label="Recipient's username" aria-describedby="button-addon2"
+                              placeholder="욕설, 비방, 과도한 표현은 제재의 대상이 될 수 있습니다."
+                              aria-label="Recipient's username" aria-describedby="button-addon2"
                               style="border: 1px solid #ced4da;resize: none"></textarea>
-                                <button class="btn btn-outline-primary" onclick="commentCreate()" type="button"
-                                        id="button-addon2">글쓰기
-                                </button>
-                                </div>
+                    <button class="btn btn-outline-primary" onclick="commentCreate()" type="button"
+                            id="button-addon2">글쓰기
+                    </button>
+                </div>
 
                 <div class="comment-view" style="margin-bottom:50px">
                     <table id="commentTable">
@@ -480,7 +564,6 @@
                     </table>
                 </div>
             </div>
-
 
         </div>
 

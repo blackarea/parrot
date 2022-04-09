@@ -26,6 +26,10 @@ public class Board extends BaseTimeEntity{
 
     @Column(columnDefinition = "integer default 0")
     private int view;
+
+    @Column(columnDefinition = "integer default 0")
+    private int commentCount;
+
     @Column(name = "recommend_count", columnDefinition = "integer default 0")
     private int recommendCount;
 
@@ -55,6 +59,10 @@ public class Board extends BaseTimeEntity{
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void updateCommentCount(int point){
+        this.commentCount += point;
     }
 
     public void updateRecommendCount(int point){
