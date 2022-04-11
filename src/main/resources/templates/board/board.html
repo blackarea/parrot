@@ -351,6 +351,20 @@
             })
         };
 
+        function deleteBoard() {
+            let check = confirm("정말로 삭제하시겠습니까?");
+            if(check){
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/board/' + [[${boardResponseDto.id}]]
+                }).done(function (response) {
+                    window.location.replace('/boardlist');
+                }).fail(function (e) {
+                    console.log(e);
+                });
+            }
+        }
+
         function recommendCheck(){
             $.ajax({
                 type: 'POST',
@@ -433,7 +447,6 @@
             }).done(function (response) {
                 printCommentList();
                 changeCommentCount();
-            }).fail(function () {
             });
         };
 
@@ -537,12 +550,10 @@
                 <div style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
                     <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}"
                        style="font-size:15px; color: #7f7f7f">수정하기</a>
-                    <form th:action="@{/board/{id}(id=${boardResponseDto.id})}" th:method="delete">
-                        <button type="submit"
-                                style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
-                            삭제하기
-                        </button>
-                    </form>
+                    <button type="submit" onclick="deleteBoard()"
+                            style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
+                        삭제하기
+                    </button>
                 </div>
 
             </div>

@@ -4,12 +4,14 @@
 
 <head>
     <style>
-    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-    @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;}
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
         .page ul li {
             list-style-type: none;
@@ -17,121 +19,169 @@
             margin: 10px;
         }
 
+        .body {
+            font-family: 'NanumSquare';
+            transform: rotate(0.04deg);
+        }
 
-        #chat input, #chat span{
-            display: block;
+        #chatlog {
+            height: 800px;
+            overflow: auto;
         }
-        .body{
-            font-family:'NanumSquare';
+
+        #chatlog::-webkit-scrollbar {
+            width: 6px;
         }
-        .top{
-            height:60px;
+
+        #chatlog::-webkit-scrollbar-thumb {
+            height: 10%;
+            background-color: #7f7f7f;
+            border-radius: 10px;
         }
-        #chatlog{
-            height: 600px;
-            background:#f9f9f9;
+
+        #chatlog::-webkit-scrollbar-track {
+            background-color: #e5e5e5;
         }
-        #conver{
+
+        #conver {
             height: 70px;
-            background:#f5f5f5;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: right;
+            align-items: center;
         }
-        .log{
+
+        #chatlogbox {
+            display: flex;
+            width: 90%;
+            margin: auto;
+            flex-direction: column;
+        }
+
+        /* JS */
+        .chatLeftDiv {
             height: 100px;
-
-        }
-        .leftbox{
-            background:#fff;
-            width:100%;
-            height:50px;
-
+            display: flex;
+            align-items: center;
         }
 
+        .chatRightDiv {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+        }
+
+
+        .leftbox {
+            float: left;
+            display: block;
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 60px;
+            line-height: 60px;
+            white-space: nowrap;
+            background: #FFB830;
+            border-radius: 0 10px 10px 10px;
+        }
+
+        .rightbox {
+            float: right;
+            padding-left: 10px;
+            padding-right: 10px;
+            display: block;
+            height: 60px;
+            line-height: 60px;
+            white-space: nowrap;
+            background: #444;
+            border-radius: 2em;
+        }
+
+        .aicon {
+            padding: 8px;
+            font-size: 18px;
+        }
+
+        .usercon {
+            padding: 8px;
+            font-size: 18px;
+            color: #fff;
+        }
     </style>
 
     <script>
         function chat() {
-            let inputValue = document.getElementById("inputChat").value;
-            let data = {
-                chat : inputValue
-            }
-            let chatDiv = document.getElementById("chat");
-            let receiveChat = document.createElement("span");
-            let pastSpan = document.createElement("span");
-            $('input').remove();
-            pastSpan.innerText = inputValue;
+            let chatLogBox = document.getElementById('chatlogbox');
 
-            let newInput = document.createElement("input");
-            newInput.setAttribute("id", "inputChat");
+            let userInput = document.getElementById('userInput');
+            let data = {
+                chat : userInput.value
+            }
 
             $.ajax({
                 type:'POST',
                 url:'/app/chat',
                 data:JSON.stringify(data),
-                contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
+                contentType:"application/json;charset=UTF-8",
             }).done(function (response) {
-                receiveChat.innerText = response.chat;
-            }).fail(function () {
-                console.log("fail");
-                receiveChat.innerText = "안녕하세요";
+                userDiv(chatLogBox, userInput.value);
+                parrotDiv(chatLogBox, response.chat);
+                userInput.value = '';
+                userInput.focus();
+                $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
             });
+        };
+        function userDiv(chatLogBox, text) {
+            let chatRightDiv = document.createElement('div');
+            chatRightDiv.setAttribute('class', 'chatRightDiv');
 
-            chatDiv.appendChild(pastSpan);
-            chatDiv.appendChild(receiveChat);
-            chatDiv.appendChild(newInput);
-        }
+            let rightDiv = document.createElement('div');
+            rightDiv.setAttribute('class', 'rightbox');
+
+            let rightSpan = document.createElement('span');
+            rightSpan.setAttribute('class', 'usercon');
+            rightSpan.innerText = text;
+
+            rightDiv.appendChild(rightSpan);
+            chatRightDiv.appendChild(rightDiv);
+
+            chatLogBox.appendChild(chatRightDiv);
+        };
+        function parrotDiv(chatLogBox, text) {
+            let chatLeftDiv = document.createElement('div');
+            chatLeftDiv.setAttribute('class', 'chatLeftDiv');
+
+            let leftDiv = document.createElement('div');
+            leftDiv.setAttribute('class', 'leftbox');
+
+            let leftSpan = document.createElement('span');
+            leftSpan.setAttribute('class', 'aicon');
+            leftSpan.innerText = text;
+
+            leftDiv.appendChild(leftSpan);
+            chatLeftDiv.appendChild(leftDiv);
+
+            chatLogBox.appendChild(chatLeftDiv);
+        };
 
     </script>
 </head>
 
 <div layout:fragment="content">
 
-    <div class="body" style="margin: auto; width: 830px; padding-top:70px">
-
-        <div class="top">
-
-                <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#대화하기</span>
-        </div>
-
-
+    <div class="body" style="margin: auto; width: 1000px; padding-top:50px">
 
         <div id="chatlog">
-            <div class="log">
-                <div class="leftbox">
-                    <span>123</span>
-                </div>
-            </div>
-
-            <div class="log">
-
-            </div>
-
-            <div class="log">
-
-            </div>
-
-            <div class="log">
-
-            </div>
-
-            <div class="log">
-
-            </div>
-
-            <div class="log">
+            <div id="chatlogbox">
 
             </div>
         </div>
-        <div id="conver">
 
+        <div id="conver" style="">
+            <input class="form-control me-2" style="border-radius: 2em; height:50px; width:400px; border:none;"
+                   id="userInput" onkeypress="if(window.event.keyCode == 13){chat()}" placeholder="대화말을 입력해보세요">
         </div>
 
-
-
-    <!--<div id="chat">
-        <button class="btn btn-info" onclick="chat()">전송</button>
-
-        <input id="inputChat">
-    </div>-->
     </div>
 </div>
 
