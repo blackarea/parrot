@@ -4,6 +4,7 @@
 
 <head>
     <style>
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
     @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
     @font-face {
     font-family: 'NanumSquareRound';
@@ -11,40 +12,90 @@
     font-weight: normal;
     font-style: normal;}
 
-        .page ul li {
-            list-style-type: none;
-            float: left;
-            margin: 10px;
-        }
-
-
-        #chat input, #chat span{
-            display: block;
-        }
         .body{
             font-family:'NanumSquare';
+            transform: rotate(0.04deg);
         }
         .top{
             height:60px;
         }
         #chatlog{
-            height: 600px;
-            background:#f9f9f9;
+            height: 800px;
+            overflow: auto;
+
         }
+        #chatlog::-webkit-scrollbar{
+            width: 6px;
+        }
+        #chatlog::-webkit-scrollbar-thumb{
+            height: 10%;
+            background-color: #7f7f7f;
+            border-radius: 10px;
+        }
+
+        #chatlog::-webkit-scrollbar-track{
+            background-color: #f1f1f1;
+        }
+
         #conver{
             height: 70px;
-            background:#f5f5f5;
-        }
-        .log{
-            height: 100px;
+            background:#f1f1f1;
+            display: flex;
+            justify-content:right;
+            align-items: center;
 
         }
+
         .leftbox{
-            background:#fff;
-            width:100%;
-            height:50px;
+            float:left;
+            display:block;
+            padding-left:10px;
+            padding-right:10px;
+            height:60px;
+            line-height:60px;
+            white-space: nowrap;
+            background:#FFB830;
+            border-radius:0 10px 10px 10px;
+        }
+        .rightbox{
+            float:right;
+            padding-left:10px;
+            padding-right:10px;
+            display:block;
+            height:60px;
+            line-height:60px;
+            white-space: nowrap;
+            background:#444;
+            border-radius:10px 0px 10px 10px;
+        }
+        #chatlogbox{
+            display:flex;
+            width:90%;
+            margin: auto;
+            flex-direction:column;
+        }
+        .aicon{
+            padding:8px;
+            font-size:18px;
+            color:#fff;
+        }
+        .usercon{
+            padding:8px;
+            font-size:18px;
+            color:#fff;
+        }
+        #startcomment{
+            width:230px;
+            display:flex;
+            align-items:center;
+            color:#444;
+            justify-content:center;
+            height:38px;
+            border-radius:2em;
+            background:#e5e5e5;
 
         }
+
 
     </style>
 
@@ -85,44 +136,63 @@
 
 <div layout:fragment="content">
 
-    <div class="body" style="margin: auto; width: 830px; padding-top:70px">
+    <div class="body" style="margin: auto; width: 1000px; padding-top:50px">
 
         <div class="top">
 
                 <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#대화하기</span>
         </div>
 
+        <div style="height:100px;background:#f1f1f1;border: 1px solid #f7f7f7">
+            <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
 
-
-        <div id="chatlog">
-            <div class="log">
-                <div class="leftbox">
-                    <span>123</span>
-                </div>
-            </div>
-
-            <div class="log">
-
-            </div>
-
-            <div class="log">
-
-            </div>
-
-            <div class="log">
-
-            </div>
-
-            <div class="log">
-
-            </div>
-
-            <div class="log">
+                <span style="font-size:14px">※앵무새는 욕설과 비인도적인 말을 싫어합니다.</span>
+                <span style="font-size:14px">※개인정보,사생활 침해에 해당하는 정보를 입력하면 이용에 지장이 있을 수 있습니다</span>
+                <span style="font-size:14px">※광고 및 홍보글의 작성을 금지합니다</span>
 
             </div>
         </div>
-        <div id="conver">
 
+        <div id="chatlog">
+            <div id="chatlogbox">
+
+                <div style="height:150px;display:flex; align-items:center; justify-content:center">
+                    <div id="startcomment" style=""><span>심심이와 대화를 시작하세요</span></div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center">
+                <div class="leftbox">
+                    <span class="aicon">안녕안녕하세요</span>
+                </div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center;justify-content:right">
+                <div class="rightbox">
+                    <span class="usercon">안녕안녕하세요</span>
+                </div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center">
+                    <div class="leftbox">
+                        <span class="aicon">가나다라마바사아자차카가타리가리가리이게리아에리히</span>
+                    </div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center;justify-content:right">
+                    <div class="rightbox">
+                        <span class="usercon">안녕안녕하세요</span>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+        <div id="conver" style="margin-bottom:50px">
+            <input class="form-control"style="border-radius: 2em; height:50px; width:450px; border:none;margin-right:10px" type="search" placeholder="대화말을 입력해보세요">
         </div>
 
 

@@ -4,8 +4,111 @@
 
 <head>
     <style>
-        #teach input, #teach span{
-            display: block;
+    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+    @font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;}
+
+
+        .body{
+            font-family:'NanumSquare';
+            transform: rotate(0.04deg);
+        }
+        .top{
+            height:60px;
+        }
+        #chatlog{
+            height: 300px;
+
+        }
+        #chatlog::-webkit-scrollbar{
+            width: 6px;
+        }
+        #chatlog::-webkit-scrollbar-thumb{
+            height: 10%;
+            background-color: #7f7f7f;
+            border-radius: 10px;
+        }
+
+        #chatlog::-webkit-scrollbar-track{
+            background:#f1f1f1;
+        }
+
+        #conver{
+            height: 70px;
+            background:#f1f1f1;
+            display: flex;
+            justify-content:center;
+            align-items: center;
+        }
+
+        .leftbox{
+            display:block;
+            padding-left:10px;
+            padding-right:10px;
+            height:60px;
+            line-height:60px;
+            white-space: nowrap;
+            background:#FFB830;
+            border-radius:0 10px 10px 10px;
+        }
+        .rightbox{
+            padding-left:10px;
+            padding-right:10px;
+            display:block;
+            height:55px;
+            line-height:55px;
+            white-space: nowrap;
+            background:#444;
+            border-radius:10px 0px 10px 10px;
+        }
+        #chatlogbox{
+            display:flex;
+            width:90%;
+            margin: auto;
+            flex-direction:column;
+        }
+        .aicon{
+            padding:8px;
+            font-size:18px;
+        }
+        .usercon{
+            padding:8px;
+            font-size:18px;
+            color:#fff;
+        }
+        .userinput{
+            border:none;
+            color:#fff;
+            padding-left:20px;
+            padding-right:20px;
+            height:55px;
+            font-size:18px;
+            line-height:55px;
+            white-space: nowrap;
+            background:#444;
+            width:500px;
+            border-radius:10px 0px 10px 10px;
+        }
+        .userinput:focus{
+            outline:none;
+        }
+        .aiinput{
+            border:2px solid #ffb830;
+            color:#444;
+            padding-left:20px;
+            padding-right:20px;
+            height:55px;
+            font-size:18px;
+            line-height:55px;
+            white-space: nowrap;
+            width:500px;
+            border-radius:0px 10px 10px 10px;
+        }
+        .aiinput:focus{
+            outline:none;
         }
     </style>
 
@@ -62,13 +165,86 @@
 
 <div layout:fragment="content">
 
-    <div id="teach">
-        <button class="btn btn-info" onclick="teach()">전송</button>
+    <div class="body" style="margin: auto; width: 1000px; padding-top:50px">
 
+        <div class="top">
+
+            <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#가르치기(긍정부정)</span>
+        </div>
+
+        <div style="height:100px;background:#f1f1f1;border: 1px solid #f7f7f7">
+            <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
+
+                <span style="font-size:14px">※무분별한 욕설 및 인종차별 언행은 계정정지의 대상입니다.</span>
+                <span style="font-size:14px">※이용을 방해하거나 지속적인 도배성 게시글 작성을 금지합니다.</span>
+                <span style="font-size:14px">※광고 및 홍보글의 작성을 금지합니다</span>
+
+            </div>
+        </div>
+
+        <div id="chatlog">
+            <div id="chatlogbox">
+
+                <div style="height:200px;display:flex; align-items:center;justify-content:left">
+                    <div style="text-align:left">
+                        <input class="aiinput">
+                        <div style="display:flex; align-items:center;margin-top:10px">
+                            <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">1</span>
+                            <span style="font-size:18px">앵무새가 이렇게 물어봤을 때</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center;justify-content:right">
+                    <div style="text-align:right">
+                        <div class="rightbox"><span class="usercon">ㅇㅇ,그래,응,맞아,네</span></div>
+                        <span style="font-size:18px;display:block;margin-top:10px">라고 내가 말을 한다면</span>
+                    </div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center;justify-content:left">
+                    <div style="text-align:left">
+                        <input class="aiinput">
+                        <div style="display:flex; align-items:center;margin-top:10px">
+                            <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">2</span>
+                            <span style="font-size:18px">이렇게 대답하고</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center;justify-content:right">
+                    <div style="text-align:right">
+                        <div class="rightbox"><span class="usercon">ㄴㄴ,아니,아니야,아뇨</span></div>
+                        <span style="font-size:18px;display:block;margin-top:10px">라고 내가 말을 한다면</span>
+                    </div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center;justify-content:left">
+                    <div style="text-align:left">
+                        <input class="aiinput">
+                        <div style="display:flex; align-items:center;margin-top:10px">
+                            <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">3</span>
+                            <span style="font-size:18px">이렇게 대답합니다</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height:100px;display:flex; align-items:center; justify-content:center">
+                    <button type="submit" class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다</button>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+   <!-- <div id="teach">
+        <button class="btn btn-info" onclick="teach()">전송</button>
         <input id="inputQuestion">
         <input id="inputPositive">
         <input id="inputNegative">
-    </div>
+    </div>-->
 
 </div>
 

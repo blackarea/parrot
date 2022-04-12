@@ -36,7 +36,7 @@
             width: 1000px;
             height: 500px;
             display: flex;
-            border: 1px solid #ced4da;
+            border-left: 1px solid #ced4da;
             align-items: center;
             background-color: #FFFFFF
 
@@ -109,11 +109,11 @@
             height: 500px;
             text-align: center;
         }
-        a {
+        #createaccount {
             color:#444444;
             text-decoration: none;
         }
-        a:hover {
+        #createaccount:hover {
             color : #ffb830;
             text-decoration: none;
         }
@@ -148,7 +148,7 @@
                                 </button>
                                 <!--<span id="forget">아이디, 혹은 비밀번호를 잊으셨나요?</span>-->
                             </div>
-                            <div id="account" style="margin-top: 40px;"><a th:href="@{/signup}">당신의 계정을 만들어 보세요</a>
+                            <div id="account" style="margin-top: 40px;"><a id="createaccount" th:href="@{/signup}">당신의 계정을 만들어 보세요</a>
                             </div>
                         </form>
                     </div>
