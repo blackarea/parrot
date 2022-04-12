@@ -1,7 +1,6 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.Board;
-import com.graduation.parrot.domain.Recommend;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
 import com.graduation.parrot.repository.BoardRepository;
@@ -13,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,6 +39,7 @@ class RecommendServiceTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("추천")
     void recommendTest(){
         User user = User.builder()
@@ -54,9 +56,13 @@ class RecommendServiceTest {
         Long board_id = boardService.create(build, savedUser);
 
         Board board = boardRepository.findById(board_id).get();
-        //추천
+        // 추천
+        recommendService.recommend(savedUser, board_id, 1);
 
-        //todo
+        assertThat(board.getRecommendCount()).isEqualTo(1);
+        Map<String, String> map = recommendService.alreadyRecommendCheck(savedUser, board_id);
+        assertThat(map.get("recommend")).isEqualTo("yes");
+
     }
 
 }

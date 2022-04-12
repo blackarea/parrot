@@ -16,9 +16,8 @@ public class WebSocketController {
 
     @PostMapping("/app/chat")
     public Map<String, String> chat(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
-        log.info("chatParameter" + chatParameter.get("chat"));
         String requestChat = chatParameter.get("chat");
-        log.info("requestChat : " + requestChat);
+        log.info("webBrowser to spring message : " + requestChat);
 
         WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/chat"), new Draft_6455());
         webSocketUtil.connectBlocking();
@@ -31,8 +30,5 @@ public class WebSocketController {
         responseChat.put("chat", pythonMessage);
 
         return responseChat;
-        /* ws://localhost:8888/ws/teach
-        ws://localhost:8888/ws/teachPolar
-        ws://localhost:8888/ws/teachFree*/
     }
 }

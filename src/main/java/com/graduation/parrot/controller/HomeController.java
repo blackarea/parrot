@@ -6,6 +6,7 @@ import com.graduation.parrot.domain.User;
 import com.graduation.parrot.repository.BoardRepository;
 import com.graduation.parrot.repository.CommentRepository;
 import com.graduation.parrot.repository.UserRepository;
+import com.graduation.parrot.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,11 +22,12 @@ public class HomeController {
     @Autowired private UserRepository userRepository;
     @Autowired private BoardRepository boardRepository;
     @Autowired private CommentRepository commentRepository;
+    @Autowired private CommentService commentService;
     @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
     public void createUserAndBoard(){
-/*            IntStream.rangeClosed(1, 210).forEach(i -> {
+        /*IntStream.rangeClosed(1, 210).forEach(i -> {
 
             User user = User.builder()
                     .login_id("login" + i)
@@ -34,10 +36,9 @@ public class HomeController {
                     .build();
             userRepository.save(user);
 
-            Board board = new Board("title"+i, "content", user);
+            Board board = new Board("title" + i, "content" + i, user);
             boardRepository.save(board);
-            Comment comment = Comment.builder().user(user).board(board).content("comment" + i).build();
-            commentRepository.save(comment);
+            commentService.create(user, board.getId(), "comment" + i);
         });*/
     }
 }

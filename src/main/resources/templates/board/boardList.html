@@ -249,6 +249,8 @@
                                                                 <a style="font-size: 16px; vertical-align:top; font-weight:bold; color:#444444"
                                                                    th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
                                                                    th:text="${boardListResponseDto.title}"></a>
+                                                                <span th:if="${boardListResponseDto.commentCount} != 0"
+                                                                      th:text="'['+${boardListResponseDto.commentCount}+']'"></span>
                                                             </div>
                                                         </div>
                                                         <!--아랫 줄-->

@@ -55,6 +55,34 @@
         }
 
     </style>
+    <link th:href="@{/css/summernote/summernote-lite.css}" rel="stylesheet">
+    <script th:src="@{/js/summernote/summernote-lite.js}"></script>
+    <script th:src="@{/js/summernote/lang/summernote-ko-KR.js}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 500,
+                focus: true,
+                lang: "ko-KR",
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['style', ['bold', 'italic', 'underline','strikethrough']],
+                    ['color', ['forecolor','color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']],
+                    ['insert',['picture','link','video']]
+                ],
+                fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+                fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+                disableResizeEditor: true,
+            });
+        });
+        $('.note-statusbar').hide();
+
+    </script>
 </head>
 
 <div layout:fragment="content">
@@ -83,43 +111,8 @@
 
                         </div>
                     </div>
-                    <div class="textedit"
-                         style="height:60px;background:#f9f9f9;border: 1px solid #e5e5e5;margin-bottom:-1px;">
 
-                        <div style="display:flex;flex-direction: column;align-items:center;margin-left:20px">
-                            <button>
-                                <i class="bi bi-card-image"></i>
-                            </button>
-
-                            <span style="font-size:11px">이미지</span>
-                        </div>
-
-                        <div style="display:flex;flex-direction: column;align-items:center;margin-left:20px">
-                            <button>
-                                <i class="bi bi-card-image"></i>
-                            </button>
-                            <span style="font-size:11px">이미지</span>
-                        </div>
-
-                        <div style="display:flex;flex-direction: column;align-items:center;margin-left:20px">
-                            <button>
-                                <i class="bi bi-card-image"></i>
-                            </button>
-                            <span style="font-size:11px">이미지</span>
-                        </div>
-
-                        <div style="display:flex;flex-direction: column;align-items:center;margin-left:20px;border-color:#E5E5E5">
-                            <button>
-                                <i class="bi bi-card-image"></i>
-                            </button>
-                            <span style="font-size:11px">이미지</span>
-                        </div>
-
-                        <!--<input type="file" class="form-control" style="width:200px;border-radius:0;border-color:#E5E5E5" id="inputGroupFile01">-->
-
-                    </div>
-                    <textarea name="content" type="text" class="form-control" placeholder="내용을 입력하세요"
-                              style="resize: none; height:500px;color:#444444;border-radius:0;border-color:#E5E5E5;"></textarea>
+                    <textarea id="summernote" name="content" type="text" class="form-control" placeholder="내용을 입력하세요"></textarea>
                     <div style="text-align:right">
                         <button type="submit" class="btn btn-primary" style="height:38px; margin-top:20px">글 등록</button>
                         <a href="/boardlist" class="btn btn-secondary" style="height:38px; margin-top:20px">취소

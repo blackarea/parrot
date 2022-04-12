@@ -32,12 +32,14 @@ public class CommentController {
     }
 
     @PutMapping("/{comment_id}")
-    public void updateComment(@PathVariable String board_id, @PathVariable Long comment_id, @RequestBody String content){
-        commentService.update(comment_id, content);
+    public void updateComment(@PathVariable String board_id, @PathVariable Long comment_id,
+                              @RequestBody Map<String, String> content){
+        System.out.println("content.get(\"commentContent\") = " + content.get("commentContent"));
+        commentService.update(comment_id, content.get("commentContent"));
     }
 
     @DeleteMapping("/{comment_id}")
-    public void deleteComment(@PathVariable String board_id, @PathVariable Long comment_id){
-        commentService.delete(comment_id);
+    public void deleteComment(@PathVariable Long board_id, @PathVariable Long comment_id){
+        commentService.delete(board_id, comment_id);
     }
 }

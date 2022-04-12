@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 import static com.graduation.parrot.service.RecommendServiceImpl.HATE;
 import static com.graduation.parrot.service.RecommendServiceImpl.LIKE;
 
@@ -25,5 +27,10 @@ public class RecommendController {
     @PostMapping("/hate/{board_id}")
     public RecommendDto hate(@PathVariable Long board_id, @AuthenticationPrincipal PrincipalDetails principalDetails){
         return recommendService.recommend(principalDetails.getUser(), board_id, HATE);
+    }
+
+    @PostMapping("/recommendcheck/{board_id}")
+    public Map<String, String> recommendCheck(@PathVariable Long board_id, @AuthenticationPrincipal PrincipalDetails principalDetails){
+        return recommendService.alreadyRecommendCheck(principalDetails.getUser(), board_id);
     }
 }

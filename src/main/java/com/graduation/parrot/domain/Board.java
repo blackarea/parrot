@@ -17,15 +17,18 @@ public class Board extends BaseTimeEntity{
     @Column(name = "board_id")
     private Long id;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false)
     private String title;
 
-    @Column(length = 1000)
     private String content;
     private String author;
 
     @Column(columnDefinition = "integer default 0")
     private int view;
+
+    @Column(columnDefinition = "integer default 0")
+    private int commentCount;
+
     @Column(name = "recommend_count", columnDefinition = "integer default 0")
     private int recommendCount;
 
@@ -55,6 +58,10 @@ public class Board extends BaseTimeEntity{
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void updateCommentCount(int point){
+        this.commentCount += point;
     }
 
     public void updateRecommendCount(int point){

@@ -78,8 +78,8 @@ public class BoardController {
 
     @PostMapping("/board")
     public String createBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        boardService.create(boardDto, principalDetails.getUser());
-        return "redirect:/boardlist";
+        Long board_id = boardService.create(boardDto, principalDetails.getUser());
+        return "redirect:/board/" + board_id;
     }
 
     @GetMapping("/board/update/{id}")
@@ -94,10 +94,10 @@ public class BoardController {
         return "redirect:/board/" + id;
     }
 
+    @ResponseBody
     @DeleteMapping("/board/{id}")
-    public String deleteBoard(@PathVariable Long id) {
+    public void deleteBoard(@PathVariable Long id) {
         boardService.delete(id);
-        return "redirect:/boardlist";
     }
 
     private void viewCountUp(Long board_id, HttpServletRequest request, HttpServletResponse response) {

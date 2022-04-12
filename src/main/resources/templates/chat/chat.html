@@ -4,132 +4,173 @@
 
 <head>
     <style>
-    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
-    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-    @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;}
 
-        .body{
-            font-family:'NanumSquare';
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .page ul li {
+            list-style-type: none;
+            float: left;
+            margin: 10px;
+        }
+
+        .body {
+            font-family: 'NanumSquare';
             transform: rotate(0.04deg);
         }
-        .top{
-            height:60px;
-        }
-        #chatlog{
+
+        #chatlog {
             height: 800px;
             overflow: auto;
+        }
+
+        #chatlog::-webkit-scrollbar {
+            width: 6px;
 
         }
-        #chatlog::-webkit-scrollbar{
-            width: 6px;
-        }
-        #chatlog::-webkit-scrollbar-thumb{
+
+        #chatlog::-webkit-scrollbar-thumb {
             height: 10%;
             background-color: #7f7f7f;
             border-radius: 10px;
         }
 
-        #chatlog::-webkit-scrollbar-track{
-            background-color: #f1f1f1;
+
+        #chatlog::-webkit-scrollbar-track {
+            background-color: #e5e5e5;
         }
 
-        #conver{
+        #conver {
             height: 70px;
-            background:#f1f1f1;
+            background: #f5f5f5;
             display: flex;
-            justify-content:right;
+            justify-content: right;
             align-items: center;
-
         }
 
-        .leftbox{
-            float:left;
-            display:block;
-            padding-left:10px;
-            padding-right:10px;
-            height:60px;
-            line-height:60px;
-            white-space: nowrap;
-            background:#FFB830;
-            border-radius:0 10px 10px 10px;
-        }
-        .rightbox{
-            float:right;
-            padding-left:10px;
-            padding-right:10px;
-            display:block;
-            height:60px;
-            line-height:60px;
-            white-space: nowrap;
-            background:#444;
-            border-radius:10px 0px 10px 10px;
-        }
-        #chatlogbox{
-            display:flex;
-            width:90%;
+        #chatlogbox {
+            display: flex;
+            width: 90%;
             margin: auto;
-            flex-direction:column;
-        }
-        .aicon{
-            padding:8px;
-            font-size:18px;
-            color:#fff;
-        }
-        .usercon{
-            padding:8px;
-            font-size:18px;
-            color:#fff;
-        }
-        #startcomment{
-            width:230px;
-            display:flex;
-            align-items:center;
-            color:#444;
-            justify-content:center;
-            height:38px;
-            border-radius:2em;
-            background:#e5e5e5;
-
+            flex-direction: column;
         }
 
+        /* JS */
+        .chatLeftDiv {
+            height: 100px;
+            display: flex;
+            align-items: center;
+        }
+
+        .chatRightDiv {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+        }
+
+
+        .leftbox {
+            float: left;
+            display: block;
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 60px;
+            line-height: 60px;
+            white-space: nowrap;
+            background: #FFB830;
+            border-radius: 0 10px 10px 10px;
+        }
+
+
+        .rightbox {
+            float: right;
+            padding-left: 10px;
+            padding-right: 10px;
+            display: block;
+            height: 60px;
+            line-height: 60px;
+            white-space: nowrap;
+            background: #444;
+            border-radius: 2em;
+        }
+
+
+        .aicon {
+            padding: 8px;
+            font-size: 18px;
+        }
+
+
+        .usercon {
+            padding: 8px;
+            font-size: 18px;
+            color: #fff;
+        }
 
     </style>
 
     <script>
         function chat() {
-            let inputValue = document.getElementById("inputChat").value;
-            let data = {
-                chat : inputValue
-            }
-            let chatDiv = document.getElementById("chat");
-            let receiveChat = document.createElement("span");
-            let pastSpan = document.createElement("span");
-            $('input').remove();
-            pastSpan.innerText = inputValue;
+            let chatLogBox = document.getElementById('chatlogbox');
 
-            let newInput = document.createElement("input");
-            newInput.setAttribute("id", "inputChat");
+            let userInput = document.getElementById('userInput');
+            let data = {
+                chat : userInput.value
+            }
 
             $.ajax({
                 type:'POST',
                 url:'/app/chat',
                 data:JSON.stringify(data),
-                contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
+                contentType:"application/json;charset=UTF-8",
             }).done(function (response) {
-                receiveChat.innerText = response.chat;
-            }).fail(function () {
-                console.log("fail");
-                receiveChat.innerText = "안녕하세요";
+                userDiv(chatLogBox, userInput.value);
+                parrotDiv(chatLogBox, response.chat);
+                userInput.value = '';
+                userInput.focus();
+                $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
             });
+        };
+        function userDiv(chatLogBox, text) {
+            let chatRightDiv = document.createElement('div');
+            chatRightDiv.setAttribute('class', 'chatRightDiv');
 
-            chatDiv.appendChild(pastSpan);
-            chatDiv.appendChild(receiveChat);
-            chatDiv.appendChild(newInput);
-        }
+            let rightDiv = document.createElement('div');
+            rightDiv.setAttribute('class', 'rightbox');
+
+
+            let rightSpan = document.createElement('span');
+            rightSpan.setAttribute('class', 'usercon');
+            rightSpan.innerText = text;
+
+            rightDiv.appendChild(rightSpan);
+            chatRightDiv.appendChild(rightDiv);
+
+            chatLogBox.appendChild(chatRightDiv);
+        };
+        function parrotDiv(chatLogBox, text) {
+            let chatLeftDiv = document.createElement('div');
+            chatLeftDiv.setAttribute('class', 'chatLeftDiv');
+
+            let leftDiv = document.createElement('div');
+            leftDiv.setAttribute('class', 'leftbox');
+
+            let leftSpan = document.createElement('span');
+            leftSpan.setAttribute('class', 'aicon');
+            leftSpan.innerText = text;
+
+            leftDiv.appendChild(leftSpan);
+            chatLeftDiv.appendChild(leftDiv);
+
+            chatLogBox.appendChild(chatLeftDiv);
+        };
 
     </script>
 </head>
@@ -138,70 +179,20 @@
 
     <div class="body" style="margin: auto; width: 1000px; padding-top:50px">
 
-        <div class="top">
-
-                <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#대화하기</span>
-        </div>
-
-        <div style="height:100px;background:#f1f1f1;border: 1px solid #f7f7f7">
-            <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
-
-                <span style="font-size:14px">※앵무새는 욕설과 비인도적인 말을 싫어합니다.</span>
-                <span style="font-size:14px">※개인정보,사생활 침해에 해당하는 정보를 입력하면 이용에 지장이 있을 수 있습니다</span>
-                <span style="font-size:14px">※광고 및 홍보글의 작성을 금지합니다</span>
-
-            </div>
-        </div>
-
         <div id="chatlog">
             <div id="chatlogbox">
 
-                <div style="height:150px;display:flex; align-items:center; justify-content:center">
-                    <div id="startcomment" style=""><span>심심이와 대화를 시작하세요</span></div>
-                </div>
-
-                <div style="height:100px;display:flex; align-items:center">
-                <div class="leftbox">
-                    <span class="aicon">안녕안녕하세요</span>
-                </div>
-                </div>
-
-                <div style="height:100px;display:flex; align-items:center;justify-content:right">
-                <div class="rightbox">
-                    <span class="usercon">안녕안녕하세요</span>
-                </div>
-                </div>
-
-                <div style="height:100px;display:flex; align-items:center">
-                    <div class="leftbox">
-                        <span class="aicon">가나다라마바사아자차카가타리가리가리이게리아에리히</span>
-                    </div>
-                </div>
-
-                <div style="height:100px;display:flex; align-items:center;justify-content:right">
-                    <div class="rightbox">
-                        <span class="usercon">안녕안녕하세요</span>
-                    </div>
-                </div>
-
-
 
             </div>
         </div>
 
 
+        <div id="conver" style="">
+            <input class="form-control me-2" style="border-radius: 2em; height:50px; width:400px; border:none;"
+                   id="userInput" onkeypress="if(window.event.keyCode == 13){chat()}" placeholder="대화말을 입력해보세요">
 
-        <div id="conver" style="margin-bottom:50px">
-            <input class="form-control"style="border-radius: 2em; height:50px; width:450px; border:none;margin-right:10px" type="search" placeholder="대화말을 입력해보세요">
         </div>
 
-
-
-    <!--<div id="chat">
-        <button class="btn btn-info" onclick="chat()">전송</button>
-
-        <input id="inputChat">
-    </div>-->
     </div>
 </div>
 

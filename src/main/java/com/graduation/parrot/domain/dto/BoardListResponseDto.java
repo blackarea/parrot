@@ -16,6 +16,7 @@ public class BoardListResponseDto {
     private String title;
     private String author;
     private int view;
+    private int commentCount;
     private int recommendCount;
     private String createdDate;
     private String modifiedDate;
@@ -25,6 +26,7 @@ public class BoardListResponseDto {
         this.title = board.getTitle();
         this.author = board.getAuthor();
         this.view = board.getView();
+        this.commentCount = board.getCommentCount();
         this.recommendCount = board.getRecommendCount();
         this.createdDate = board.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.modifiedDate = board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));

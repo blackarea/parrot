@@ -39,6 +39,7 @@ public class CommentServiceImpl implements CommentService{
     public Long create(User user, Long board_id, String content) {
         User foundUser = userRepository.findById(user.getId()).get();
         Board board = boardRepository.findById(board_id).get();
+        board.updateCommentCount(1);
 
         return commentRepository.save(new Comment(content, foundUser, board)).getId();
     }
@@ -59,9 +60,12 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public void delete(Long comment_id) {
+    public void delete(Long board_id, Long comment_id) {
         Comment comment = commentRepository.findById(comment_id)
                 .orElseThrow(() -> new NoSuchElementException("해당 댓글이 없습니다."));
+
+        Board board = boardRepository.findById(board_id).get();
+        board.updateCommentCount(-1);
         commentRepository.delete(comment);
     }
 

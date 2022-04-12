@@ -35,6 +35,7 @@ class CommentServiceTest {
     EntityManager em;
 
     private Long commentId;
+    private Long boardId;
     JPAQueryFactory queryFactory;
 
     @BeforeEach
@@ -56,6 +57,7 @@ class CommentServiceTest {
                 .build();
         Board foundBoard = boardRepository.save(board);
 
+        boardId = foundBoard.getId();
         commentId = commentService.create(user, board.getId(), "댓글");
     }
 
@@ -75,7 +77,7 @@ class CommentServiceTest {
         Comment comment = commentService.getComment(commentId);
         assertThat(comment.getContent()).isEqualTo("업뎃내용");
 
-        commentService.delete(commentId);
+        commentService.delete(boardId ,commentId);
         assertThat(commentRepository.count()).isEqualTo(0L);
     }
 
