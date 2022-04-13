@@ -25,7 +25,7 @@
         }
 
         #chatlog {
-            height: 800px;
+            height: 600px;
             overflow: auto;
         }
 
@@ -108,6 +108,9 @@
             font-size: 18px;
             color: #fff;
         }
+        .top{
+            height:60px;
+        }
     </style>
 
     <script>
@@ -171,6 +174,20 @@
 <div layout:fragment="content">
 
     <div class="body" style="margin: auto; width: 1000px; padding-top:50px">
+        <div class="top">
+
+            <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#대화하기</span>
+        </div>
+
+        <div style="height:100px;background:#f1f1f1;border: 1px solid #f7f7f7">
+            <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
+
+                <span style="font-size:14px">※무분별한 욕설 및 인종차별 언행은 계정정지의 대상입니다.</span>
+                <span style="font-size:14px">※이용을 방해하거나 지속적인 도배성 게시글 작성을 금지합니다.</span>
+                <span style="font-size:14px">※광고 및 홍보글의 작성을 금지합니다</span>
+
+            </div>
+        </div>
 
         <div id="chatlog">
             <div id="chatlogbox">
