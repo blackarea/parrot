@@ -2,7 +2,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 
+
+
 <head>
+    <link rel="stylesheet" th:href="@{/css/account-custom.css}">
     <style>
         @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
     @font-face {
@@ -30,11 +33,14 @@
 
             font-family:NanumSquare;
             transform : rotate(0.04deg);
+
         }
 
         .main {
             display: flex;
-            width:1000px;
+            justify-content:center;
+            width:1200px;
+            overflow:hidden;
             height:800px;
         }
 
@@ -54,7 +60,6 @@
             border-radius: 2em;
             margin-top: 15px;
             border: none;
-
         }
 
         #login {
@@ -63,14 +68,18 @@
         }
 
         #left {
-            width: 300px;
+            flex-direction: column;
+            display: flex;
+            align-items:center;
+            width: 400px;
+            border-left:1px solid #e5e5e5;
 
         }
 
         #right {
-            width: 500px;
+            width: 800px;
             margin: 0;
-            background-color: #444444;
+            background-color: #e5e5e5;
         }
 
         #section {
@@ -111,12 +120,7 @@
             text-decoration: none;
         }
 
-        #accounttable:hover tr:hover{
-            background: #FFB830;
-            color:#fff;
-            margin:0px;
-            padding:0px;
-        }
+
 
 
     </style>
@@ -142,24 +146,156 @@
 </head>
 
 <div layout:fragment="content">
-    <div class="flex-container">
 
-        <div class="main">
-            <div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width:320px;height:400px;display:flex;flex-direction:column;justify-content:center;align-items:center">
 
+                <div class="modal-header" style="height:20%">
+                    <span class="modal-title" id="exampleModalLabel">다죽여버리겠어님의 <span style="font-weight:bold;color:#ffb830">아이디</span>를 수정합니다</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body" style="width:300px;height:65%;display:flex;flex-direction:column;justify-content:center">
+                    <div style="margin-bottom:5px">
+                    <span style="font-size:14px">기존 아이디</span>
+                    <input class="form-control" style="height:40px;margin:0px">
+                    </div>
+                    <div style="margin-bottom:5px">
+                        <span style="font-size:14px">변경할 아이디</span>
+                        <input class="form-control" style="height:40px;margin:0px">
+                    </div>
+                    <div style="margin-bottom:5px">
+                        <span style="font-size:14px">비밀번호</span>
+                        <input class="form-control" style="height:40px;margin:0px">
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:15%">
+                    <div style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:100%;background:#ffb830"><span style="color:#fff">확인</span></div>
+                    <div style="display:flex;justify-content:center;align-items:center;width:50%;height:100%;background:#666"><span style="color:#fff">취소</span></div>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 
+
+    <div class="flex-container">
+        <div class="main">
+            <div id="left">
+
+                <div id="smleft" style="margin-top:80px">
+                    <i class="bi bi-person-circle" style="font-size:80px;color:#444;display:flex;justify-content:center"></i>
+                    <span style="font-size:25px;display:block;color:#444;margin-top:10px;font-weight:bold">다죽여버리겠어</span>
+                    <span style="font-size:15px;display:block;color:#666">dhtmddhks23@naver.com</span>
+                    <table id="accounttable" style="margin-top:50px">
+                        <tr style="background:#ffb830">
+                            <td style="width: 300px;height:60px;display:flex;align-items:center">
+                                <i id="accounticon" class="bi bi-person-lines-fill" style="font-size:30px;margin-left:20px;float:right;color:#fff"></i>
+                                <span id="accountsetting" style="font-size:17px;margin-left:20px;color:#fff">계정설정</span>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td style="width: 300px;height:60px;display:flex;align-items:center">
+                                <i class="bi bi-person-workspace"style="font-size:30px;margin-left:20px;color:#444"></i>
+                                <span  style="font-size:17px;margin-left:20px">나의활동</span>
+                            </td>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div id="right" style="display:flex;align-items:center;justify-content:center;flex-direction:column">
+                <div class="form-control" style="border-radius:10px;width:700px;height:140px;padding:0px;margin-bottom:30px">
+                    <div style="height:40px;display:flex;align-items:center">
+                    <span style="color:#aaa;font-weight:bold;margin-left:20px;margin-top:10px">기본정보</span>
+                    </div>
+
+                    <div style="height:50px;display:flex;align-items:center;margin-left:20px;border-bottom:1px solid #e5e5e5;margin-right:20px">
+                        <div style="width:18%">
+                            <span style="font-size:14px;color:#777;font-weight:bold;margin-right:30px">아이디</span>
+                        </div>
+                        <div style="width:75%">
+                            <span style="font-size:15px;color:#777;font-weight:bold">happys32</span>
+                        </div>
+                        <div style="width:10%">
+                        <button class="btn btn-outline-primary" style="padding:0px;width:50px;height:25px"><span style="font-size:14px;font-weight:bold">수정</span></button>
+                        </div>
+                    </div>
+
+                    <div style="height:50px;display:flex;align-items:center;margin-left:20px;border-bottom:1px solid #e5e5e5;margin-right:20px">
+                        <div style="width:18%">
+                            <span style="font-size:14px;color:#777;font-weight:bold;margin-right:30px">이메일</span>
+                        </div>
+                        <div style="width:75%">
+                            <span style="font-size:15px;color:#777;font-weight:bold">dhtmddhks23@naver.com</span>
+                        </div>
+                        <div style="width:10%">
+                            <button class="btn btn-outline-primary" style="padding:0px;width:50px;height:25px"><span style="font-size:14px;font-weight:bold">수정</span></button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-control" style="border-radius:10px;width:700px;height:140px;padding:0px;margin-bottom:30px">
+                    <div style="height:40px;display:flex;align-items:center">
+                        <span style="color:#aaa;font-weight:bold;margin-left:20px;margin-top:10px">세부정보</span>
+                    </div>
+                    <div style="height:50px;display:flex;align-items:center;margin-left:20px;border-bottom:1px solid #e5e5e5;margin-right:20px">
+                        <div style="width:18%"><span style="font-size:14px;color:#777;font-weight:bold;margin-right:30px">닉네임</span></div>
+                        <div style="width:75%"><span style="font-size:15px;color:#777;font-weight:bold">다죽여버리겠어</span></div>
+                        <div style="width:10%"><button class="btn btn-outline-primary" style="padding:0px;width:50px;height:25px"><span style="font-size:14px;font-weight:bold">수정</span></button></div>
+                    </div>
+
+                    <div style="height:50px;display:flex;align-items:center;margin-left:20px;border-bottom:1px solid #e5e5e5;margin-right:20px">
+                        <div style="width:18%">
+                            <span style="font-size:14px;color:#777;font-weight:bold;margin-right:30px">앵무새의 이름</span>
+                        </div>
+                        <div style="width:75%"><span style="font-size:15px;color:#777;font-weight:bold">독수리의부리는왜노랄까그이유는네이버에도나와있지않는다고한다</span></div>
+                        <div style="width:10%">
+                            <button class="btn btn-outline-primary"data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding:0px;width:50px;height:25px"><span style="font-size:14px;font-weight:bold">수정</span></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-control" style="border-radius:10px;width:700px;height:90px;padding:0px;margin-bottom:30px">
+                    <div style="height:40px;display:flex;align-items:center">
+                        <span style="color:#aaa;font-weight:bold;margin-left:20px;margin-top:10px">비밀번호 변경</span>
+                    </div>
+                    <div style="height:50px;display:flex;align-items:center;margin-left:20px;border-bottom:1px solid #e5e5e5;margin-right:20px">
+                        <div style="width:18%"><span style="font-size:14px;color:#777;font-weight:bold;margin-right:30px">비밀번호</span></div>
+                        <div style="width:75%"><span style="font-size:15px;color:#777;font-weight:bold"></span></div>
+                        <div style="width:10%"><button class="btn btn-outline-primary" style="padding:0px;width:50px;height:25px"><span style="font-size:14px;font-weight:bold">수정</span></button></div>
+                    </div>
+                </div>
+
+                <div class="form-control" style="border-radius:10px;width:700px;height:90px;padding:0px;margin-bottom:30px">
+                    <div style="height:40px;display:flex;align-items:center">
+                        <span style="color:#aaa;font-weight:bold;margin-left:20px;margin-top:10px">회원탈퇴</span>
+                    </div>
+                    <div style="height:50px;display:flex;align-items:center;margin-left:20px;border-bottom:1px solid #e5e5e5;margin-right:20px">
+                        <div style="width:18%"><span style="font-size:14px;color:#777;font-weight:bold;margin-right:30px">계정삭제</span></div>
+                        <div style="width:75%"><span style="font-size:15px;color:#777;font-weight:bold"></span></div>
+                        <div style="width:10%"><button class="btn btn-outline-primary" style="padding:0px;width:50px;height:25px"><span style="font-size:14px;font-weight:bold">탈퇴</span></button></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        </div>
+    </div>
    <!-- <a th:href="@{/account/activity/{login_id}(login_id=${login_id})}">내 활동</a>
     <a th:href="@{/account/{login_id}(login_id=${login_id})}">계정 설정</a>
-
     <div>닉네임</div>
     <input id="username" name="username" th:value="${userResponseDto.username}">
     <div>이메일</div>
     <input id="email" name="email" th:value="${userResponseDto.email}">
     <button onclick="updateAll()">수정</button>-->
+
 
 </div>
 

@@ -4,7 +4,6 @@
 
 <head>
     <style>
-
         @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
         @font-face {
@@ -32,7 +31,6 @@
 
         #chatlog::-webkit-scrollbar {
             width: 6px;
-
         }
 
         #chatlog::-webkit-scrollbar-thumb {
@@ -41,14 +39,13 @@
             border-radius: 10px;
         }
 
-
         #chatlog::-webkit-scrollbar-track {
             background-color: #e5e5e5;
         }
 
         #conver {
             height: 70px;
-            background: #f5f5f5;
+            background: #e5e5e5;
             display: flex;
             justify-content: right;
             align-items: center;
@@ -88,7 +85,6 @@
             border-radius: 0 10px 10px 10px;
         }
 
-
         .rightbox {
             float: right;
             padding-left: 10px;
@@ -101,19 +97,16 @@
             border-radius: 2em;
         }
 
-
         .aicon {
             padding: 8px;
             font-size: 18px;
         }
-
 
         .usercon {
             padding: 8px;
             font-size: 18px;
             color: #fff;
         }
-
     </style>
 
     <script>
@@ -144,7 +137,6 @@
 
             let rightDiv = document.createElement('div');
             rightDiv.setAttribute('class', 'rightbox');
-
 
             let rightSpan = document.createElement('span');
             rightSpan.setAttribute('class', 'usercon');
@@ -182,15 +174,12 @@
         <div id="chatlog">
             <div id="chatlogbox">
 
-
             </div>
         </div>
-
 
         <div id="conver" style="">
             <input class="form-control me-2" style="border-radius: 2em; height:50px; width:400px; border:none;"
                    id="userInput" onkeypress="if(window.event.keyCode == 13){chat()}" placeholder="대화말을 입력해보세요">
-
         </div>
 
     </div>

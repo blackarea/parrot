@@ -191,8 +191,8 @@
                     <div class="col">
                         <table class="table table-hover">
                             <!--공지-->
-                            <tr style="background-color:#efefef">
-                                <td>
+                            <tr style="background-color:#efefef;border:none">
+                                <td style="border:none">
                                     <div class="container" style="width: 810px">
                                         <div class="row">
                                             <div class="col-sm-1"
@@ -223,8 +223,8 @@
                                 </td>
                             </tr>
                             <!--게시글-->
-                            <tr th:each="boardListResponseDto : ${boardList}">
-                                <td>
+                            <tr style="border-bottom:1px solid #e7e7e7"th:each="boardListResponseDto : ${boardList}">
+                                <td style="border:none;padding-top:12px;padding-bottom:12px;">
                                     <div class="container" style="width: 810px;">
                                         <div class="row">
                                             <!--왼쪽 (그림, 추천수)-->
@@ -255,14 +255,11 @@
                                                         </div>
                                                         <!--아랫 줄-->
                                                         <div class="row" style="height: 24px">
-                                                            <div class="col">
-                                                                <span style="font-size: 14px;color:#444444">게시물 번호</span>
-                                                                <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
-                                                                      th:text="${boardListResponseDto.view}"></span>
-                                                                <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
-                                                                      th:text="${boardListResponseDto.createdDate}"></span>
-                                                                <span style="font-size: 14px; float:right; font-weight:bold"
-                                                                      th:text="${boardListResponseDto.getAuthor}"></span>
+                                                            <div class="col" style="display:flex">
+                                                                <div style="width:15%;text-align:left"><span style="font-size: 14px;color:#444444">게시물 번호</span></div>
+                                                                <div style="width:5%;margin-left:10px;text-align:left"><span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.view}"></span></div>
+                                                                <div style="width:25%;margin-left:10px;text-align:center"><span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.createdDate}"></span></div>
+                                                                <div style="width:70%"><span style="font-size: 14px;float:right;font-weight:bold" th:text="${boardListResponseDto.getAuthor}"></span></div>
                                                             </div>
                                                         </div>
                                                     </div>

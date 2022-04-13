@@ -36,7 +36,7 @@
             width: 1000px;
             height: 500px;
             display: flex;
-            border-left: 1px solid #ced4da;
+            border: 1px solid #ced4da;
             align-items: center;
             background-color: #FFFFFF
 
@@ -117,6 +117,13 @@
             color : #ffb830;
             text-decoration: none;
         }
+        input[type=password] {
+            font-family: "나눔스퀘어 아닐때 쓸 글꼴";
+
+            &::placeholder {
+            font-family: "NanumSquare";
+        }
+}
 
 
     </style>
@@ -138,8 +145,8 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="password" class="form-control rounded-4" id="floatingPassword"
-                                       name="password" placeholder="Password">
-                                <label for="floatingPassword" style="font-color: 6d6d6d">Password</label>
+                                       name="password" placeholder="Password" style="color:#444">
+                                <label for="floatingPassword" style="color: 6d6d6d">Password</label>
                             </div>
                             <div class="forget" style="text-align:center">
                                 <button class="btn btn-lg rounded-4 btn-primary" id="signup" type="submit"
