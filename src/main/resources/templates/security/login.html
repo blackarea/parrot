@@ -33,7 +33,6 @@
         }
 
         .main {
-            width: 1000px;
             height: 500px;
             display: flex;
             border: 1px solid #ced4da;
@@ -69,19 +68,18 @@
         #left {
             width: 500px;
             height: 500px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            text-align: center;
         }
 
         #right {
-            width: 500px;
+            width: 80px;
             height: 500px;
             margin: 0;
             background-color: #444444;
         }
-
-        #section {
-            margin: 0;
-        }
-
         #floatingInput {
             width: 300px;
             height: 50px;
@@ -103,12 +101,6 @@
             font-size: 13px;
         }
 
-        #smleft {
-            margin: auto;
-            width: 300px;
-            height: 500px;
-            text-align: center;
-        }
         #createaccount {
             color:#444444;
             text-decoration: none;
@@ -119,7 +111,6 @@
         }
         input[type=password] {
             font-family: "나눔스퀘어 아닐때 쓸 글꼴";
-
             &::placeholder {
             font-family: "NanumSquare";
         }
@@ -133,17 +124,16 @@
 
     <div class="flex-container">
         <div class="main">
-            <div class="row" id="section">
-                <div class="col" id="left">
-                    <div id="smleft" style="margin-top:50px">
+                <div id="left">
+                    <div id="smleft">
                         <h2 class="fw-bold mb-2 p-3" id="title">로그인</h2>
-                        <form th:action="@{/login}" method="post">
-                            <div class="form-floating mb-3">
+                        <form class th:action="@{/login}" method="post" style="display:flex;justify-content:center;align-items:center;flex-direction:column">
+                            <div class="form-floating">
                                 <input class="form-control rounded-4" id="floatingInput"
                                        name="login_id" placeholder="name@example.com">
                                 <label for="floatingInput">Id</label>
                             </div>
-                            <div class="form-floating mb-3">
+                            <div class="form-floating">
                                 <input type="password" class="form-control rounded-4" id="floatingPassword"
                                        name="password" placeholder="Password" style="color:#444">
                                 <label for="floatingPassword" style="color: 6d6d6d">Password</label>
@@ -161,10 +151,9 @@
                     </div>
                 </div>
 
-                <div class="col" id="right">
+                <div id="right">
 
                 </div>
-            </div>
         </div>
     </div>
 </div>

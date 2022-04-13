@@ -12,7 +12,9 @@
     font-weight: normal;
     font-style: normal;}
 
-
+        body{
+            overflow:hidden;
+        }
         .body{
             font-family:'NanumSquare';
             transform: rotate(0.04deg);
@@ -21,8 +23,8 @@
             height:60px;
         }
         #chatlog{
-            height: 300px;
-
+            height: 700px;
+            overflow: auto;
         }
         #chatlog::-webkit-scrollbar{
             width: 6px;
@@ -34,7 +36,7 @@
         }
 
         #chatlog::-webkit-scrollbar-track{
-            background:#f1f1f1;
+            background:#e5e5e5;
         }
 
         #conver{
@@ -112,12 +114,11 @@
         }
         #plus{
             border:none;
-            style="margin-left:58%"
         }
         #trash{
             border:none;
-            style="margin-left:15px"
         }
+
     </style>
 
     <script>
@@ -200,7 +201,7 @@
             <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#가르치기(자유질문)</span>
         </div>
 
-        <div style="height:100px;background:#f1f1f1;border: 1px solid #f7f7f7">
+        <div style="height:100px;background:#f1f1f1;border: 1px solid #f1f1f1">
             <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
 
                 <span style="font-size:14px">※무분별한 욕설 및 인종차별 언행은 계정정지의 대상입니다.</span>
@@ -213,7 +214,7 @@
         <div id="chatlog">
             <div id="chatlogbox">
 
-                <div style="height:150px;display:flex; align-items:center;justify-content:left">
+                <div style="height:200px;display:flex; align-items:center;justify-content:left">
                     <div style="text-align:left">
                         <input class="aiinput">
                         <div style="display:flex; align-items:center;margin-top:10px">
@@ -225,15 +226,60 @@
 
                 <div style="height:150px;display:flex;align-items:center;justify-content:right">
                     <div style="text-align:left">
-                        <div style="display:flex; align-items:center;margin-bottom:7px">
+                        <div style="display:flex; align-items:center;margin-bottom:10px">
                             <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">2</span>
                             <span style="font-size:18px">나의 대답이</span>
                         </div>
                         <input class="userinput">
                         <div style="display:flex; align-items:center;margin-top:10px">
                             <span style="font-size:18px">를 포함하면</span>
-                            <button class="btn btn-outline-primary" id="plus" style="margin-left:63%"><i style="font-size:22px" class="bi bi-plus-circle"></i></button>
-                            <button class="btn btn-outline-secondary" id="trash"><i style="font-size:22px" class="bi bi-trash3"></i></button>
+                            <button class="btn btn-outline-primary" style="padding:5px;margin-left:65%;line-height: 0" id="plus"><i style="font-size:22px" class="bi bi-plus-circle"></i></button>
+                            <button class="btn btn-outline-secondary" style="padding:5px;margin-left:10px;line-height: 0" id="trash"><i style="font-size:22px" class="bi bi-trash3"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height:150px;display:flex;align-items:center;justify-content:right">
+                    <div style="text-align:left">
+                        <div style="display:flex; align-items:center;margin-bottom:10px">
+                            <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">2</span>
+                            <span style="font-size:18px">나의 대답이</span>
+                        </div>
+                        <input class="userinput">
+                        <div style="display:flex; align-items:center;margin-top:10px">
+                            <span style="font-size:18px">를 포함하면</span>
+                            <button class="btn btn-outline-primary" style="padding:5px;margin-left:65%;line-height: 0" id="plus"><i style="font-size:22px" class="bi bi-plus-circle"></i></button>
+                            <button class="btn btn-outline-secondary" style="padding:5px;margin-left:10px;line-height: 0" id="trash"><i style="font-size:22px" class="bi bi-trash3"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height:150px;display:flex;align-items:center;justify-content:right">
+                    <div style="text-align:left">
+                        <div style="display:flex; align-items:center;margin-bottom:10px">
+                            <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">2</span>
+                            <span style="font-size:18px">나의 대답이</span>
+                        </div>
+                        <input class="userinput">
+                        <div style="display:flex; align-items:center;margin-top:10px">
+                            <span style="font-size:18px">를 포함하면</span>
+                            <button class="btn btn-outline-primary" style="padding:5px;margin-left:65%;line-height: 0" id="plus"><i style="font-size:22px" class="bi bi-plus-circle"></i></button>
+                            <button class="btn btn-outline-secondary" style="padding:5px;margin-left:10px;line-height: 0" id="trash"><i style="font-size:22px" class="bi bi-trash3"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height:150px;display:flex;align-items:center;justify-content:right">
+                    <div style="text-align:left">
+                        <div style="display:flex; align-items:center;margin-bottom:10px">
+                            <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">2</span>
+                            <span style="font-size:18px">나의 대답이</span>
+                        </div>
+                        <input class="userinput">
+                        <div style="display:flex; align-items:center;margin-top:10px">
+                            <span style="font-size:18px">를 포함하면</span>
+                            <button class="btn btn-outline-primary" style="padding:5px;margin-left:65%;line-height: 0" id="plus"><i style="font-size:22px" class="bi bi-plus-circle"></i></button>
+                            <button class="btn btn-outline-secondary" style="padding:5px;margin-left:10px;line-height: 0" id="trash"><i style="font-size:22px" class="bi bi-trash3"></i></button>
                         </div>
                     </div>
                 </div>
@@ -264,7 +310,7 @@
 
 
 
-                <div style="height:0px;display:flex; align-items:center; justify-content:center">
+                <div style="height:0px;display:flex; margin-top:50px;align-items:center; justify-content:center">
                     <button type="submit" class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다</button>
                 </div>
 
