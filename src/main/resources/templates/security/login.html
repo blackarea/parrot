@@ -3,7 +3,7 @@
       layout:decorate="~{layout/layout}">
 <head>
     <style>
-
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
     @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
     @font-face {
     font-family: 'NanumSquareRound';
@@ -33,8 +33,9 @@
         }
 
         .main {
-            height: 500px;
+            height: 400px;
             display: flex;
+            flex-direction:column;
             border: 1px solid #ced4da;
             align-items: center;
             background-color: #FFFFFF
@@ -67,7 +68,7 @@
 
         #left {
             width: 500px;
-            height: 500px;
+            height: 400px;
             display:flex;
             flex-direction:column;
             justify-content:center;
@@ -75,8 +76,11 @@
         }
 
         #right {
-            width: 80px;
-            height: 500px;
+            width: 500px;
+            height: 60px;
+            display:flex;
+            justify-content:right;
+            align-items:center;
             margin: 0;
             background-color: #444444;
         }
@@ -144,15 +148,14 @@
                                     Login
                                 </button>
                                 <!--<span id="forget">아이디, 혹은 비밀번호를 잊으셨나요?</span>-->
-                            </div>
-                            <div id="account" style="margin-top: 40px;"><a id="createaccount" th:href="@{/signup}">당신의 계정을 만들어 보세요</a>
+                                <div id="account"><a style="color:#000" id="createaccount" th:href="@{/signup}">당신의 계정을 만들어 보세요</a></div>
                             </div>
                         </form>
                     </div>
                 </div>
 
                 <div id="right">
-
+                    <div><i class="bi bi-person-plus-fill" style="margin-right:20px;font-size:30px;color:#fff"></i></div>
                 </div>
         </div>
     </div>
