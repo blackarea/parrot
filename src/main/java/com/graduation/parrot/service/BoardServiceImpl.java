@@ -68,13 +68,15 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Page<BoardListResponseDto> getBoardList(Pageable pageable) {
+
         QueryResults<Board> boardQueryResults = queryFactory
-                .selectFrom(board)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .join(board.user,user).fetchJoin()
-                .orderBy(board.id.desc())
-                .fetchResults();
+                    .selectFrom(board)
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .join(board.user, user).fetchJoin()
+                    .orderBy(board.id.desc())
+                    .fetchResults();
+
         long total = boardQueryResults.getTotal();
         List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
                 .map(BoardListResponseDto::new)
@@ -86,12 +88,49 @@ public class BoardServiceImpl implements BoardService {
     public Page<BoardListResponseDto> getBoardListPagingSearch(Pageable pageable, String type, String searchKeyword) {
 
         QueryResults<Board> boardQueryResults = queryFactory
+                    .selectFrom(board)
+                    .where(decideWhere(type, searchKeyword))
+                    .join(board.user, user).fetchJoin()
+                    .offset(pageable.getOffset())
+                    .limit(pageable.getPageSize())
+                    .orderBy(board.id.desc())
+                    .fetchResults();
+
+        long total = boardQueryResults.getTotal();
+        List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
+                .map(BoardListResponseDto::new)
+                .collect(Collectors.toList());
+        return new PageImpl<>(results, pageable, total);
+    }
+
+    @Override
+    public Page<BoardListResponseDto> getBoardRecommendList(Pageable pageable) {
+
+        QueryResults<Board> boardQueryResults = queryFactory
+                .selectFrom(board)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .join(board.user, user).fetchJoin()
+                .orderBy(board.recommendCount.desc())
+                .fetchResults();
+
+        long total = boardQueryResults.getTotal();
+        List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
+                .map(BoardListResponseDto::new)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(results, pageable, total);
+    }
+
+    public Page<BoardListResponseDto> getBoardRecommendListPagingSearch(Pageable pageable, String type, String searchKeyword) {
+
+        QueryResults<Board> boardQueryResults = queryFactory
                 .selectFrom(board)
                 .where(decideWhere(type, searchKeyword))
                 .join(board.user, user).fetchJoin()
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(board.id.desc())
+                .orderBy(board.recommendCount.desc())
                 .fetchResults();
 
         long total = boardQueryResults.getTotal();
@@ -100,6 +139,45 @@ public class BoardServiceImpl implements BoardService {
                 .collect(Collectors.toList());
         return new PageImpl<>(results, pageable, total);
     }
+
+    @Override
+    public Page<BoardListResponseDto> getBoardViewList(Pageable pageable) {
+
+        QueryResults<Board> boardQueryResults = queryFactory
+                .selectFrom(board)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .join(board.user, user).fetchJoin()
+                .orderBy(board.view.desc())
+                .fetchResults();
+
+        long total = boardQueryResults.getTotal();
+        List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
+                .map(BoardListResponseDto::new)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(results, pageable, total);
+    }
+
+    public Page<BoardListResponseDto> getBoardViewListPagingSearch(Pageable pageable, String type, String searchKeyword) {
+
+        QueryResults<Board> boardQueryResults = queryFactory
+                .selectFrom(board)
+                .where(decideWhere(type, searchKeyword))
+                .join(board.user, user).fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(board.view.desc())
+                .fetchResults();
+
+        long total = boardQueryResults.getTotal();
+        List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
+                .map(BoardListResponseDto::new)
+                .collect(Collectors.toList());
+        return new PageImpl<>(results, pageable, total);
+    }
+
+
 
     @Transactional
     @Override

@@ -124,7 +124,7 @@
             }
 
             let teachDiv = document.getElementById("teach");
-            let receiveTeach = document.createElement("span");
+            let receiveteach = document.createElement("span");
             let pastSpan1 = document.createElement("span");
             let pastSpan2 = document.createElement("span");
             let pastSpan3 = document.createElement("span");
@@ -146,15 +146,16 @@
                 data:JSON.stringify(data),
                 contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
             }).done(function (response) {
-                receiveTeach.innerText = response.teach;
-            }).fail(function (e) {
-                receiveTeach.innerText = "교육실패";
+                receiveteach.innerText = response.teachPolar;
+            }).fail(function () {
+                console.log("fail");
+                receiveteach.innerText = "교육실패";
             });
 
             teachDiv.appendChild(pastSpan1);
             teachDiv.appendChild(pastSpan2);
             teachDiv.appendChild(pastSpan3);
-            teachDiv.appendChild(receiveTeach);
+            teachDiv.appendChild(receiveteach);
             teachDiv.appendChild(newInput1);
             teachDiv.appendChild(newInput2);
             teachDiv.appendChild(newInput3);
