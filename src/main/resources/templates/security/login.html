@@ -113,6 +113,10 @@
             &::placeholder {
             font-family: "NanumSquare";
         }
+        #createaccount:hover{
+            background:#e5e5e5;
+
+        }
 
 }
 
@@ -150,12 +154,12 @@
                 </div>
 
                 <div id="right">
-                    <button class="btn" type="submit"
+                    <button class="btn" type="submit" id="createaccountbtn"
                             style="display:flex;justify-content:center;align-items:center;width: 300px; height: 45px">
                         <div style="width:30%;text-align:right"><i class="bi bi-person-plus-fill" style="margin-right:20px;font-size:25px;color:#ffb830"></i></div>
                         <div style="width:70%;text-align:left"><a id="createaccount" style="color:#444;font-size:14px" th:href="@{/signup}">당신의 계정을 만들어 보세요</a></div>
                     </button>
-                    <button class="btn" type="submit"
+                    <button class="btn" type="submit"   id="findaccountbtn"
                             style="display:flex;justify-content:center;align-items:center;margin-top: 10px;width: 300px; height: 45px">
                         <div style="width:30%;text-align:right"><i class="bi bi-key-fill" style="margin-right:20px;font-size:25px;color:#ffb830"></i></div>
                         <div style="width:70%;text-align:left"><span style="color:#444;font-size:14px">비밀번호를 잊으셨나요?</span></div>
