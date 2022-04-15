@@ -40,6 +40,17 @@ public class RestApiController {
         return map;
     }
 
+    @GetMapping("/duplicate/name/{username}")
+    public Map<String, String> validateDuplicateName(@PathVariable String username) {
+        Map<String, String> map = new HashMap<>();
+        if (userService.validateDuplicateUsername(username)) {
+            map.put("duplicate", "yes");
+        } else {
+            map.put("duplicate", "no");
+        }
+        return map;
+    }
+
     @PutMapping("/user/name/{login_id}")
     public void changeName(@PathVariable String login_id, @RequestBody Map<String, String> name) {
         userService.updateName(login_id, name.get("name"));

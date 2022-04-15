@@ -137,6 +137,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean validateDuplicateUsername(String username) {
+        System.out.println("UserServiceImpl.validateDuplicateUsername");
+        System.out.println("username = " + username);
+        Optional<User> user = userRepository.findByName(username);
+        System.out.println(user.isPresent());
+        return user.isPresent();
+    }
+
+    @Override
     public Map<String, String> validateHandling(Errors errors) {
         Map<String, String> validatorResult = new HashMap<>();
 

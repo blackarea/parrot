@@ -15,5 +15,6 @@ public interface UserService {
     void updateEmail(String login_id, String email);
     Page<UserActivityListDto> getUserActivityPaging(String login_id, Pageable pageable);
     boolean validateDuplicateUser(String login_id);
+    boolean validateDuplicateUsername(String username);
     Map<String, String> validateHandling(Errors errors);
 }

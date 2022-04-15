@@ -1,5 +1,6 @@
 package com.graduation.parrot.controller;
 
+import com.graduation.parrot.domain.dto.TeachFreeDto;
 import com.graduation.parrot.webSocket.WebSocketUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.drafts.Draft_6455;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -74,17 +76,21 @@ public class TeachController {
 
     @PostMapping("/teach/free")
     @ResponseBody
-    public Map<String, String> teachFree(@RequestBody Map<String, String> teachFreeParameter) throws InterruptedException {
-
-        String parrotQuestionTeach = teachFreeParameter.get("question");
-        String answerTeach1 = teachFreeParameter.get("condition1");
-        String parrotAnswerTeach1 = teachFreeParameter.get("answer1");
-        String answerTeach2 = teachFreeParameter.get("condition2");
-        String parrotAnswerTeach2 = teachFreeParameter.get("answer2");
+    public Map<String, String> teachFree(@RequestBody TeachFreeDto teachFreeDto) throws InterruptedException {
 
         WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teachfree"), new Draft_6455());
         webSocketUtil.connectBlocking();
-        webSocketUtil.send(parrotQuestionTeach + "," + answerTeach1 + "," + parrotAnswerTeach1 + "," + answerTeach2 + "," + parrotAnswerTeach2);
+        String conditionAnswer = "";
+
+        List<TeachFreeDto.TeachFreeList> condition = teachFreeDto.getCondition();
+        List<TeachFreeDto.TeachFreeList> answer = teachFreeDto.getAnswer();
+
+        for (int i = 0; i < teachFreeDto.getAnswerCount(); i++) {
+            conditionAnswer = conditionAnswer.concat(condition.get(i).getContent())
+                    .concat(",").concat(answer.get(i).getContent()).concat(",");
+        }
+
+        webSocketUtil.send(teachFreeDto.getQuestion() + "," + conditionAnswer + teachFreeDto.getNotIncludeAnswer());
         webSocketUtil.run();
         String pythonMessage = webSocketUtil.getPythonMessage();
         webSocketUtil.close();

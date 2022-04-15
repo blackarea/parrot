@@ -256,7 +256,7 @@
                                                         <!--아랫 줄-->
                                                         <div class="row" style="height: 24px">
                                                             <div class="col" style="display:flex">
-                                                                <div style="width:15%;text-align:left"><span style="font-size: 14px;color:#444444">게시물 번호</span></div>
+                                                                <div style="width:15%;text-align:left"><span style="font-size: 14px;color:#444444" th:text="${boardListResponseDto.id}"></span></div>
                                                                 <div style="width:5%;margin-left:10px;text-align:left"><span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.view}"></span></div>
                                                                 <div style="width:25%;margin-left:10px;text-align:center"><span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.createdDate}"></span></div>
                                                                 <div style="width:70%"><span style="font-size: 14px;float:right;font-weight:bold" th:text="${boardListResponseDto.getAuthor}"></span></div>

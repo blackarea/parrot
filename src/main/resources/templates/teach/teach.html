@@ -4,151 +4,153 @@
 
 <head>
     <style>
-    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-    @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;}
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
 
-        .body{
-            font-family:'NanumSquare';
+        .body {
+            font-family: 'NanumSquare';
             transform: rotate(0.04deg);
         }
-        .top{
-            height:60px;
+
+        .top {
+            height: 60px;
         }
-        #chatlog{
+
+        #chatlog {
             height: 300px;
 
         }
-        #chatlog::-webkit-scrollbar{
+
+        #chatlog::-webkit-scrollbar {
             width: 6px;
         }
-        #chatlog::-webkit-scrollbar-thumb{
+
+        #chatlog::-webkit-scrollbar-thumb {
             height: 10%;
             background-color: #7f7f7f;
             border-radius: 10px;
         }
 
-        #chatlog::-webkit-scrollbar-track{
-            background:#f1f1f1;
+        #chatlog::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
 
-        #conver{
+        #conver {
             height: 70px;
-            background:#f1f1f1;
+            background: #f1f1f1;
             display: flex;
-            justify-content:center;
+            justify-content: center;
             align-items: center;
         }
 
-        .leftbox{
-            float:left;
-            display:block;
-            padding-left:10px;
-            padding-right:10px;
-            height:60px;
-            line-height:60px;
+        .leftbox {
+            float: left;
+            display: block;
+            padding-left: 10px;
+            padding-right: 10px;
+            height: 60px;
+            line-height: 60px;
             white-space: nowrap;
-            background:#FFB830;
-            border-radius:0 10px 10px 10px;
+            background: #FFB830;
+            border-radius: 0 10px 10px 10px;
         }
-        .rightbox{
-            float:right;
-            padding-left:10px;
-            padding-right:10px;
-            display:block;
-            height:60px;
-            line-height:60px;
+
+        .rightbox {
+            float: right;
+            padding-left: 10px;
+            padding-right: 10px;
+            display: block;
+            height: 60px;
+            line-height: 60px;
             white-space: nowrap;
-            background:#444;
-            border-radius:10px 0px 10px 10px;
+            background: #444;
+            border-radius: 10px 0px 10px 10px;
         }
-        #chatlogbox{
-            display:flex;
-            width:90%;
+
+        #chatlogbox {
+            display: flex;
+            width: 90%;
             margin: auto;
-            flex-direction:column;
+            flex-direction: column;
         }
-        .aicon{
-            padding:8px;
-            font-size:18px;
+
+        .aicon {
+            padding: 8px;
+            font-size: 18px;
         }
-        .usercon{
-            padding:8px;
-            font-size:18px;
-            color:#fff;
+
+        .usercon {
+            padding: 8px;
+            font-size: 18px;
+            color: #fff;
         }
-        #userinput{
-            border:2px solid #444444;
-            color:#444;
-            padding-left:20px;
-            padding-right:20px;
-            height:55px;
-            font-size:18px;
-            line-height:55px;
+
+        #userInput {
+            border: 2px solid #444444;
+            color: #444;
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 55px;
+            font-size: 18px;
+            line-height: 55px;
             white-space: nowrap;
-            width:500px;
-            border-radius:10px 0px 10px 10px;
+            width: 500px;
+            border-radius: 10px 0px 10px 10px;
         }
-        #userinput:focus{
-            outline:none;
+
+        #userInput:focus {
+            outline: none;
         }
-        #aiinput{
-            border:2px solid #ffb830;
-            color:#444;
-            padding-left:20px;
-            padding-right:20px;
-            height:55px;
-            font-size:18px;
-            line-height:55px;
+
+        #aiInput {
+            border: 2px solid #ffb830;
+            color: #444;
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 55px;
+            font-size: 18px;
+            line-height: 55px;
             white-space: nowrap;
-            width:500px;
-            border-radius:0px 10px 10px 10px;
+            width: 500px;
+            border-radius: 0px 10px 10px 10px;
         }
-        #aiinput:focus{
-            outline:none;
+
+        #aiInput:focus {
+            outline: none;
         }
 
 
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function chat() {
-            let inputValue = document.getElementById("inputChat").value;
+        function teach() {
+            let userInput = document.getElementById("userInput").value;
+            let aiInput = document.getElementById("aiInput").value;
             let data = {
-                chat : inputValue
+                question: userInput,
+                answer: aiInput
             }
-            let chatDiv = document.getElementById("chat");
-            let receiveChat = document.createElement("span");
-            let pastSpan = document.createElement("span");
-            $('input').remove();
-            pastSpan.innerText = inputValue;
-
-            let newInput = document.createElement("input");
-            newInput.setAttribute("id", "inputChat");
 
             $.ajax({
-                type:'POST',
-                url:'/app/chat',
-                data:JSON.stringify(data),
-                contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
-            }).done(function (response) {
-                receiveChat.innerText = response.chat;
-            }).fail(function () {
-                console.log("fail");
-                receiveChat.innerText = "안녕하세요";
+                type: 'POST',
+                url: '/teach',
+                data: JSON.stringify(data),
+                contentType: "application/json;charset=UTF-8",
+            }).done(function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: '앵무새는 이 가르치기를 기억할 것입니다.',
+                });
             });
-
-            chatDiv.appendChild(pastSpan);
-            chatDiv.appendChild(receiveChat);
-            chatDiv.appendChild(newInput);
         }
-
-
-
     </script>
 </head>
 
@@ -176,7 +178,7 @@
 
                 <div style="height:200px;display:flex; align-items:center;justify-content:right">
                     <div style="text-align:left">
-                        <input id="userinput">
+                        <input id="userInput">
                         <div style="display:flex; align-items:center;margin-top:10px">
                             <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">1</span>
                             <span style="font-size:18px">내가 이렇게 물어본다면</span>
@@ -185,10 +187,9 @@
                 </div>
 
 
-
                 <div style="height:150px;display:flex; align-items:center;justify-content:left">
                     <div style="text-align:left">
-                        <input id="aiinput">
+                        <input id="aiInput">
                         <div style="display:flex; align-items:center;margin-top:10px">
                             <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">2</span>
                             <span style="font-size:18px">앵무새가 이렇게 대답합니다</span>
@@ -196,23 +197,17 @@
                     </div>
                 </div>
 
-                <div style="height:150px;display:flex; align-items:center; justify-content:center">
-                    <button type="submit" class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다</button>
+                <div style="height:100px;display:flex; align-items:center; justify-content:center">
+                    <button onclick="teach()" class="btn btn-secondary"
+                            style="height:38px">앵무새가 이 대화를 기억합니다</button>
                 </div>
 
-
-                </div>
             </div>
-
         </div>
 
-
-        <!--<div id="chat">
-            <button class="btn btn-info" onclick="chat()">전송</button>
-
-            <input id="inputChat">
-        </div>-->
     </div>
+
+</div>
 </div>
 
 </html>
