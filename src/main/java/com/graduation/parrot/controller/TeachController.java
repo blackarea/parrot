@@ -12,14 +12,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/* ws://localhost:8888/ws/teachFree*/
-
 @Controller
 @Slf4j
 public class TeachController {
 
     @GetMapping("/teach")
-    public String teach()  {
+    public String teach() {
 
         return "teach/teach";
     }
@@ -30,7 +28,7 @@ public class TeachController {
 
         String questionTeach = teachParameter.get("question");
         String answerTeach = teachParameter.get("answer");
-        
+
         WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teach"), new Draft_6455());
         webSocketUtil.connectBlocking();
         webSocketUtil.send(questionTeach + "," + answerTeach);
@@ -65,7 +63,7 @@ public class TeachController {
         webSocketUtil.close();
 
         Map<String, String> responseTeach = new HashMap<>();
-        responseTeach.put("teachPolar", pythonMessage);
+        responseTeach.put("teach", pythonMessage);
 
         return responseTeach;
     }
@@ -79,9 +77,6 @@ public class TeachController {
     @PostMapping("/teach/free")
     @ResponseBody
     public Map<String, String> teachFree(@RequestBody TeachFreeDto teachFreeDto) throws InterruptedException {
-
-        log.info(parrotQuestionTeach);
-        log.info(answerTeach1);
 
         WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/teachfree"), new Draft_6455());
         webSocketUtil.connectBlocking();
@@ -107,7 +102,7 @@ public class TeachController {
     }
 
     @GetMapping("/mission")
-    public String mission(){
+    public String mission() {
         return "teach/mission";
     }
 }
