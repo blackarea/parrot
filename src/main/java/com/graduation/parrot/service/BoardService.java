@@ -16,5 +16,9 @@ public interface BoardService {
     BoardResponseDto getBoard(Long board_id);
     Page<BoardListResponseDto> getBoardList(Pageable pageable);
     Page<BoardListResponseDto> getBoardListPagingSearch(Pageable pageable, String type, String searchKeyword);
+    Page<BoardListResponseDto> getBoardRecommendList(Pageable pageable);
+    Page<BoardListResponseDto> getBoardRecommendListPagingSearch(Pageable pageable, String type, String searchKeyword);
+    Page<BoardListResponseDto> getBoardViewList(Pageable pageable);
+    Page<BoardListResponseDto> getBoardViewListPagingSearch(Pageable pageable, String type, String searchKeyword);
     int updateView(Long board_id);
 }

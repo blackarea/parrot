@@ -183,7 +183,7 @@
     </script>
 </head>
 
-<div layout:fragment="content" class="text-center">
+<div layout:fragment="content">
     <div class="flex-container">
 
         <div class="main" style="display:flex">
@@ -281,49 +281,9 @@
                 </div>
             </div>
 
+
         </div>
     </div>
 </div>
-</div>
-<!--<main class="form-signin">
-    <form th:action="@{/signup}" method="post">
 
-        <div class="py-5 text-center">
-            <h2>회원가입</h2>
-        </div>
-
-        <div class="row g-3 mb-3">
-            &lt;!&ndash;ID&ndash;&gt;
-            <div class="col-sm-12">
-                <label for="ID" class="form-label">ID</label>
-                <input type="text" class="form-control" th:value="${userSaveDto?.login_id}" id="ID" name="login_id" required>
-                <span class="text-danger" th:text="${valid_login_id}"></span>
-            </div>
-
-            &lt;!&ndash;password&ndash;&gt;
-            <div class="col-sm-12">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" th:value="${userSaveDto?.password}" id="password" name="password" required>
-                <span class="text-danger" th:text="${valid_password}"></span>
-            </div>
-
-            &lt;!&ndash;Username&ndash;&gt;
-            <div class="col-12">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" th:value="${userSaveDto?.username}" id="username" name="username" placeholder="Username" required>
-                <span class="text-danger" th:text="${valid_username}"></span>
-            </div>
-
-            &lt;!&ndash;email&ndash;&gt;
-            <div class="col-12">
-                <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
-            </div>
-        </div>
-
-        <button class="w-100 btn btn-primary btn-lg" type="submit">회원가입 완료</button>
-
-    </form>
-</main>-->
-</div>
 </html>

@@ -144,25 +144,25 @@
 
 
                 <div class="row">
+                    <form method="get" th:action="@{/boardlist}">
                     <!--최신글 인기글-->
                     <div class="col" style="display: flex; justify-content: flex-start">
-                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="text" class="btn-check" id="btnradio1" autocomplete="off" name="array" th:value="${param.array}" th:onclick="location.href='/boardlist?array=all'"
                                    checked>
                             <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio1">전체글</label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                            <input type="text" class="btn-check" id="btnradio2" autocomplete="off"  th:onclick="location.href='/boardlist?array=recommend'">
                             <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio2">인기글</label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                            <input type="text" class="btn-check" id="btnradio3" autocomplete="off" th:onclick="location.href='/boardlist?array=view'">
                             <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio3">최신글</label>
-                        </div>
+                            </div>
                     </div>
 
                     <div class="col" style="display: flex; justify-content: flex-end">
                         <!--검색-->
                         <div class="search">
-                            <form method="get" style="display: flex" th:action="@{/boardlist}">
 
                                 <select class="form-select" id="type" name="type" style="width:80px">
                                     <option value="all">전체</option>
@@ -179,9 +179,9 @@
                                     <button class="serachimg" type="submit"><i class="bi bi-search"></i></button>
                                 </div>
 
-                            </form>
                         </div>
                     </div>
+                    </form>
 
                     <!--검색-->
                 </div>
@@ -191,8 +191,8 @@
                     <div class="col">
                         <table class="table table-hover">
                             <!--공지-->
-                            <tr style="background-color:#efefef;border:none">
-                                <td style="border:none">
+                            <tr style="background-color:#efefef">
+                                <td>
                                     <div class="container" style="width: 810px">
                                         <div class="row">
                                             <div class="col-sm-1"
@@ -223,8 +223,8 @@
                                 </td>
                             </tr>
                             <!--게시글-->
-                            <tr style="border-bottom:1px solid #e7e7e7"th:each="boardListResponseDto : ${boardList}">
-                                <td style="border:none;padding-top:12px;padding-bottom:12px;">
+                            <tr th:each="boardListResponseDto : ${boardList}">
+                                <td>
                                     <div class="container" style="width: 810px;">
                                         <div class="row">
                                             <!--왼쪽 (그림, 추천수)-->
@@ -282,27 +282,27 @@
                                 end=${start + 9 < boardList.getTotalPages() ? start + 9 : boardList.getTotalPages()}">
 
                             <li class="page-item" th:if="${boardList.number != 0}">
-                                <a th:href="@{/boardlist(searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                <a th:href="@{/boardlist(array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="'<<'"></a>
                             </li>
 
                             <li class="page-item" th:if="${start > 1}">
-                                <a th:href="@{/boardlist(page=${((boardList.number/10)*10)-10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                <a th:href="@{/boardlist(page=${((boardList.number/10)*10)-10}, array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="'<'"></a>
                             </li>
 
                             <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
-                                <a th:href="@{/boardlist(page=${page - 1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                <a th:href="@{/boardlist(page=${page - 1}, array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="${page}">1</a>
                             </li>
 
                             <li class="page-item" th:if="${end < boardList.getTotalPages()}">
-                                <a th:href="@{/boardlist(page=${(boardList.number/10)*10+10}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                <a th:href="@{/boardlist(page=${(boardList.number/10)*10+10}, array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="'>'"></a>
                             </li>
 
                             <li class="page-item" th:if="${boardList.number != boardList.getTotalPages()-1}">
-                                <a th:href="@{/boardlist(page=${boardList.getTotalPages()-1}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
+                                <a th:href="@{/boardlist(page=${boardList.getTotalPages()-1}, array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="'>>'"></a>
                             </li>
                         </ul>
