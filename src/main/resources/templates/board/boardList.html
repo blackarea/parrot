@@ -144,7 +144,7 @@
 
 
                 <div class="row">
-                    <form method="get" th:action="@{/boardlist}">
+                    <form method="get"style="display: flex" th:action="@{/boardlist}">
                     <!--최신글 인기글-->
                     <div class="col" style="display: flex; justify-content: flex-start">
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -162,7 +162,7 @@
 
                     <div class="col" style="display: flex; justify-content: flex-end">
                         <!--검색-->
-                        <div class="search">
+                        <div class="search" style="display:flex">
 
                                 <select class="form-select" id="type" name="type" style="width:80px">
                                     <option value="all">전체</option>
@@ -189,9 +189,9 @@
                 <!--테이블-->
                 <div class="row" style="margin-top: 20px">
                     <div class="col">
-                        <table class="table table-hover">
+                        <table class="table">
                             <!--공지-->
-                            <tr style="background-color:#efefef">
+                            <tr style="background-color:#efefef;height:70px;display:flex;align-items:center">
                                 <td>
                                     <div class="container" style="width: 810px">
                                         <div class="row">
@@ -204,7 +204,7 @@
                                                     <div>
                                                         <div class="row" style="height: 24px">
                                                             <div class="col">
-                                                                <span style="font-size: 15px; vertical-align:top; font-weight:bold; color:#000">공지사항 욕설,비방,분탕 싹 다 쳐내 [2]</span>
+                                                                <span style="font-size: 15px; vertical-align:top; font-weight:bold; color:#000">공지사항</span>
                                                             </div>
                                                         </div>
                                                         <div class="row" style="height: 24px">
@@ -223,7 +223,7 @@
                                 </td>
                             </tr>
                             <!--게시글-->
-                            <tr th:each="boardListResponseDto : ${boardList}">
+                            <tr th:each="boardListResponseDto : ${boardList}" style="height:70px;display:flex;align-items:center">
                                 <td>
                                     <div class="container" style="width: 810px;">
                                         <div class="row">
@@ -246,18 +246,25 @@
                                                         <!--윗 줄(제목)-->
                                                         <div class="row" style="height: 24px">
                                                             <div class="col" id="boardtitle">
-                                                                <a style="font-size: 16px; vertical-align:top; font-weight:bold; color:#444444"
+
+                                                                <a style="font-size: 16px;;font-weight:bold; color:#444444"
                                                                    th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
                                                                    th:text="${boardListResponseDto.title}"></a>
                                                                 <span th:if="${boardListResponseDto.commentCount} != 0"
-                                                                      th:text="'['+${boardListResponseDto.commentCount}+']'"></span>
+                                                                      th:text="'['+${boardListResponseDto.commentCount}+']'" style="color:#ffb830"></span>
                                                             </div>
-                                                        </div>
+
                                                         <!--아랫 줄-->
                                                         <div class="row" style="height: 24px">
                                                             <div class="col" style="display:flex">
-                                                                <div style="width:15%;text-align:left"><span style="font-size: 14px;color:#444444" th:text="${boardListResponseDto.id}"></span></div>
-                                                                <div style="width:5%;margin-left:10px;text-align:left"><span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.view}"></span></div>
+                                                                <div style="width:15%;text-align:left">
+                                                                    <span style="font-size: 14px; color:#7C7C7C">글 번호</span>
+                                                                    <span style="font-size: 14px;color:#444444" th:text="${boardListResponseDto.id}"></span>
+                                                                </div>
+                                                                <div style="width:15%;text-align:center">
+                                                                    <span style="font-size: 14px; color:#7C7C7C">조회</span>
+                                                                    <span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.view}"></span>
+                                                                </div>
                                                                 <div style="width:25%;margin-left:10px;text-align:center"><span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.createdDate}"></span></div>
                                                                 <div style="width:70%"><span style="font-size: 14px;float:right;font-weight:bold" th:text="${boardListResponseDto.getAuthor}"></span></div>
                                                             </div>
