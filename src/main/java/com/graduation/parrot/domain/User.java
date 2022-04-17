@@ -52,7 +52,7 @@ public class User extends BaseTimeEntity{
     }
 
     public void updatePassword(String password){
-        this.name = password;
+        this.password = password;
     }
 
     public void updateName(String username){
