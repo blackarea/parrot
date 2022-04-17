@@ -1,11 +1,12 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.dto.QUserActivityDto;
-import com.graduation.parrot.domain.dto.UserActivityListDto;
-import com.graduation.parrot.domain.dto.UserSaveDto;
+import com.graduation.parrot.domain.dto.User.QUserActivityDto;
+import com.graduation.parrot.domain.dto.User.UserActivityListDto;
+import com.graduation.parrot.domain.dto.User.UserSaveDto;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,7 @@ import static com.graduation.parrot.domain.QComment.comment;
 import static com.graduation.parrot.domain.QRecommend.recommend;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -61,10 +63,19 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void updatePassword(String login_id, String password) {
+    public boolean updatePassword(String login_id, String oldPassword, String newPassword) {
         User user = userRepository.findByLogin_id(login_id)
                 .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
-        user.updatePassword(bCryptPasswordEncoder.encode(password));
+
+        if(confirmPassword(oldPassword, user.getPassword())){
+            user.updatePassword(bCryptPasswordEncoder.encode(newPassword));
+            return true;
+        }
+        return false;
+    }
+
+    boolean confirmPassword(String rawPassword, String encodedPassword){
+        return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
     }
 
     @Transactional
@@ -138,10 +149,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean validateDuplicateUsername(String username) {
-        System.out.println("UserServiceImpl.validateDuplicateUsername");
-        System.out.println("username = " + username);
         Optional<User> user = userRepository.findByName(username);
-        System.out.println(user.isPresent());
         return user.isPresent();
     }
 

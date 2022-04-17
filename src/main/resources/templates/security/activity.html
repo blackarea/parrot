@@ -178,14 +178,21 @@
                         <tr>
                             <td style="width: 250px;height:60px;display:flex;align-items:center;">
                                 <i id="accounticon" class="bi bi-person-lines-fill" style="font-size:30px;margin-left:20px;float:right;color:#444"></i>
-                                <span id="accountsetting" style="font-size:17px;margin-left:20px;color:#444">계정설정</span>
+                                <a id="accountsetting" th:href="@{/account/{login_id}(login_id=${login_id})}"
+                                      style="font-size:17px;margin-left:20px;color:#444;text-decoration: none">계정설정</a>
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 250px;height:60px;display:flex;align-items:center;background:#ffb830">
                                 <i class="bi bi-person-workspace"style="font-size:30px;margin-left:20px;color:#fff"></i>
-                                <span  style="font-size:17px;margin-left:20px;color:#fff">나의활동</span>
+                                <a th:href="@{/account/{login_id}/activity(login_id=${login_id})}"
+                                   style="font-size:17px;margin-left:20px;color:#fff;text-decoration: none">나의활동</a>
                             </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 250px;height:60px;display:flex;align-items:center">
+                                <i class="bi bi-person-workspace"style="font-size:30px;margin-left:20px;color:#444"></i>
+                                <a th:href="@{/account/{login_id}/taught(login_id=${login_id})}" style="font-size:17px;margin-left:20px;color:#444;text-decoration: none !important">가르치기 내역</a>
                             </td>
                         </tr>
                     </table>

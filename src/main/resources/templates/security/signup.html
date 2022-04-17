@@ -143,6 +143,9 @@
 
     </style>
     <script>
+        let idCheck = false;
+        let usernameCheck = false;
+
         function validateDuplicateId() {
             let id = document.getElementById('login_id').value;
 
@@ -158,6 +161,7 @@
                     duplicate.setAttribute('style', 'font-size:14px;color:#333');
                 } else {
                     notDuplicate.setAttribute('style', 'font-size:14px;color:#333');
+                    idCheck = true;
                 }
             });
         };
@@ -177,6 +181,7 @@
                     duplicate.setAttribute('style', 'font-size:14px;color:#333');
                 } else {
                     notDuplicate.setAttribute('style', 'font-size:14px;color:#333');
+                    usernameCheck = true;
                 }
             });
         };
@@ -267,7 +272,6 @@
                                     style="border-radius: 2em; margin-top: 20px; margin-bottom: 20px;width: 200px; height: 45px">
                                 Join
                             </button>
-                            <!--<span id="forget">아이디, 혹은 비밀번호를 잊으셨나요?</span>-->
                         </div>
                     </form>
                 </div>

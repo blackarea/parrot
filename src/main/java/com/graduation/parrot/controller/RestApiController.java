@@ -1,6 +1,6 @@
 package com.graduation.parrot.controller;
 
-import com.graduation.parrot.domain.dto.UserSaveDto;
+import com.graduation.parrot.domain.dto.User.UserSaveDto;
 import com.graduation.parrot.exception.ApiException;
 import com.graduation.parrot.exception.ExceptionEnum;
 import com.graduation.parrot.service.UserService;
