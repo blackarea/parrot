@@ -3251,7 +3251,8 @@ textarea.form-control-lg {
 }
 
 .btn-outline-primary {
-  color: #7f7f7f;
+  color: #6c757d;
+  font-size: 15px;
   border-color: #D3D3D3;
 }
 .btn-outline-primary:hover {
@@ -3303,8 +3304,10 @@ textarea.form-control-lg {
 }
 
 .btn-outline-success {
-  color: #198754;
-  border-color: #198754;
+  color: #F99900;
+  background-color: #fff;
+  border-color: #FFB830;
+  font-weight: bold;
 }
 .btn-outline-success:hover {
   color: #fff;
