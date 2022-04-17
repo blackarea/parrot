@@ -3,9 +3,24 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout}">
 
-<link rel="stylesheet" th:href="@{/css/custom.css}">
 <head>
+    <script>
+        $(function () {
+            let url = new URL(location.href);
+            let searchParams = url.searchParams;
+            console.log(searchParams.get('array'));
 
+            if (searchParams.get('array') === 'recommend') {
+                document.getElementById('sortRecommendLabel').setAttribute('class', 'btn btn-outline-primary');
+            }
+            else if (searchParams.get('array') === 'view') {
+                document.getElementById('sortViewLabel').setAttribute('class', 'btn btn-outline-primary');
+            }else {
+                document.getElementById('sortTimeLabel').setAttribute('class', 'btn btn-outline-primary');
+            }
+
+        });
+    </script>
     <style>
         @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
@@ -116,6 +131,28 @@
             color: #444444;
             font-size: 25px;
         }
+        .btn-outline-primary {
+            color: #F99900;
+            background-color: #fff;
+            border-color: #FFB830;
+            font-weight: bold;
+        }
+        .btn-check:checked + .btn-outline-primary, .btn-check:active + .btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show {
+            color: #F99900;
+            background-color: #fff;
+            border-color: #FFB830;
+            font-weight: bold;
+        }
+        .btn-outline-secondary:hover {
+            color: #fff;
+            background-color: #FFB830;
+            border-color: #FFB830;
+        }
+        .btn-check:checked + .btn-outline-secondary, .btn-check:active + .btn-outline-secondary, .btn-outline-secondary:active, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show {
+            color: #fff;
+            background-color: #FFB830;
+            border-color: #FFB830;
+        }
 
 
 
@@ -150,13 +187,13 @@
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                             <input type="text" class="btn-check" id="btnradio1" autocomplete="off" name="array" th:value="${param.array}" th:onclick="location.href='/boardlist?array=all'"
                                    checked>
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio1">전체글</label>
+                            <label id="sortTimeLabel" class="btn btn-outline-secondary" style="font-size:14px" for="btnradio1">최신순</label>
 
                             <input type="text" class="btn-check" id="btnradio2" autocomplete="off"  th:onclick="location.href='/boardlist?array=recommend'">
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio2">인기글</label>
+                            <label id="sortRecommendLabel" class="btn btn-outline-secondary" style="font-size:14px" for="btnradio2">추천순</label>
 
                             <input type="text" class="btn-check" id="btnradio3" autocomplete="off" th:onclick="location.href='/boardlist?array=view'">
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio3">최신글</label>
+                            <label id="sortViewLabel" class="btn btn-outline-secondary" style="font-size:14px" for="btnradio3">조회순</label>
                             </div>
                     </div>
 

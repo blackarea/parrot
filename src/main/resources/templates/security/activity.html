@@ -202,8 +202,7 @@
                         </tr>
                         <tr>
                             <td style="width: 250px;height:60px;display:flex;align-items:center">
-                                <i class="bi bi-person-workspace"
-                                   style="font-size:30px;margin-left:20px;color:#444"></i>
+                                <i class="bi bi bi-chat-text"style="font-size:30px;margin-left:20px;color:#444"></i>
                                 <a th:href="@{/account/{login_id}/taught(login_id=${login_id})}"
                                    style="font-size:17px;margin-left:20px;color:#444;text-decoration: none !important">가르치기
                                     내역</a>
@@ -256,7 +255,7 @@
                             </div>
 
                             <td style="width:70%;display:flex;justify-content:left">
-                                <span th:text="${userActivity.title}" style="font-size:14px;color:#777"></span>
+                                <span th:text="${userActivity.title}" style="font-size:14px;color:#444"></span>
                             </td>
                             <td style="width:20%;display:flex;justify-content:left">
                                 <span th:text="${userActivity.author}" style="font-size:14px;color:#777"></span>
