@@ -9,7 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Recommend {
+public class Recommend extends BaseTimeEntity{
 
     @Id @GeneratedValue
     @Column(name = "recommend_id")

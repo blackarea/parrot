@@ -1,6 +1,7 @@
 package com.graduation.parrot.controller;
 
 import com.graduation.parrot.config.auth.PrincipalDetails;
+import com.graduation.parrot.domain.dto.User.UserActivityPageDto;
 import com.graduation.parrot.domain.dto.User.UserResponseDto;
 import com.graduation.parrot.domain.dto.User.UserUpdateDto;
 import com.graduation.parrot.service.UserService;
@@ -31,8 +32,14 @@ public class UserController {
     @GetMapping("/activity")
     public String activity(@PathVariable String login_id, Model model, @PageableDefault(size = 10) Pageable pageable,
                            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        UserActivityPageDto userActivityPaging = userService.getUserActivityPaging(login_id, pageable);
+        int boardCount = userActivityPaging.getBoardCount();
+        int commentCount = userActivityPaging.getCommentCount();
+
+        model.addAttribute("boardCount", boardCount);
+        model.addAttribute("commentCount", commentCount);
         model.addAttribute("userName", principalDetails.getUser().getName());
-        model.addAttribute("userActivityListDto", userService.getUserActivityPaging(login_id, pageable));
+        model.addAttribute("userActivityListDto", userActivityPaging.getPage());
         return "security/activity";
     }
 

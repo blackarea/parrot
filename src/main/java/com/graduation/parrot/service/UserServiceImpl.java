@@ -3,11 +3,11 @@ package com.graduation.parrot.service;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.User.QUserActivityDto;
 import com.graduation.parrot.domain.dto.User.UserActivityListDto;
+import com.graduation.parrot.domain.dto.User.UserActivityPageDto;
 import com.graduation.parrot.domain.dto.User.UserSaveDto;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,7 +19,6 @@ import org.springframework.validation.FieldError;
 import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.graduation.parrot.domain.QBoard.board;
 import static com.graduation.parrot.domain.QComment.comment;
@@ -110,35 +109,43 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserActivityListDto> getUserActivityPaging(String login_id, Pageable pageable) {
-
+    public UserActivityPageDto getUserActivityPaging(String login_id, Pageable pageable) {
         List<UserActivityListDto> boardList = queryFactory
-                .select(new QUserActivityDto(board.title, board.author))
+                .select(new QUserActivityDto(board.title, board.author, board.createdDate))
                 .from(board)
                 .where(board.user.login_id.eq(login_id))
-                .fetch().stream().map(userActivityDto -> new UserActivityListDto("board", userActivityDto))
+                .fetch().stream().map(userActivityDto -> new UserActivityListDto("게시글", userActivityDto))
                 .collect(Collectors.toList());
 
         List<UserActivityListDto> commentList = queryFactory
-                .select(new QUserActivityDto(board.title, board.author))
+                .select(new QUserActivityDto(board.title, board.author, comment.createdDate))
                 .from(board)
                 .join(board.comments, comment)
                 .where(comment.user.login_id.eq(login_id))
-                .fetch().stream().map(userActivityDto -> new UserActivityListDto("comment", userActivityDto))
+                .fetch().stream().map(userActivityDto -> new UserActivityListDto("댓글", userActivityDto))
                 .collect(Collectors.toList());
 
         List<UserActivityListDto> recommendList = queryFactory
-                .select(new QUserActivityDto(board.title, board.author))
+                .select(new QUserActivityDto(board.title, board.author, recommend.createdDate))
                 .from(board)
                 .join(board.recommends, recommend)
                 .where(recommend.user.login_id.eq(login_id))
-                .fetch().stream().map(userActivityDto -> new UserActivityListDto("recommend", userActivityDto))
+                .fetch().stream().map(userActivityDto -> new UserActivityListDto("추천", userActivityDto))
                 .collect(Collectors.toList());
 
-        List<UserActivityListDto> allList = Stream.concat(boardList.stream(), commentList.stream()).collect(Collectors.toList());
+        List<UserActivityListDto> allList = new ArrayList<>();
+        allList.addAll(boardList);
+        allList.addAll(commentList);
         allList.addAll(recommendList);
 
-        return new PageImpl<>(allList, pageable, allList.size());
+        //날짜순 정렬
+        Comparator<UserActivityListDto> comparingNameNatural =
+                Comparator.comparing(UserActivityListDto::getCreatedDate, Comparator.reverseOrder());
+        List<UserActivityListDto> sortedAllList =
+                allList.stream().sorted(comparingNameNatural).collect(Collectors.toList());
+
+        return new UserActivityPageDto(boardList.size(), commentList.size(),
+                new PageImpl<>(sortedAllList, pageable, sortedAllList.size()));
     }
 
     @Override
