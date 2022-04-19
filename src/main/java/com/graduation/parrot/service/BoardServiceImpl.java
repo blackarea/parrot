@@ -111,7 +111,7 @@ public class BoardServiceImpl implements BoardService {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .join(board.user, user).fetchJoin()
-                .orderBy(board.recommendCount.desc())
+                .orderBy(board.recommendCount.desc(), board.id.desc())
                 .fetchResults();
 
         long total = boardQueryResults.getTotal();
@@ -130,7 +130,7 @@ public class BoardServiceImpl implements BoardService {
                 .join(board.user, user).fetchJoin()
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(board.recommendCount.desc())
+                .orderBy(board.recommendCount.desc(), board.id.desc())
                 .fetchResults();
 
         long total = boardQueryResults.getTotal();
@@ -148,7 +148,7 @@ public class BoardServiceImpl implements BoardService {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .join(board.user, user).fetchJoin()
-                .orderBy(board.view.desc())
+                .orderBy(board.view.desc(), board.id.desc())
                 .fetchResults();
 
         long total = boardQueryResults.getTotal();
@@ -167,7 +167,7 @@ public class BoardServiceImpl implements BoardService {
                 .join(board.user, user).fetchJoin()
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(board.view.desc())
+                .orderBy(board.view.desc(), board.id.desc())
                 .fetchResults();
 
         long total = boardQueryResults.getTotal();
