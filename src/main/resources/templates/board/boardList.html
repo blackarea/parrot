@@ -8,8 +8,6 @@
         $(function () {
             let url = new URL(location.href);
             let searchParams = url.searchParams;
-            console.log(searchParams.get('array'));
-
             if (searchParams.get('array') === 'recommend') {
                 document.getElementById('sortRecommendLabel').setAttribute('class', 'btn btn-outline-primary');
             }
