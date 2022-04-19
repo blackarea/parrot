@@ -1,18 +1,16 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
+
 <head>
     <link rel="stylesheet" th:href="@{/css/account-custom.css}">
     <style>
         @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-
-        @font-face {
-            font-family: 'NanumSquareRound';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-
+    @font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;}
         .flex-container {
             width: 100%;
             height: 100vh;
@@ -31,21 +29,20 @@
             -ms-flex-pack: center;
             justify-content: center;
 
-            font-family: NanumSquare;
-            transform: rotate(0.04deg);
+            font-family:NanumSquare;
+            transform : rotate(0.04deg);
 
         }
-
-        body {
-            overflow: hidden;
+        body{
+            overflow:hidden;
         }
 
         .main {
             display: flex;
-            justify-content: center;
-            width: 1200px;
-            overflow: hidden;
-            height: 800px;
+            justify-content:center;
+            width:1200px;
+            overflow:hidden;
+            height:800px;
         }
 
         input {
@@ -74,9 +71,9 @@
         #left {
             flex-direction: column;
             display: flex;
-            align-items: center;
+            align-items:center;
             width: 300px;
-            border-left: 1px solid #e5e5e5;
+            border-left:1px solid #e5e5e5;
 
         }
 
@@ -88,7 +85,7 @@
 
         #section {
             margin: 0;
-            width: 1000px;
+            width:1000px;
             height: 800px;
         }
 
@@ -119,10 +116,9 @@
             text-align: center;
         }
 
-        #activity {
-            overflow: auto;
+        #activity{
+            overflow:auto;
         }
-
         #activity::-webkit-scrollbar {
             width: 0px;
         }
@@ -147,30 +143,35 @@
                 <div id="smleft" style="margin-top:80px">
                     <div style="display:flex;align-items:center;justify-content:center">
                         <div style="margin-right:15px">
-                            <i class="bi bi-person-circle"
-                               style="font-size:50px;color:#444;display:flex;justify-content:center"></i>
+                            <i class="bi bi-person-circle" style="font-size:50px;color:#444;display:flex;justify-content:center"></i>
                         </div>
                         <div style="text-align:left">
-                            <span th:text="${userName}"
-                                  style="display:block;font-size:22px;color:#444;font-weight:bold"></span>
-                            <span style="display:block;font-size:15px;color:#444">님의 활동내역</span>
+                            <span style="display:block;font-size:22px;color:#444;font-weight:bold">다죽여버리겠어</span>
+                            <span style="display:block;font-size:15px;color:#444">님이 가르친 말</span>
                         </div>
                     </div>
                     <div style="display:flex;align-items:center;justify-content:center;margin-top:20px">
                         <div style="display:flex; align-items:center; flex-direction:column; margin:7px">
                             <div>
                                 <i class="bi bi-text-left" style="color:#aaa;font-size:15px"></i>
-                                <span style="color:#aaa;font-size:15px">작성글</span>
+                                <span style="color:#aaa;font-size:15px">기본</span>
                             </div>
-                            <span th:text="${boardCount}"
-                                  style="display:block;font-size:15px;color:#777;font-weight:bold"></span>
+                            <span style="display:block;font-size:15px;color:#777;font-weight:bold">10</span>
                         </div>
                         <div style="display:flex; align-items:center; flex-direction:column;margin:7px">
                             <div>
                                 <i class="bi bi-chat-right-text" style="color:#aaa;font-size:13px"></i>
-                                <span style="color:#aaa;font-size:15px">작성댓글</span>
+                                <span style="color:#aaa;font-size:15px">긍정부정</span>
                             </div>
-                            <span th:text="${commentCount}" style="font-size:15px;color:#777;font-weight:bold">10</span>
+                            <span style="font-size:15px;color:#777;font-weight:bold">10</span>
+
+                        </div>
+                        <div style="display:flex; align-items:center; flex-direction:column;margin:7px">
+                            <div>
+                                <i class="bi bi-chat-right-text" style="color:#aaa;font-size:13px"></i>
+                                <span style="color:#aaa;font-size:15px">자유질문</span>
+                            </div>
+                            <span style="font-size:15px;color:#777;font-weight:bold">10</span>
 
                         </div>
                         <!--<div style="display:flex; align-items:center; flex-direction:column;margin:7px">
@@ -182,30 +183,25 @@
                             <span style="font-size:14px;color:#777;font-weight:bold">10</span>
                         </div>-->
                     </div>
-                    <table id="accounttable"
-                           style="margin-top:50px;display:flex;align-items:center;justify-content:center">
+                    <table id="accounttable" style="margin-top:50px;display:flex;align-items:center;justify-content:center">
                         <tr>
                             <td style="width: 250px;height:60px;display:flex;align-items:center;">
-                                <i id="accounticon" class="bi bi-person-lines-fill"
-                                   style="font-size:30px;margin-left:20px;float:right;color:#444"></i>
+                                <i id="accounticon" class="bi bi-person-lines-fill" style="font-size:30px;margin-left:20px;float:right;color:#444"></i>
                                 <a id="accountsetting" th:href="@{/account/{login_id}(login_id=${login_id})}"
                                    style="font-size:17px;margin-left:20px;color:#444;text-decoration: none">계정설정</a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 250px;height:60px;display:flex;align-items:center;background:#ffb830">
-                                <i class="bi bi-person-workspace"
-                                   style="font-size:30px;margin-left:20px;color:#fff"></i>
+                            <td style="width: 250px;height:60px;display:flex;align-items:center">
+                                <i class="bi bi-person-workspace"style="font-size:30px;margin-left:20px;color:#444"></i>
                                 <a th:href="@{/account/{login_id}/activity(login_id=${login_id})}"
-                                   style="font-size:17px;margin-left:20px;color:#fff;text-decoration: none">나의활동</a>
+                                   style="font-size:17px;margin-left:20px;color:#444;text-decoration: none">나의활동</a>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 250px;height:60px;display:flex;align-items:center">
-                                <i class="bi bi bi-chat-text"style="font-size:30px;margin-left:20px;color:#444"></i>
-                                <a th:href="@{/account/{login_id}/taught(login_id=${login_id})}"
-                                   style="font-size:17px;margin-left:20px;color:#444;text-decoration: none !important">가르치기
-                                    내역</a>
+                            <td style="width: 250px;height:60px;display:flex;align-items:center;background:#ffb830">
+                                <i class="bi bi bi-chat-text"style="font-size:30px;margin-left:20px;color:#fff"></i>
+                                <a th:href="@{/account/{login_id}/taught(login_id=${login_id})}" style="font-size:17px;margin-left:20px;color:#fff;text-decoration: none !important">가르치기 내역</a>
                             </td>
                         </tr>
                     </table>
@@ -213,8 +209,11 @@
             </div>
 
             <div id="right" style="display:flex;align-items:center;justify-content:center;flex-direction:column">
-                <!--head-->
+
+
+
                 <div style="width:90%;display:flex;align-items:center;background:#fff;height:30px;padding:0px;margin-bottom:5px">
+
                     <div style="width:2%;height:70px"></div>
                     <div style="width:15%;display:flex;justify-content:center;align-items:center">
                         <span style="font-size:15px;color:#aaa;font-weight:bold">형태</span>
@@ -222,53 +221,61 @@
                     <div style="width:70%;display:flex;justify-content:left">
                         <span style="font-size:15px;color:#aaa;font-weight:bold">게시글 제목</span>
                     </div>
-                    <div style="width:20%;display:flex;justify-content:left">
-                        <span style="font-size:15px;color:#aaa;font-weight:bold">게시글 저자</span>
-                    </div>
-                </div>
 
-                <!--content-->
+
+                </div>
                 <div id="activity" style="width:90%;height:90%">
                     <table style="width:100%;height:90%">
-                        <tr th:each="userActivity : ${userActivityListDto}" style="display:flex;align-items:center;background:#fff;height:70px;padding:0px;margin-bottom:15px">
 
-                            <div th:if="${userActivity.type} == '댓글'">
-                                <td style="width:2%;background:#ffb830;height:70px"></td>
-                                <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
-                                    <i class="bi bi-chat-right-text" style="color:#444"></i>
-                                    <span th:text="${userActivity.type}" style="font-size:14px;color:#444"></span>
-                                </td>
-                            </div>
-                            <div th:if="${userActivity.type} == '게시글'">
-                                <td style="width:2%;background:#143F6B;display:flex;height:100%"></td>
-                                <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
-                                    <i class="bi bi-text-left" style="color:#444"></i>
-                                    <span th:text="${userActivity.type}" style="font-size:14px;color:#444"></span>
-                                </td>
-                            </div>
-                            <div th:if="${userActivity.type} == '추천'">
-                                <td style="width:2%;background:#F55353;display:flex;height:100%"></td>
-                                <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
-                                    <i class="bi bi-hand-thumbs-up" style="color:#444"></i>
-                                    <span th:text="${userActivity.type}" style="font-size:14px;color:#444">추천</span>
-                                </td>
-                            </div>
+                        <tr style="display:flex;align-items:center;background:#fff;height:70px;padding:0px;margin-bottom:15px">
+                            <td style="width:2%;background:#ffb830;height:70px"></td>
 
+                            <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
+                                <i class="bi bi-chat-right-text" style="color:#444"></i>
+                                <span style="font-size:14px;color:#444">댓글</span>
+                            </td>
                             <td style="width:70%;display:flex;justify-content:left">
-                                <span th:text="${userActivity.title}" style="font-size:14px;color:#444"></span>
+                                <span style="font-size:14px;color:#777">가나다라마바사ㄴㅇㄹㄹㅇㄴㅇ</span>
+
                             </td>
-                            <td style="width:20%;display:flex;justify-content:left">
-                                <span th:text="${userActivity.author}" style="font-size:14px;color:#777"></span>
-                            </td>
+
+
                         </tr>
+
+                        <tr style="display:flex;align-items:center;background:#fff;height:70px;padding:0px;margin-bottom:15px">
+                            <td style="width:2%;background:#143F6B;display:flex;height:100%"></td>
+                            <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
+                                <i class="bi bi-text-left" style="color:#444"></i>
+                                <span style="font-size:14px;color:#444">게시글</span>
+                            </td>
+                            <td style="width:70%;display:flex;justify-content:left">
+                                <span style="font-size:14px;color:#777">가나다라마바사ㄴㅇㄹㄹㅇㄴㅇ</span>
+
+                            </td>
+
+                        </tr>
+
+                        <tr style="display:flex;align-items:center;background:#fff;height:70px;padding:0px;margin-bottom:15px">
+                            <td style="width:2%;background:#F55353;display:flex;height:100%"></td>
+                            <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
+                                <i class="bi bi-hand-thumbs-up" style="color:#444"></i>
+                                <span style="font-size:14px;color:#444">추천</span>
+                            </td>
+                            <td style="width:70%;display:flex;justify-content:left">
+                                <span style="font-size:14px;color:#777">가나다라마바사ㄴㅇㄹㄹㅇㄴㅇ</span>
+
+                            </td>
+
+                        </tr>
+
                     </table>
                 </div>
 
             </div>
         </div>
 
+
     </div>
 
 </div>
-
 </html>

@@ -1,6 +1,6 @@
 package com.graduation.parrot.controller;
 
-import com.graduation.parrot.domain.dto.UserSaveDto;
+import com.graduation.parrot.domain.dto.User.UserSaveDto;
 import com.graduation.parrot.exception.ApiException;
 import com.graduation.parrot.exception.ExceptionEnum;
 import com.graduation.parrot.service.UserService;
@@ -33,6 +33,17 @@ public class RestApiController {
     public Map<String, String> validateDuplicateId(@PathVariable String duplicated_id) {
         Map<String, String> map = new HashMap<>();
         if (userService.validateDuplicateUser(duplicated_id)) {
+            map.put("duplicate", "yes");
+        } else {
+            map.put("duplicate", "no");
+        }
+        return map;
+    }
+
+    @GetMapping("/duplicate/name/{username}")
+    public Map<String, String> validateDuplicateName(@PathVariable String username) {
+        Map<String, String> map = new HashMap<>();
+        if (userService.validateDuplicateUsername(username)) {
             map.put("duplicate", "yes");
         } else {
             map.put("duplicate", "no");

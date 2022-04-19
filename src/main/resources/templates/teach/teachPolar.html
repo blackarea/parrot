@@ -4,12 +4,12 @@
 
 <head>
     <style>
-    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-    @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;}
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;}
 
 
         .body{
@@ -95,7 +95,8 @@
         .userinput:focus{
             outline:none;
         }
-        .aiinput{
+
+        .aiInput{
             border:3px solid #ffb830;
             color:#444;
             padding-left:20px;
@@ -107,58 +108,36 @@
             width:400px;
             border-radius:0px 10px 10px 10px;
         }
-        .aiinput:focus{
+        .aiInput:focus{
             outline:none;
         }
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function teach() {
-            let inputValue1 = document.getElementById("inputQuestion").value;
-            let inputValue2 = document.getElementById("inputPositive").value;
-            let inputValue3 = document.getElementById("inputNegative").value;
+            let question = document.getElementById("question").value;
+            let positiveAnswer = document.getElementById("positiveAnswer").value;
+            let negativeAnswer = document.getElementById("negativeAnswer").value;
             let data = {
-                question : inputValue1,
-                positive : inputValue2,
-                negative : inputValue3
+                question : question,
+                positive : positiveAnswer,
+                negative : negativeAnswer
             }
-
-            let teachDiv = document.getElementById("teach");
-            let receiveteach = document.createElement("span");
-            let pastSpan1 = document.createElement("span");
-            let pastSpan2 = document.createElement("span");
-            let pastSpan3 = document.createElement("span");
-            $('input').remove();
-            pastSpan1.innerText = inputValue1;
-            pastSpan2.innerText = inputValue2;
-            pastSpan3.innerText = inputValue3;
-
-            let newInput1 = document.createElement("input");
-            let newInput2 = document.createElement("input");
-            let newInput3 = document.createElement("input");
-            newInput1.setAttribute("id", "inputPolarQuestion");
-            newInput2.setAttribute("id", "inputPolarPositive");
-            newInput3.setAttribute("id", "inputPolarNegative");
 
             $.ajax({
                 type:'POST',
                 url:'/teach/polar',
                 data:JSON.stringify(data),
-                contentType:"application/json;charset=UTF-8", //body 데이터가 어떤 타입인지
+                contentType:"application/json;charset=UTF-8",
             }).done(function (response) {
-                receiveteach.innerText = response.teachPolar;
-            }).fail(function () {
-                console.log("fail");
-                receiveteach.innerText = "교육실패";
+                Swal.fire({
+                    icon: 'success',
+                    title: '앵무새는 이 가르치기를 기억할 것입니다.',
+                });
             });
 
-            teachDiv.appendChild(pastSpan1);
-            teachDiv.appendChild(pastSpan2);
-            teachDiv.appendChild(pastSpan3);
-            teachDiv.appendChild(receiveteach);
-            teachDiv.appendChild(newInput1);
-            teachDiv.appendChild(newInput2);
-            teachDiv.appendChild(newInput3);
+
         }
 
     </script>
@@ -188,7 +167,7 @@
 
                 <div style="height:200px;display:flex; align-items:center;justify-content:left">
                     <div style="text-align:left">
-                        <input class="aiinput">
+                        <input id="question" class="aiInput">
                         <div style="display:flex; align-items:center;margin-top:10px">
                             <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">1</span>
                             <span style="font-size:16px">앵무새가 이렇게 물어봤을 때</span>
@@ -205,7 +184,7 @@
 
                 <div style="height:100px;display:flex; align-items:center;justify-content:left">
                     <div style="text-align:left">
-                        <input class="aiinput">
+                        <input id="positiveAnswer" class="aiInput">
                         <div style="display:flex; align-items:center;margin-top:10px">
                             <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">2</span>
                             <span style="font-size:16px">이렇게 대답하고</span>
@@ -220,9 +199,9 @@
                     </div>
                 </div>
 
-                <div style="height:150px;display:flex; align-items:center;justify-content:left">
+                <div style="height:100px;display:flex; align-items:center;justify-content:left">
                     <div style="text-align:left">
-                        <input class="aiinput">
+                        <input id="negativeAnswer" class="aiInput">
                         <div style="display:flex; align-items:center;margin-top:10px">
                             <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">3</span>
                             <span style="font-size:16px">이렇게 대답합니다</span>
@@ -240,12 +219,6 @@
 
     </div>
 
-   <!-- <div id="teach">
-        <button class="btn btn-info" onclick="teach()">전송</button>
-        <input id="inputQuestion">
-        <input id="inputPositive">
-        <input id="inputNegative">
-    </div>-->
 
 </div>
 

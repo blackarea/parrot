@@ -33,6 +33,7 @@ public class HomeController {
                     .login_id("login" + i)
                     .password(bCryptPasswordEncoder.encode("pwd" + i))
                     .name("name" + i)
+                    .email("email" + i + "@naver.com")
                     .build();
             userRepository.save(user);
 

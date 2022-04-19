@@ -4,14 +4,12 @@ import com.graduation.parrot.domain.Board;
 import com.graduation.parrot.domain.Comment;
 import com.graduation.parrot.domain.Recommend;
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.dto.BoardListResponseDto;
-import com.graduation.parrot.domain.dto.QUserActivityDto;
-import com.graduation.parrot.domain.dto.UserActivityListDto;
+import com.graduation.parrot.domain.dto.User.UserActivityListDto;
+import com.graduation.parrot.domain.dto.User.UserActivityPageDto;
 import com.graduation.parrot.repository.BoardRepository;
 import com.graduation.parrot.repository.CommentRepository;
 import com.graduation.parrot.repository.RecommendRepository;
 import com.graduation.parrot.repository.UserRepository;
-import com.querydsl.core.types.Expression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -89,8 +87,8 @@ class UserServiceTest {
         });
 
         Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "board_id");
-        Page<UserActivityListDto> tests = userService.getUserActivityPaging("login", pageable);
-        assertThat(tests.getNumberOfElements()).isEqualTo(4);
+        UserActivityPageDto userActivityPageDto = userService.getUserActivityPaging("login", pageable);
+        assertThat(userActivityPageDto.getPage().getNumberOfElements()).isEqualTo(4);
 
     }
 }

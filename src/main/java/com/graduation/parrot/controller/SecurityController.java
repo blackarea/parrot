@@ -1,14 +1,9 @@
 package com.graduation.parrot.controller;
 
-import com.graduation.parrot.config.auth.PrincipalDetails;
-import com.graduation.parrot.domain.dto.*;
+import com.graduation.parrot.domain.dto.User.UserSaveDto;
 import com.graduation.parrot.service.UserService;
 import com.graduation.parrot.validator.SignUpValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -60,39 +55,8 @@ public class SecurityController {
 
             return "security/signup";
         }
-        if (userSaveDto.getEmail().equals("")) {
-            userSaveDto.setEmail(null);
-        }
         userService.create(userSaveDto);
         return "redirect:/";
-    }
-
-    @GetMapping("/account/activity/{login_id}")
-    public String activity(@PathVariable String login_id, Model model, @PageableDefault(size = 10) Pageable pageable,
-                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        model.addAttribute("userName", principalDetails.getUser().getName());
-        model.addAttribute("userActivityListDto", userService.getUserActivityPaging(login_id, pageable));
-        return "security/activity";
-    }
-
-    @GetMapping("/account/{login_id}")
-    public String account(@PathVariable String login_id, Model model,
-                          @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        UserResponseDto userResponseDto = new UserResponseDto(principalDetails.getUser());
-        model.addAttribute("userResponseDto", userResponseDto);
-        return "security/account";
-    }
-
-    @PutMapping("/account/password/{login_id}")
-    public void updatePassword(@PathVariable String login_id, @RequestBody Map<String, String> name) {
-        userService.updatePassword(login_id, name.get("password"));
-    }
-
-    @ResponseBody
-    @PutMapping("/account/{login_id}")
-    public void updateAccount(@PathVariable String login_id, @RequestBody UserUpdateDto userUpdateDto, HttpServletResponse response) {
-        userService.updateName(login_id, userUpdateDto.getUsername());
-        userService.updateEmail(login_id, userUpdateDto.getEmail());
     }
 
     private void expireCookie(HttpServletResponse response) {

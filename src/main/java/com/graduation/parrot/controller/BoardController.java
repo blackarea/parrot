@@ -5,7 +5,7 @@ import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
 import com.graduation.parrot.domain.dto.BoardResponseDto;
 import com.graduation.parrot.domain.dto.CommentResponseDto;
-import com.graduation.parrot.domain.dto.UserResponseDto;
+import com.graduation.parrot.domain.dto.User.UserResponseDto;
 import com.graduation.parrot.service.BoardService;
 import com.graduation.parrot.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class BoardController {
     private final CommentService commentService;
 
     @GetMapping("/")
-    public String index(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
+    public String index(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model) {
         if (principalDetails != null) {
             model.addAttribute("login_id", principalDetails.getUser().getLogin_id());
         }
@@ -40,28 +40,23 @@ public class BoardController {
 
     @GetMapping("/boardlist")
     public String boardList(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 15) Pageable pageable,
-                        @RequestParam(defaultValue = "all")String type, String searchKeyword, @RequestParam(defaultValue = "all")String array) {
+                            @RequestParam(defaultValue = "all") String type, String searchKeyword, @RequestParam(defaultValue = "all") String array) {
         log.info(array);
         if (principalDetails != null) {
             model.addAttribute("userName", principalDetails.getUser().getName());
         }
 
-        if(searchKeyword != null && array.equals("all")){
-            model.addAttribute("boardList",boardService.getBoardListPagingSearch(pageable,type,searchKeyword));
-        }
-        else if(searchKeyword == null && array.equals("view")){
+        if (searchKeyword != null && array.equals("all")) {
+            model.addAttribute("boardList", boardService.getBoardListPagingSearch(pageable, type, searchKeyword));
+        } else if (searchKeyword == null && array.equals("view")) {
             model.addAttribute("boardList", boardService.getBoardViewList(pageable));
-        }
-        else if(searchKeyword == null && array.equals("recommend")) {
+        } else if (searchKeyword == null && array.equals("recommend")) {
             model.addAttribute("boardList", boardService.getBoardRecommendList(pageable));
-        }
-        else if(searchKeyword != null && array.equals("view")){
-            model.addAttribute("boardList",boardService.getBoardViewListPagingSearch(pageable,type,searchKeyword));
-        }
-        else if(searchKeyword != null && array.equals("recommend")){
-            model.addAttribute("boardList",boardService.getBoardRecommendListPagingSearch(pageable,type,searchKeyword));
-        }
-        else if(searchKeyword == null && array.equals("all")){
+        } else if (searchKeyword != null && array.equals("view")) {
+            model.addAttribute("boardList", boardService.getBoardViewListPagingSearch(pageable, type, searchKeyword));
+        } else if (searchKeyword != null && array.equals("recommend")) {
+            model.addAttribute("boardList", boardService.getBoardRecommendListPagingSearch(pageable, type, searchKeyword));
+        } else if (searchKeyword == null && array.equals("all")) {
             model.addAttribute("boardList", boardService.getBoardList(pageable));
         }
         return "board/boardList";
@@ -88,10 +83,10 @@ public class BoardController {
         return "board/createBoard";
     }
 
-    @PostMapping("/board/create")
+    @PostMapping("/board")
     public String createBoard(BoardDto boardDto, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        boardService.create(boardDto, principalDetails.getUser());
-        return "redirect:/boardlist";
+        Long board_id = boardService.create(boardDto, principalDetails.getUser());
+        return "redirect:/board/" + board_id;
     }
 
     @GetMapping("/board/update/{id}")
@@ -100,19 +95,19 @@ public class BoardController {
         return "board/updateBoard";
     }
 
-    @PutMapping("/board/update/{id}")
+    @PutMapping("/board/{id}")
     public String updateBoard(@PathVariable Long id, BoardDto boardDto) {
         boardService.update(id, boardDto);
-        return "redirect:/boardlist";
+        return "redirect:/board/" + id;
     }
 
-    @DeleteMapping("/board/delete/{id}")
-    public String deleteBoard(@PathVariable Long id) {
+    @ResponseBody
+    @DeleteMapping("/board/{id}")
+    public void deleteBoard(@PathVariable Long id) {
         boardService.delete(id);
-        return "redirect:/boardlist";
     }
 
-    private void viewCountUp(Long board_id, HttpServletRequest request, HttpServletResponse response){
+    private void viewCountUp(Long board_id, HttpServletRequest request, HttpServletResponse response) {
         Cookie oldCookie = null;
         Cookie[] cookies = request.getCookies();
 
@@ -129,15 +124,15 @@ public class BoardController {
                 boardService.updateView(board_id);
                 oldCookie.setValue(oldCookie.getValue() + "_[" + board_id + "]");
                 oldCookie.setPath("/");
-                oldCookie.setMaxAge(60 * 60); //1시간 //TODO 나중에 24시간으로 변경 밑에 쿠키도
+                oldCookie.setMaxAge(1 * 1); //1시간 //TODO 나중에 24시간으로 변경 밑에 쿠키도
                 oldCookie.setHttpOnly(true);
                 response.addCookie(oldCookie);
             }
         } else {
             boardService.updateView(board_id);
-            Cookie newCookie = new Cookie("postView","[" + board_id + "]");
+            Cookie newCookie = new Cookie("postView", "[" + board_id + "]");
             newCookie.setPath("/");
-            newCookie.setMaxAge(60 * 60); //1시간
+            newCookie.setMaxAge(1 * 1); //1시간
             newCookie.setHttpOnly(true);
             response.addCookie(newCookie);
         }

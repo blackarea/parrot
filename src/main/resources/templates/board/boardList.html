@@ -3,9 +3,24 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout}">
 
-<link rel="stylesheet" th:href="@{/css/custom.css}">
 <head>
+    <script>
+        $(function () {
+            let url = new URL(location.href);
+            let searchParams = url.searchParams;
+            console.log(searchParams.get('array'));
 
+            if (searchParams.get('array') === 'recommend') {
+                document.getElementById('sortRecommendLabel').setAttribute('class', 'btn btn-outline-primary');
+            }
+            else if (searchParams.get('array') === 'view') {
+                document.getElementById('sortViewLabel').setAttribute('class', 'btn btn-outline-primary');
+            }else {
+                document.getElementById('sortTimeLabel').setAttribute('class', 'btn btn-outline-primary');
+            }
+
+        });
+    </script>
     <style>
         @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
@@ -116,6 +131,28 @@
             color: #444444;
             font-size: 25px;
         }
+        .btn-outline-primary {
+            color: #F99900;
+            background-color: #fff;
+            border-color: #FFB830;
+            font-weight: bold;
+        }
+        .btn-check:checked + .btn-outline-primary, .btn-check:active + .btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show {
+            color: #F99900;
+            background-color: #fff;
+            border-color: #FFB830;
+            font-weight: bold;
+        }
+        .btn-outline-secondary:hover {
+            color: #fff;
+            background-color: #FFB830;
+            border-color: #FFB830;
+        }
+        .btn-check:checked + .btn-outline-secondary, .btn-check:active + .btn-outline-secondary, .btn-outline-secondary:active, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show {
+            color: #fff;
+            background-color: #FFB830;
+            border-color: #FFB830;
+        }
 
 
 
@@ -144,25 +181,25 @@
 
 
                 <div class="row">
-                    <form method="get" th:action="@{/boardlist}">
+                    <form method="get"style="display: flex" th:action="@{/boardlist}">
                     <!--최신글 인기글-->
                     <div class="col" style="display: flex; justify-content: flex-start">
                             <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                             <input type="text" class="btn-check" id="btnradio1" autocomplete="off" name="array" th:value="${param.array}" th:onclick="location.href='/boardlist?array=all'"
                                    checked>
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio1">전체글</label>
+                            <label id="sortTimeLabel" class="btn btn-outline-secondary" style="font-size:14px" for="btnradio1">최신순</label>
 
                             <input type="text" class="btn-check" id="btnradio2" autocomplete="off"  th:onclick="location.href='/boardlist?array=recommend'">
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio2">인기글</label>
+                            <label id="sortRecommendLabel" class="btn btn-outline-secondary" style="font-size:14px" for="btnradio2">추천순</label>
 
                             <input type="text" class="btn-check" id="btnradio3" autocomplete="off" th:onclick="location.href='/boardlist?array=view'">
-                            <label class="btn btn-outline-primary" style="font-size:14px" for="btnradio3">최신글</label>
+                            <label id="sortViewLabel" class="btn btn-outline-secondary" style="font-size:14px" for="btnradio3">조회순</label>
                             </div>
                     </div>
 
                     <div class="col" style="display: flex; justify-content: flex-end">
                         <!--검색-->
-                        <div class="search">
+                        <div class="search" style="display:flex">
 
                                 <select class="form-select" id="type" name="type" style="width:80px">
                                     <option value="all">전체</option>
@@ -189,9 +226,9 @@
                 <!--테이블-->
                 <div class="row" style="margin-top: 20px">
                     <div class="col">
-                        <table class="table table-hover">
+                        <table class="table">
                             <!--공지-->
-                            <tr style="background-color:#efefef">
+                            <tr style="background-color:#efefef;height:70px;display:flex;align-items:center">
                                 <td>
                                     <div class="container" style="width: 810px">
                                         <div class="row">
@@ -204,7 +241,7 @@
                                                     <div>
                                                         <div class="row" style="height: 24px">
                                                             <div class="col">
-                                                                <span style="font-size: 15px; vertical-align:top; font-weight:bold; color:#000">공지사항 욕설,비방,분탕 싹 다 쳐내 [2]</span>
+                                                                <span style="font-size: 15px; vertical-align:top; font-weight:bold; color:#000">공지사항</span>
                                                             </div>
                                                         </div>
                                                         <div class="row" style="height: 24px">
@@ -223,7 +260,7 @@
                                 </td>
                             </tr>
                             <!--게시글-->
-                            <tr th:each="boardListResponseDto : ${boardList}">
+                            <tr th:each="boardListResponseDto : ${boardList}" style="height:70px;display:flex;align-items:center">
                                 <td>
                                     <div class="container" style="width: 810px;">
                                         <div class="row">
@@ -246,23 +283,27 @@
                                                         <!--윗 줄(제목)-->
                                                         <div class="row" style="height: 24px">
                                                             <div class="col" id="boardtitle">
-                                                                <a style="font-size: 16px; vertical-align:top; font-weight:bold; color:#444444"
+
+                                                                <a style="font-size: 16px;;font-weight:bold; color:#444444"
                                                                    th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
                                                                    th:text="${boardListResponseDto.title}"></a>
                                                                 <span th:if="${boardListResponseDto.commentCount} != 0"
-                                                                      th:text="'['+${boardListResponseDto.commentCount}+']'"></span>
+                                                                      th:text="'['+${boardListResponseDto.commentCount}+']'" style="color:#ffb830"></span>
                                                             </div>
-                                                        </div>
+
                                                         <!--아랫 줄-->
                                                         <div class="row" style="height: 24px">
-                                                            <div class="col">
-                                                                <span style="font-size: 14px;color:#444444">게시물 번호</span>
-                                                                <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
-                                                                      th:text="${boardListResponseDto.view}"></span>
-                                                                <span style="margin-left:10px; font-size: 14px; color:#7C7C7C"
-                                                                      th:text="${boardListResponseDto.createdDate}"></span>
-                                                                <span style="font-size: 14px; float:right; font-weight:bold"
-                                                                      th:text="${boardListResponseDto.getAuthor}"></span>
+                                                            <div class="col" style="display:flex">
+                                                                <div style="width:15%;text-align:left">
+                                                                    <span style="font-size: 14px; color:#7C7C7C">글 번호</span>
+                                                                    <span style="font-size: 14px;color:#444444" th:text="${boardListResponseDto.id}"></span>
+                                                                </div>
+                                                                <div style="width:15%;text-align:center">
+                                                                    <span style="font-size: 14px; color:#7C7C7C">조회</span>
+                                                                    <span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.view}"></span>
+                                                                </div>
+                                                                <div style="width:25%;margin-left:10px;text-align:center"><span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.createdDate}"></span></div>
+                                                                <div style="width:70%"><span style="font-size: 14px;float:right;font-weight:bold" th:text="${boardListResponseDto.getAuthor}"></span></div>
                                                             </div>
                                                         </div>
                                                     </div>

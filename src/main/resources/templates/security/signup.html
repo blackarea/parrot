@@ -3,15 +3,16 @@
       layout:decorate="~{layout/layout}">
 
 <head>
-    <link th:href="@{/css/signin.css}" rel="stylesheet">
     <style>
 
-    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-    @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;}
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
         .flex-container {
             width: 100%;
@@ -31,11 +32,12 @@
             -ms-flex-pack: center;
             justify-content: center;
 
-            font-family:NanumSquare;
-            transform : rotate(0.04deg);
+            font-family: NanumSquare;
+            transform: rotate(0.04deg);
         }
-        body{
-            overflow:hidden;
+
+        body {
+            overflow: hidden;
         }
 
         .main {
@@ -111,31 +113,79 @@
             margin: auto;
             width: 400px;
             height: 100%;
-            display:flex;
-            flex-direction:column;
-            justify-content:center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             text-align: center;
         }
+
         #smright {
             margin: auto;
             text-align: center;
         }
+
         a {
-            color:#444444;
+            color: #444444;
             text-decoration: none;
         }
+
         a:hover {
-            color : #ffb830;
+            color: #ffb830;
             text-decoration: none;
         }
-        #title{
-            margin-top:30px;
-            margin-bottom:20px;
+
+        #title {
+            margin-top: 30px;
+            margin-bottom: 20px;
 
         }
 
 
     </style>
+    <script>
+        let idCheck = false;
+        let usernameCheck = false;
+
+        function validateDuplicateId() {
+            let id = document.getElementById('login_id').value;
+
+            $.ajax({
+                type: 'GET',
+                url: '/app/duplicate/' + id
+            }).done(function (response) {
+                let duplicate = document.getElementById('duplicatedId');
+                let notDuplicate = document.getElementById('notDuplicatedId');
+                duplicate.setAttribute('style', 'display:none');
+                notDuplicate.setAttribute('style', 'display:none');
+                if (response.duplicate == 'yes') {
+                    duplicate.setAttribute('style', 'font-size:14px;color:#333');
+                } else {
+                    notDuplicate.setAttribute('style', 'font-size:14px;color:#333');
+                    idCheck = true;
+                }
+            });
+        };
+
+        function validateDuplicateUsername() {
+            let name = document.getElementById('username').value;
+
+            $.ajax({
+                type: 'GET',
+                url: '/app/duplicate/name/' + name
+            }).done(function (response) {
+                let duplicate = document.getElementById('duplicatedUsername');
+                let notDuplicate = document.getElementById('notDuplicatedUsername');
+                duplicate.setAttribute('style', 'display:none');
+                notDuplicate.setAttribute('style', 'display:none');
+                if (response.duplicate == 'yes') {
+                    duplicate.setAttribute('style', 'font-size:14px;color:#333');
+                } else {
+                    notDuplicate.setAttribute('style', 'font-size:14px;color:#333');
+                    usernameCheck = true;
+                }
+            });
+        };
+    </script>
 </head>
 
 <div layout:fragment="content">
@@ -144,55 +194,77 @@
         <div class="main" style="display:flex">
 
             <div id="left">
-                    <div id="smleft" style="text-align:left">
-                        <h2 id="title" style="font-weight:bold">회원가입</h2>
+                <div id="smleft" style="text-align:left">
+                    <h2 id="title" style="font-weight:bold">회원가입</h2>
+                    <form th:action="@{/signup}" method="post">
                         <div style="margin-bottom:20px">
-                        <span style="font-size:14px">아이디</span>
+                            <span style="font-size:14px">아이디</span>
                             <div style="display:flex;align-items:center">
-                            <input class="form-control me-2"style="border-radius: 0.5em;width:320px; height:45px; margin:0px" type="search" placeholder="">
-                            <button class="btn btn-outline-primary"style="border-radius: 0.5em;height:45px;padding:5px;width:70px;height:40px"><span style="font-size:13px">중복확인</span></button>
+                                <input class="form-control me-2" id="login_id" name="login_id"
+                                       style="border-radius: 0.5em;width:320px; height:45px; margin:0px" type="search"
+                                       required>
+                                <button onclick="validateDuplicateId()" class="btn btn-outline-primary" type="button"
+                                        style="border-radius: 0.5em;height:45px;padding:5px;width:70px;height:40px"><span
+                                        style="font-size:13px">중복확인</span></button>
                             </div>
-                            <div style="height:14px"><!--<span style="font-size:14px;color:#333">아이디가 중복됩니다.</span>--></div>
+                            <div style="height:14px">
+                                <span id="duplicatedId"
+                                      style="display:none;font-size:14px;color:#333">아이디가 중복됩니다.</span>
+                                <span id="notDuplicatedId" style="display:none;font-size:14px;color:greenyellow">사용가능한 아이디입니다.</span>
+                            </div>
                         </div>
 
                         <div style="margin-bottom:20px">
-                        <span style="font-size:14px">비밀번호</span>
-                            <form class="d-flex">
-                                <input class="form-control me-2"style="border-radius: 0.5em; height:45px; margin:0px" type="search" placeholder="영문, 숫자를 포함하여 8자 내외">
-
-                            </form>
+                            <span style="font-size:14px">비밀번호</span>
+                            <div class="d-flex">
+                                <input class="form-control me-2" style="border-radius: 0.5em; height:45px; margin:0px"
+                                       name="password"
+                                       type="search" placeholder="영문, 숫자를 포함하여 8자 내외" required>
+                            </div>
                         </div>
 
                         <div style="margin-bottom:20px">
                             <span style="font-size:14px">비밀번호 확인</span>
-                            <form class="d-flex">
-                                <input class="form-control me-2"style="border-radius: 0.5em; height:45px; margin:0px" type="search" placeholder="">
-                            </form>
+                            <div class="d-flex">
+                                <input class="form-control me-2" style="border-radius: 0.5em; height:45px; margin:0px"
+                                       type="search" required>
+                            </div>
                         </div>
 
                         <div style="margin-bottom:20px">
                             <span style="font-size:14px">유저 이름</span>
-                            <form class="d-flex">
-                                <input class="form-control me-2"style="border-radius: 0.5em;width:320px; height:45px; margin:0px" type="search" placeholder="">
-                                <button class="btn btn-outline-primary"style="border-radius: 0.5em;height:45px;padding:5px;width:70px;height:40px"><span style="font-size:13px">중복확인</span></button>
-                            </form>
-                            <div style="height:14px"><!--<span style="font-size:14px;color:#333">아이디가 중복됩니다.</span>--></div>
+                            <div class="d-flex">
+                                <input class="form-control me-2" id="username" name="username"
+                                       style="border-radius: 0.5em;width:320px; height:45px; margin:0px" type="search"
+                                       required>
+                                <button onclick="validateDuplicateUsername()" class="btn btn-outline-primary"
+                                        type="button"
+                                        style="border-radius: 0.5em;height:45px;padding:5px;width:70px;height:40px"><span
+                                        style="font-size:13px">중복확인</span></button>
+                            </div>
+                            <div style="height:14px">
+                                <span id="duplicatedUsername"
+                                      style="display:none;font-size:14px;color:#333">이름이 중복됩니다.</span>
+                                <span id="notDuplicatedUsername" style="display:none;font-size:14px;color:#333">사용가능한 이름입니다.</span>
+                            </div>
                         </div>
 
                         <div style="margin-bottom:20px">
                             <span style="font-size:14px">앵무새의 이름</span>
                             <div style="display:flex">
-                                <input class="form-control me-2"style="border-radius: 0.5em; height:45px; margin:0px" type="search" placeholder="">
+                                <input class="form-control me-2" style="border-radius: 0.5em; height:45px; margin:0px"
+                                       type="search" placeholder="">
                                 <!--<button class="btn btn-secondary"style="width:70px;height:40px"><span style="font-size:13px">중복</span></button>-->
                             </div>
                         </div>
 
                         <div style="margin-bottom:20px">
                             <span style="font-size:14px">이메일</span>
-                            <form class="d-flex">
-                                <input class="form-control me-2"style="border-radius: 0.5em; height:45px; margin:0px" type="search" placeholder="영문, 숫자를 포함하여 8자 내외">
-
-                            </form>
+                            <div class="d-flex">
+                                <input class="form-control me-2" style="border-radius: 0.5em; height:45px; margin:0px"
+                                       name="email"
+                                       type="search" placeholder="영문, 숫자를 포함하여 8자 내외" required>
+                            </div>
                         </div>
 
                         <div class="forget" style="text-align:center">
@@ -200,62 +272,22 @@
                                     style="border-radius: 2em; margin-top: 20px; margin-bottom: 20px;width: 200px; height: 45px">
                                 Join
                             </button>
-                            <!--<span id="forget">아이디, 혹은 비밀번호를 잊으셨나요?</span>-->
                         </div>
-                    </div>
-            </div>
-
-
-                <div id="right">
-                    <div id="smright" style="text-align:left">
-
-
-                    </div>
+                    </form>
                 </div>
-
             </div>
-    </div>
+
+
+            <div id="right">
+                <div id="smright" style="text-align:left">
+
+
+                </div>
+            </div>
+
+
         </div>
     </div>
-    <!--<main class="form-signin">
-        <form th:action="@{/signup}" method="post">
-
-            <div class="py-5 text-center">
-                <h2>회원가입</h2>
-            </div>
-
-            <div class="row g-3 mb-3">
-                &lt;!&ndash;ID&ndash;&gt;
-                <div class="col-sm-12">
-                    <label for="ID" class="form-label">ID</label>
-                    <input type="text" class="form-control" th:value="${userSaveDto?.login_id}" id="ID" name="login_id" required>
-                    <span class="text-danger" th:text="${valid_login_id}"></span>
-                </div>
-
-                &lt;!&ndash;password&ndash;&gt;
-                <div class="col-sm-12">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" th:value="${userSaveDto?.password}" id="password" name="password" required>
-                    <span class="text-danger" th:text="${valid_password}"></span>
-                </div>
-
-                &lt;!&ndash;Username&ndash;&gt;
-                <div class="col-12">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" th:value="${userSaveDto?.username}" id="username" name="username" placeholder="Username" required>
-                    <span class="text-danger" th:text="${valid_username}"></span>
-                </div>
-
-                &lt;!&ndash;email&ndash;&gt;
-                <div class="col-12">
-                    <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
-                </div>
-            </div>
-
-            <button class="w-100 btn btn-primary btn-lg" type="submit">회원가입 완료</button>
-
-        </form>
-    </main>-->
 </div>
+
 </html>
