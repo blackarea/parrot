@@ -7,12 +7,15 @@ import com.graduation.parrot.domain.dto.BoardListResponseDto;
 import com.graduation.parrot.domain.dto.BoardResponseDto;
 import com.graduation.parrot.repository.BoardRepository;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,13 +70,14 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardListResponseDto> getBoardList(Pageable pageable) {
+    public Page<BoardListResponseDto> getBoardList(Pageable pageable, String array) {
 
         QueryResults<Board> boardQueryResults = queryFactory
                     .selectFrom(board)
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .join(board.user, user).fetchJoin()
+                    .orderBy(boardSort(array))
                     .orderBy(board.id.desc())
                     .fetchResults();
 
@@ -85,7 +89,7 @@ public class BoardServiceImpl implements BoardService {
         return new PageImpl<>(results, pageable, total);
     }
 
-    public Page<BoardListResponseDto> getBoardListPagingSearch(Pageable pageable, String type, String searchKeyword) {
+    public Page<BoardListResponseDto> getBoardListPagingSearch(Pageable pageable, String type, String searchKeyword, String array) {
 
         QueryResults<Board> boardQueryResults = queryFactory
                     .selectFrom(board)
@@ -93,6 +97,7 @@ public class BoardServiceImpl implements BoardService {
                     .join(board.user, user).fetchJoin()
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
+                    .orderBy(boardSort(array))
                     .orderBy(board.id.desc())
                     .fetchResults();
 
@@ -102,82 +107,6 @@ public class BoardServiceImpl implements BoardService {
                 .collect(Collectors.toList());
         return new PageImpl<>(results, pageable, total);
     }
-
-    @Override
-    public Page<BoardListResponseDto> getBoardRecommendList(Pageable pageable) {
-
-        QueryResults<Board> boardQueryResults = queryFactory
-                .selectFrom(board)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .join(board.user, user).fetchJoin()
-                .orderBy(board.recommendCount.desc(), board.id.desc())
-                .fetchResults();
-
-        long total = boardQueryResults.getTotal();
-        List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
-                .map(BoardListResponseDto::new)
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(results, pageable, total);
-    }
-
-    public Page<BoardListResponseDto> getBoardRecommendListPagingSearch(Pageable pageable, String type, String searchKeyword) {
-
-        QueryResults<Board> boardQueryResults = queryFactory
-                .selectFrom(board)
-                .where(decideWhere(type, searchKeyword))
-                .join(board.user, user).fetchJoin()
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(board.recommendCount.desc(), board.id.desc())
-                .fetchResults();
-
-        long total = boardQueryResults.getTotal();
-        List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
-                .map(BoardListResponseDto::new)
-                .collect(Collectors.toList());
-        return new PageImpl<>(results, pageable, total);
-    }
-
-    @Override
-    public Page<BoardListResponseDto> getBoardViewList(Pageable pageable) {
-
-        QueryResults<Board> boardQueryResults = queryFactory
-                .selectFrom(board)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .join(board.user, user).fetchJoin()
-                .orderBy(board.view.desc(), board.id.desc())
-                .fetchResults();
-
-        long total = boardQueryResults.getTotal();
-        List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
-                .map(BoardListResponseDto::new)
-                .collect(Collectors.toList());
-
-        return new PageImpl<>(results, pageable, total);
-    }
-
-    public Page<BoardListResponseDto> getBoardViewListPagingSearch(Pageable pageable, String type, String searchKeyword) {
-
-        QueryResults<Board> boardQueryResults = queryFactory
-                .selectFrom(board)
-                .where(decideWhere(type, searchKeyword))
-                .join(board.user, user).fetchJoin()
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .orderBy(board.view.desc(), board.id.desc())
-                .fetchResults();
-
-        long total = boardQueryResults.getTotal();
-        List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
-                .map(BoardListResponseDto::new)
-                .collect(Collectors.toList());
-        return new PageImpl<>(results, pageable, total);
-    }
-
-
 
     @Transactional
     @Override
@@ -212,5 +141,17 @@ public class BoardServiceImpl implements BoardService {
 
     private BooleanExpression allEq(String searchKeyword){
         return titleEq(searchKeyword).or(contentEq(searchKeyword).or(writerEq(searchKeyword)));
+    }
+
+    private OrderSpecifier<?> boardSort(String array) {
+        switch(array) {
+            case "all" :
+                return new OrderSpecifier(Order.DESC, board.id);
+            case "recommend" :
+                return new OrderSpecifier(Order.DESC, board.recommendCount);
+            case "view" :
+                return new OrderSpecifier(Order.DESC, board.view);
+        }
+        return null;
     }
 }
