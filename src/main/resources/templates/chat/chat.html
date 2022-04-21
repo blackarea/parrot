@@ -108,33 +108,61 @@
             font-size: 18px;
             color: #fff;
         }
-        .top{
-            height:60px;
+
+        .top {
+            height: 60px;
         }
     </style>
 
     <script>
-        function chat() {
-            let chatLogBox = document.getElementById('chatlogbox');
+        let time = new Date().getTime();
+        let parrotTalk = false;
+        let parrotQuestion;
 
+        function chat() {
+            time = new Date().getTime();
+            let chatLogBox = document.getElementById('chatlogbox');
             let userInput = document.getElementById('userInput');
-            let data = {
-                chat : userInput.value
+
+            if (parrotTalk === true) {
+                let data = {
+                    question: parrotQuestion,
+                    answer: userInput.value
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/chat/parrotanswer',
+                    data: JSON.stringify(data),
+                    contentType: "application/json;charset=UTF-8",
+                }).done(function (response) {
+                    userDiv(chatLogBox, userInput.value);
+                    parrotDiv(chatLogBox, response.chat);
+                    userInput.value = '';
+                    userInput.focus();
+                    $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
+                    parrotTalk = false;
+                });
+            } else {
+                let data = {
+                    chat: userInput.value
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/app/chat',
+                    data: JSON.stringify(data),
+                    contentType: "application/json;charset=UTF-8",
+                }).done(function (response) {
+                    userDiv(chatLogBox, userInput.value);
+                    parrotDiv(chatLogBox, response.chat);
+                    userInput.value = '';
+                    userInput.focus();
+                    $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
+                    parrotTalk = false;
+                });
             }
 
-            $.ajax({
-                type:'POST',
-                url:'/app/chat',
-                data:JSON.stringify(data),
-                contentType:"application/json;charset=UTF-8",
-            }).done(function (response) {
-                userDiv(chatLogBox, userInput.value);
-                parrotDiv(chatLogBox, response.chat);
-                userInput.value = '';
-                userInput.focus();
-                $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
-            });
-        };
+        }
+
         function userDiv(chatLogBox, text) {
             let chatRightDiv = document.createElement('div');
             chatRightDiv.setAttribute('class', 'chatRightDiv');
@@ -150,7 +178,8 @@
             chatRightDiv.appendChild(rightDiv);
 
             chatLogBox.appendChild(chatRightDiv);
-        };
+        }
+
         function parrotDiv(chatLogBox, text) {
             let chatLeftDiv = document.createElement('div');
             chatLeftDiv.setAttribute('class', 'chatLeftDiv');
@@ -166,7 +195,29 @@
             chatLeftDiv.appendChild(leftDiv);
 
             chatLogBox.appendChild(chatLeftDiv);
-        };
+        }
+
+        setInterval(function () {
+            if (new Date().getTime() - time >= 15000 && parrotTalk === false) {
+                parrotFirst();
+                time = new Date().getTime();
+            }
+        }, 3000);
+
+        function parrotFirst() {
+            let chatLogBox = document.getElementById('chatlogbox');
+            $.ajax({
+                type: 'GET',
+                url: '/chat/parrottalk'
+            }).done(function (response) {
+                parrotDiv(chatLogBox, response.chat);
+                parrotQuestion = response.chat;
+                parrotTalk = true;
+                $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
+            }).fail(function (e) {
+                console.log(e)
+            });
+        }
 
     </script>
 </head>

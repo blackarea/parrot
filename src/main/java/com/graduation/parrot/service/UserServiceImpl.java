@@ -111,14 +111,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserActivityPageDto getUserActivityPaging(String login_id, Pageable pageable) {
         List<UserActivityListDto> boardList = queryFactory
-                .select(new QUserActivityDto(board.title, board.author, board.createdDate))
+                .select(new QUserActivityDto(board.id, board.title, board.author, board.createdDate))
                 .from(board)
                 .where(board.user.login_id.eq(login_id))
                 .fetch().stream().map(userActivityDto -> new UserActivityListDto("게시글", userActivityDto))
                 .collect(Collectors.toList());
 
         List<UserActivityListDto> commentList = queryFactory
-                .select(new QUserActivityDto(board.title, board.author, comment.createdDate))
+                .select(new QUserActivityDto(board.id, board.title, board.author, comment.createdDate))
                 .from(board)
                 .join(board.comments, comment)
                 .where(comment.user.login_id.eq(login_id))
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
 
         List<UserActivityListDto> recommendList = queryFactory
-                .select(new QUserActivityDto(board.title, board.author, recommend.createdDate))
+                .select(new QUserActivityDto(board.id, board.title, board.author, recommend.createdDate))
                 .from(board)
                 .join(board.recommends, recommend)
                 .where(recommend.user.login_id.eq(login_id))
@@ -143,6 +143,9 @@ public class UserServiceImpl implements UserService {
                 Comparator.comparing(UserActivityListDto::getCreatedDate, Comparator.reverseOrder());
         List<UserActivityListDto> sortedAllList =
                 allList.stream().sorted(comparingNameNatural).collect(Collectors.toList());
+        for (UserActivityListDto userActivityListDto : sortedAllList) {
+            System.out.println(userActivityListDto);
+        }
 
         return new UserActivityPageDto(boardList.size(), commentList.size(),
                 new PageImpl<>(sortedAllList, pageable, sortedAllList.size()));
