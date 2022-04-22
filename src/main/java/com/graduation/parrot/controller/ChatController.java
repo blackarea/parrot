@@ -1,5 +1,6 @@
 package com.graduation.parrot.controller;
 
+import com.graduation.parrot.webSocket.WebSocketService;
 import com.graduation.parrot.webSocket.WebSocketUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.drafts.Draft_6455;
@@ -15,15 +16,30 @@ import java.util.Map;
 @RequestMapping("/chat")
 public class ChatController {
 
+    WebSocketService webSocketService = new WebSocketService();
+
     @GetMapping()
     public String chat() {
         return "chat/chat";
     }
 
     @ResponseBody
+    @PostMapping()
+    public Map<String, String> chat(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
+        String requestChat = chatParameter.get("chat");
+
+        String pythonMessage = webSocketService.sendWebSocket(requestChat, "ws://localhost:8888/ws/web/chat");
+
+        Map<String, String> responseChat = new HashMap<>();
+        responseChat.put("chat", pythonMessage);
+
+        return responseChat;
+    }
+
+    @ResponseBody
     @GetMapping("/parrottalk")
     public Map<String, String> parrotFirst() throws InterruptedException {
-        String pythonMessage = webSocket("ws://localhost:8888/ws/parrottalk", "parrotTalk");
+        String pythonMessage = webSocketService.sendWebSocket("parrotTalk", "ws://localhost:8888/ws/parrottalk");
         Map<String, String> responseChat = new HashMap<>();
         responseChat.put("chat", pythonMessage);
 
@@ -35,21 +51,11 @@ public class ChatController {
     public Map<String, String> parrotAnswer(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
         String requestChat = chatParameter.get("question").concat(",").concat(chatParameter.get("answer"));
 
-        String pythonMessage = webSocket("ws://localhost:8888/ws/parrotanswer", requestChat);
+        String pythonMessage = webSocketService.sendWebSocket(requestChat, "ws://localhost:8888/ws/parrotanswer");
         Map<String, String> responseChat = new HashMap<>();
         responseChat.put("chat", pythonMessage);
 
         return responseChat;
     }
 
-    public String webSocket(String url, String sendMessage) throws InterruptedException {
-        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create(url), new Draft_6455());
-        webSocketUtil.connectBlocking();
-        webSocketUtil.send(sendMessage);
-        webSocketUtil.run();
-        String pythonMessage = webSocketUtil.getPythonMessage();
-        webSocketUtil.close();
-
-        return pythonMessage;
-    }
 }

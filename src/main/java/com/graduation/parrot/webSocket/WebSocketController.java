@@ -2,6 +2,7 @@ package com.graduation.parrot.webSocket;
 
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.drafts.Draft_6455;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,21 +15,27 @@ import java.util.Map;
 @RestController
 public class WebSocketController {
 
+    WebSocketService webSocketService = new WebSocketService();
+
     @PostMapping("/app/chat")
     public Map<String, String> chat(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
+        String login_id = chatParameter.get("login_id");
         String requestChat = chatParameter.get("chat");
-        log.info("webBrowser to spring message : " + requestChat);
-
-        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create("ws://localhost:8888/ws/chat"), new Draft_6455());
-        webSocketUtil.connectBlocking();
-        webSocketUtil.send(requestChat);
-        webSocketUtil.run();
-        String pythonMessage = webSocketUtil.getPythonMessage();
-        webSocketUtil.close();
+;
+        String pythonMessage = webSocketService.sendWebSocket(login_id.concat(",").concat(requestChat),
+                "ws://localhost:8888/ws/app/chat");
 
         Map<String, String> responseChat = new HashMap<>();
         responseChat.put("chat", pythonMessage);
 
         return responseChat;
+    }
+
+    @DeleteMapping("/app/chat")
+    public void deleteChat(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
+        String login_id = chatParameter.get("login_id");
+        String requestChat = chatParameter.get("chat");
+
+        webSocketService.sendWebSocket(login_id.concat(",").concat(requestChat), "ws://localhost:8888/ws/delete");
     }
 }
