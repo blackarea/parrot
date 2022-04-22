@@ -104,14 +104,14 @@
 
         /* JS START */
         .topDiv {
-            height: 150px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: right
         }
 
         .topAnswerDiv {
-            height: 150px;
+            height: 120px;
             display: flex;
             align-items: center;
             justify-content: left;
@@ -208,7 +208,7 @@
             numberSpan.setAttribute('class', 'badge bg-secondary number');
             numberSpan.innerText = '2';
             let contentSpan = document.createElement('span');
-            contentSpan.setAttribute('style', 'font-size:18px');
+            contentSpan.setAttribute('style', 'font-size:16px');
             contentSpan.innerText = '나의 대답이';
 
             upDiv.appendChild(numberSpan);
@@ -221,7 +221,7 @@
             downDiv.setAttribute('class', 'downDiv');
 
             let downContentSpan = document.createElement('span');
-            downContentSpan.setAttribute('style', 'font-size:18px');
+            downContentSpan.setAttribute('style', 'font-size:16px');
             downContentSpan.innerText = '를 포함하면';
             let trashButton = document.createElement('button');
             trashButton.setAttribute('class', 'btn btn-outline-primary trash');
@@ -260,7 +260,7 @@
             numberSpan.setAttribute('class', 'badge bg-secondary number');
             numberSpan.innerText = '3';
             let contentSpan = document.createElement('span');
-            contentSpan.setAttribute('style', 'font-size:18px');
+            contentSpan.setAttribute('style', 'font-size:16px');
             contentSpan.innerText = '이렇게 대답하고';
 
             let aiInput = document.createElement('input');
@@ -288,6 +288,21 @@
 
 <div layout:fragment="content">
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width:400px;height:300px">
+                <div class="modal-body" style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+                    <i class="bi bi-check-circle-fill" style="font-size:80px;color:#ffb830"></i>
+                    <span style="font-size:20px;color:#444;font-weight:bold">앵무가 이 대화를 기억했습니다!</span>
+                    <span style="font-size:15px;color:#444">계정관리에서 내가 가르친 말을 확인해 보세요</span>
+                </div>
+                <div class="modal-footer" style="display:flex;justify-content:center;height:60px;padding-bottom:30px">
+                    <button class="btn btn-primary" style="padding:0px;width:70px;height:40px"><span style="font-size:15px;font-weight:bold">확인</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="body" style="margin: auto; width: 1000px; padding-top:50px">
 
         <div class="top">
@@ -307,7 +322,7 @@
         <div id="chatlog">
             <div id="chatlogbox">
 
-                <div style="height:200px;display:flex; align-items:center;justify-content:left">
+                <div style="height:120px;display:flex; align-items:center;justify-content:left;margin-top:40px">
                     <div style="text-align:left">
                         <input id="question" class="aiinput">
                         <div style="display:flex; align-items:center;margin-top:10px">
@@ -352,10 +367,10 @@
 
                 <button onclick="addConditionAnswer()">조건 추가</button>
 
-                <div style="height:200px;display:flex; align-items:center;justify-content:left">
+                <div style="height:120px;display:flex; align-items:center;justify-content:left">
                     <div style="text-align:left">
                         <div style="display:flex; align-items:center;margin-bottom:10px">
-                            <span style="font-size:18px">위 조건에 해당하지 않는다면</span>
+                            <span style="font-size:16px">위 조건에 해당하지 않는다면</span>
                         </div>
                         <input id="notInclude" class="aiinput">
                         <div style="display:flex; align-items:center;margin-top:10px">
@@ -365,8 +380,8 @@
                     </div>
                 </div>
 
-                <div style="height:0px;display:flex; margin-top:50px;align-items:center; justify-content:center">
-                    <button onclick="teachFree()" class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다</button>
+                <div style="height:0px;display:flex;margin-bottom:50px;margin-top:50px;align-items:center; justify-content:center;margin-bottom:40px">
+                    <button onclick="teachFree()" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height:38px">앵무새가 이 대화를 기억합니다</button>
                 </div>
 
 

@@ -3,7 +3,7 @@
       layout:decorate="~{layout/layout}">
 
 <head>
-    <link rel="stylesheet" th:href="@{/css/account-custom.css}">
+    <link rel="stylesheet" th:href="@{/css/teach-custom.css}">
     <style>
         @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
     @font-face {
@@ -32,6 +32,9 @@
             font-family:NanumSquare;
             transform : rotate(0.04deg);
 
+        }
+        #exampleModal{
+            font-family:NanumSquare;
         }
         body{
             overflow:hidden;
@@ -116,30 +119,324 @@
             text-align: center;
         }
 
-        #activity{
-            overflow:auto;
+        .modal-dialog-scrollable .modal-content {
+            max-height: 100%;
+            overflow: scroll;
+            -ms-overflow-style: none;
+
         }
-        #activity::-webkit-scrollbar {
-            width: 0px;
+        .modal-dialog-scrollable .modal-content::-webkit-scrollbar {
+            display: none;
+            width: 0 !important;
+        }
+        .modal-dialog-scrollable .modal-body {
+
+            overflow: scroll;
+           -ms-overflow-style: none;
+        }
+        .modal-dialog-scrollable .modal-body::-webkit-scrollbar {
+            display: none;
+            width: 0 !important;
         }
 
-        #activity::-webkit-scrollbar-thumb {
-            height: 10%;
-            background-color: #ccc;
-        }
 
-        #activity::-webkit-scrollbar-track {
-            background-color: #f1f1f1;
-        }
     </style>
 </head>
 
 <div layout:fragment="content">
 
+
+    <div class="modal fade" id="basicteach" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="width:400px">
+                <div class="modal-body" style="display:flex;flex-direction:column;align-items:center">
+
+                    <div style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span  style="font-size:15px;color:#444;font-weight:bold">기본답변 시나리오</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">충격,기괴,공포) a컵 브라를 한 남자가 있다?</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">에이브라함 링컨</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
+                    <div style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:100%;height:100%;background:#ffb830">
+                        <span style="color:#fff">확인</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="width:400px">
+                <div class="modal-body" style="display:flex;flex-direction:column;align-items:center">
+
+                    <div style="width:90%">
+                    <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                        <div style="margin-bottom:5px">
+                            <span  style="font-size:15px;color:#444;font-weight:bold">긍정답변 시나리오</span>
+                        </div>
+                        <div style="display:flex;margin-bottom:5px">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                            &nbsp&nbsp<span style="font-size:15px;color:#444">밥은 먹고 다니냐?</span>
+                        </div>
+                        <div style="display:flex;margin-bottom:5px">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                            &nbsp&nbsp<span style="font-size:15px;color:#444">ㅇㅇ, 그래</span>
+                        </div>
+                        <div style="display:flex">
+                            <div style="width:18%"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                            <div style="width:82%"><span style="font-size:15px;color:#444">뭐 먹었는데?</span></div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;justify-content:center;border-top:1px solid #e5e5e5;padding-top:15px;padding-bottom:10px">
+                        <div style="margin-bottom:5px">
+                            <span  style="font-size:15px;color:#444;font-weight:bold">부정답변 시나리오</span>
+                        </div>
+                        <div style="display:flex;margin-bottom:5px">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                            &nbsp&nbsp<span style="font-size:15px;color:#444">밥은 먹고 다니냐?</span>
+                        </div>
+                        <div style="display:flex;margin-bottom:5px">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                            &nbsp&nbsp<span style="font-size:15px;color:#444">ㄴㄴ, 아니</span>
+                        </div>
+                        <div style="display:flex;margin-bottom:5px">
+                            <div style="width:18%"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                            <div style="width:82%"><span style="font-size:15px;color:#444">뭐하는데 밥을 안먹고 다니니</span></div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!--<div style="display:flex;flex-direction:column;width:90%;height:45%;background:#fff;padding:10px">
+                        <div style="">
+                            <span  style="font-size:15px;color:#444;font-weight:bold">긍정답변 시나리오</span>
+                        </div>
+                        <div style="display:flex;align-items:center">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">밥은 먹고 다니냐</span>
+                        </div>
+                        <div style="display:flex;align-items:center">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">그래</span>
+                        </div>
+                        <div style="display:flex;align-items:center">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">뭐 먹었는데</span>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;width:90%;height:45%;padding:10px;margin-top:10px;border-top:1px solid #e5e5e5">
+                        <div style="">
+                            <span  style="font-size:15px;color:#444;font-weight:bold">부정답변 시나리오</span>
+                        </div>
+                        <div style="display:flex;align-items:center">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                            &nbsp&nbsp<span style="font-size:15px;color:#444">밥은 먹고 다니냐</span>
+                        </div>
+                        <div style="display:flex;align-items:center">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">아니</span>
+                        </div>
+                        <div style="display:flex;align-items:center">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">트러스 구조는 여러 개의 막대들을 여러개의 삼각형 형태로 배열해서 막대 끝 점에서 연결해 구성한 뼈대 구조야 그것도 몰라?</span>
+                        </div>
+                    </div>-->
+                </div>
+
+                <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
+                    <div style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:100%;height:100%;background:#ffb830">
+                        <span style="color:#fff">확인</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="teachfreemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="width:400px">
+                <div class="modal-body" style="display:flex;flex-direction:column;align-items:center">
+                    <p style="margin-bottom:10px">
+                    <button class="btn btn-outline-primary" style="width:360px;height:30px;padding:0px" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        <span style="font-size:15px">[응 다 알고 있어]라고 내가 말했을 때</span>
+                    </button>
+                    </p>
+                    <!--<p style="margin-bottom:10px">
+                        <button class="btn btn-outline-primary" style="width:360px;height:30px;padding:0px" type="button" data-bs-toggle="collapse" data-bs-target="#condition2" aria-expanded="false" aria-controls="condition2">
+                            <span style="font-size:15px">[아니 하나도 모르겠어]라고 내가 말했을 때</span>
+                        </button>
+                    </p>
+                    <p style="margin-bottom:10px">
+                        <button class="btn btn-outline-primary" style="width:360px;height:30px;padding:0px" type="button" data-bs-toggle="collapse" data-bs-target="#condition3" aria-expanded="false" aria-controls="condition2">
+                            <span style="font-size:15px">[조금은 알고 있어]라고 내가 말했을 때</span>
+                        </button>
+                    </p>
+                    <p style="margin-bottom:10px">
+                        <button class="btn btn-outline-primary" style="width:360px;height:30px;padding:0px" type="button" data-bs-toggle="collapse" data-bs-target="#condition4" aria-expanded="false" aria-controls="condition2">
+                            <span style="font-size:15px">[거의 알고 있어]라고 내가 말했을 때</span>
+                        </button>
+                    </p>
+                    <p style="margin-bottom:10px">
+                        <button class="btn btn-outline-primary" style="width:360px;height:30px;padding:0px" type="button" data-bs-toggle="collapse" data-bs-target="#condition5" aria-expanded="false" aria-controls="condition2">
+                            <span style="font-size:15px">[그게 뭔데 씹덕아]라고 내가 말했을 때</span>
+                        </button>
+                    </p>-->
+
+                    <div style="width:90%">
+                    <div style="display:flex;flex-direction:column;justify-content:center;padding-top:15px;padding-bottom:10px">
+                        <div style="margin-bottom:5px">
+                            <span style="font-size:15px;color:#444;font-weight:bold">위 조건에 해당하는 말이 없을 때</span>
+                        </div>
+                        <div style="display:flex;margin-bottom:5px">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                            &nbsp&nbsp<span style="font-size:15px;color:#444">트러스트 구조에 대해 알고 있어?</span>
+                        </div>
+                        <div style="display:flex;margin-bottom:5px">
+                            <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                            &nbsp&nbsp<span style="font-size:15px;color:#444">(사용자 지정 대화)</span>
+                        </div>
+                        <div style="display:flex;margin-bottom:5px">
+                            <div style="width:18%"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                            <div style="width:82%"><span style="font-size:15px;color:#444">트러스 구조는 여러 개의 막대들을 여러개의 삼각형 형태로 배열해서 막대 끝 점에서 연결해 구성한 뼈대 구조야 그것도 몰라?</span></div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="collapse" id="collapseExample" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span  style="font-size:15px;color:#444;font-weight:bold">[응 다 알고 있어]<span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">트러스트 구조에 대해 알고 있어?</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">응 다 알고 있어</span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span style="font-size:15px;color:#444">똑똑한걸?</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                   <!-- <div class="collapse" id="condition2" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span  style="font-size:15px;color:#444;font-weight:bold">[아니 하나도 모르겠어]<span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">트러스트 구조에 대해 알고 있어?</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">아니 하나도 모르겠어</span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span style="font-size:15px;color:#444">머리 열어봐서 뭐 들어 있는지 한 번 보고싶네</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="collapse" id="condition3" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span  style="font-size:15px;color:#444;font-weight:bold">[조금은 알고 있어]<span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">트러스트 구조에 대해 알고 있어?</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">아니 하나도 모르겠어</span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span style="font-size:15px;color:#444">머리 열어봐서 뭐 들어 있는지 한 번 보고싶네</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse" id="condition4" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="">
+                                <span  style="font-size:15px;color:#444;font-weight:bold">[거의 다 알고 있어]<span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">트러스트 구조에 대해 알고 있어?</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">아니 하나도 모르겠어</span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span style="font-size:15px;color:#444">머리 열어봐서 뭐 들어 있는지 한 번 보고싶네</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse" id="condition5" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="">
+                                <span  style="font-size:15px;color:#444;font-weight:bold">[그게 뭔데 씹덕아]<span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">트러스트 구조에 대해 알고 있어?</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">아니 하나도 모르겠어</span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span style="font-size:15px;color:#444">머리 열어봐서 뭐 들어 있는지 한 번 보고싶네</span></div>
+                            </div>
+                        </div>
+                    </div>-->
+
+
+
+                </div>
+                <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
+                    <div style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:100%;height:100%;background:#ffb830">
+                        <span style="color:#fff">확인</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="flex-container">
+
         <div class="main">
             <div id="left">
-
                 <div id="smleft" style="margin-top:80px">
                     <div style="display:flex;align-items:center;justify-content:center">
                         <div style="margin-right:15px">
@@ -154,7 +451,7 @@
                         <div style="display:flex; align-items:center; flex-direction:column; margin:7px">
                             <div>
                                 <i class="bi bi-text-left" style="color:#aaa;font-size:15px"></i>
-                                <span style="color:#aaa;font-size:15px">기본</span>
+                                <span style="color:#aaa;font-size:15px">기본질문</span>
                             </div>
                             <span style="display:block;font-size:15px;color:#777;font-weight:bold">10</span>
                         </div>
@@ -204,77 +501,67 @@
                                 <a th:href="@{/account/{login_id}/taught(login_id=${login_id})}" style="font-size:17px;margin-left:20px;color:#fff;text-decoration: none !important">가르치기 내역</a>
                             </td>
                         </tr>
+
                     </table>
                 </div>
             </div>
 
             <div id="right" style="display:flex;align-items:center;justify-content:center;flex-direction:column">
-
-
-
-                <div style="width:90%;display:flex;align-items:center;background:#fff;height:30px;padding:0px;margin-bottom:5px">
-
-                    <div style="width:2%;height:70px"></div>
-                    <div style="width:15%;display:flex;justify-content:center;align-items:center">
-                        <span style="font-size:15px;color:#aaa;font-weight:bold">형태</span>
-                    </div>
-                    <div style="width:70%;display:flex;justify-content:left">
-                        <span style="font-size:15px;color:#aaa;font-weight:bold">게시글 제목</span>
-                    </div>
-
-
-                </div>
                 <div id="activity" style="width:90%;height:90%">
-                    <table style="width:100%;height:90%">
 
-                        <tr style="display:flex;align-items:center;background:#fff;height:70px;padding:0px;margin-bottom:15px">
-                            <td style="width:2%;background:#ffb830;height:70px"></td>
+                    <div style="height:70px;background:#fff;display:flex;align-items:center;margin-bottom:15px">
+                        <div style="width:20%;display:flex;justify-content:center">
+                            <span style="font-size:15px;color:#aaa">기본질문</span>
+                        </div>
+                        <div style="width:73%;display:flex">
+                            <div style="width:30%"><span style="font-size:14px;color:#aaa;font-weight:bold">내가 이렇게 말한다면</span></div>
+                            <div style="width:70%">&nbsp&nbsp<span style="font-size:15px;color:#444">충격,기괴,공포) a컵 브라를 한 남자가 있다!?</span></div>
+                        </div>
+                        <div style="width:17%">
+                            <button class="btn btn-primary" style="width:70px;height:30px;padding:0px" data-bs-toggle="modal" data-bs-target="#basicteach">
+                                <span style="font-size:14px">전체보기</span>
+                            </button>
+                        </div>
+                    </div>
 
-                            <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
-                                <i class="bi bi-chat-right-text" style="color:#444"></i>
-                                <span style="font-size:14px;color:#444">댓글</span>
-                            </td>
-                            <td style="width:70%;display:flex;justify-content:left">
-                                <span style="font-size:14px;color:#777">가나다라마바사ㄴㅇㄹㄹㅇㄴㅇ</span>
 
-                            </td>
+                    <div style="height:70px;background:#fff;display:flex;align-items:center;margin-bottom:15px">
+                        <div style="width:20%;display:flex;justify-content:center">
+                            <span style="font-size:15px;color:#aaa">긍정부정</span>
+                        </div>
+                        <div style="width:73%;display:flex">
+                            <div style="width:30%"><span style="font-size:14px;color:#aaa;font-weight:bold">앵무가 이렇게 말한다면</span></div>
+                            <div style="width:70%">&nbsp&nbsp<span style="font-size:15px;color:#444">밥은 먹고 다니냐</span></div>
+                        </div>
+                        <div style="width:17%">
+                            <button class="btn btn-primary" style="width:70px;height:30px;padding:0px" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <span style="font-size:14px">전체보기</span>
+                            </button>
+                        </div>
+                    </div>
 
 
-                        </tr>
+                    <div style="height:70px;background:#fff;display:flex;align-items:center;margin-bottom:15px">
+                        <div style="width:20%;display:flex;justify-content:center">
+                            <span style="font-size:15px;color:#aaa">자유질문</span>
+                        </div>
+                        <div style="width:73%;display:flex">
+                            <div style="width:30%"><span style="font-size:14px;color:#aaa;font-weight:bold">앵무가 이렇게 말한다면</span></div>
+                            <div class="text-truncate" style="width:70%">&nbsp&nbsp<span style="font-size:15px;color:#444">트러스 구조에 대해 알고 있어?</span></div>
+                        </div>
+                        <div style="width:17%">
+                            <button class="btn btn-primary" style="width:70px;height:30px;padding:0px" data-bs-toggle="modal" data-bs-target="#teachfreemodal">
+                                <span style="font-size:14px">전체보기</span>
+                            </button>
+                        </div>
+                    </div>
 
-                        <tr style="display:flex;align-items:center;background:#fff;height:70px;padding:0px;margin-bottom:15px">
-                            <td style="width:2%;background:#143F6B;display:flex;height:100%"></td>
-                            <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
-                                <i class="bi bi-text-left" style="color:#444"></i>
-                                <span style="font-size:14px;color:#444">게시글</span>
-                            </td>
-                            <td style="width:70%;display:flex;justify-content:left">
-                                <span style="font-size:14px;color:#777">가나다라마바사ㄴㅇㄹㄹㅇㄴㅇ</span>
 
-                            </td>
 
-                        </tr>
 
-                        <tr style="display:flex;align-items:center;background:#fff;height:70px;padding:0px;margin-bottom:15px">
-                            <td style="width:2%;background:#F55353;display:flex;height:100%"></td>
-                            <td style="width:15%;display:flex;flex-direction:column;justify-content:center;align-items:center">
-                                <i class="bi bi-hand-thumbs-up" style="color:#444"></i>
-                                <span style="font-size:14px;color:#444">추천</span>
-                            </td>
-                            <td style="width:70%;display:flex;justify-content:left">
-                                <span style="font-size:14px;color:#777">가나다라마바사ㄴㅇㄹㄹㅇㄴㅇ</span>
-
-                            </td>
-
-                        </tr>
-
-                    </table>
                 </div>
-
             </div>
         </div>
-
-
     </div>
 
 </div>

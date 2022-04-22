@@ -27,7 +27,7 @@ public class HomeController {
 
     @PostConstruct
     public void createUserAndBoard(){
-        /*IntStream.rangeClosed(1, 210).forEach(i -> {
+       /* IntStream.rangeClosed(1, 210).forEach(i -> {
 
             User user = User.builder()
                     .login_id("login" + i)

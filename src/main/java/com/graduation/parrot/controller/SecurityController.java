@@ -64,5 +64,13 @@ public class SecurityController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
+    @GetMapping("/findpassword")
+    public String findPassword(){
+        return "security/findPassword";
+    }
+    @GetMapping("/newpassword")
+    public String newPassword(){
+        return "security/newPassword";
+    }
 
 }

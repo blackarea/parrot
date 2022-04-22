@@ -124,7 +124,7 @@ public class BoardController {
                 boardService.updateView(board_id);
                 oldCookie.setValue(oldCookie.getValue() + "_[" + board_id + "]");
                 oldCookie.setPath("/");
-                oldCookie.setMaxAge(1 * 1); //1시간 //TODO 나중에 24시간으로 변경 밑에 쿠키도
+                oldCookie.setMaxAge(60 * 60); //1시간 //TODO 나중에 24시간으로 변경 밑에 쿠키도
                 oldCookie.setHttpOnly(true);
                 response.addCookie(oldCookie);
             }
@@ -132,7 +132,7 @@ public class BoardController {
             boardService.updateView(board_id);
             Cookie newCookie = new Cookie("postView", "[" + board_id + "]");
             newCookie.setPath("/");
-            newCookie.setMaxAge(1 * 1); //1시간
+            newCookie.setMaxAge(60 * 60); //1시간
             newCookie.setHttpOnly(true);
             response.addCookie(newCookie);
         }

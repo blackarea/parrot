@@ -154,10 +154,24 @@
 
 <div layout:fragment="content">
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width:400px;height:300px">
+                <div class="modal-body" style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+                    <i class="bi bi-check-circle-fill" style="font-size:80px;color:#ffb830"></i>
+                    <span style="font-size:20px;color:#444;font-weight:bold">앵무가 이 대화를 기억했습니다!</span>
+                    <span style="font-size:15px;color:#444">계정관리에서 내가 가르친 말을 확인해 보세요</span>
+                </div>
+                <div class="modal-footer" style="display:flex;justify-content:center;height:60px;padding-bottom:30px">
+                    <button class="btn btn-primary" style="padding:0px;width:70px;height:40px"><span style="font-size:15px;font-weight:bold">확인</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="body" style="margin: auto; width: 1000px; padding-top:50px">
 
         <div class="top">
-
             <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#가르치기(기본)</span>
         </div>
 
@@ -197,7 +211,7 @@
                 </div>
 
                 <div style="height:150px;display:flex; align-items:center; justify-content:center">
-                    <button type="submit" class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다</button>
+                    <button type="submit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height:38px">앵무새가 이 대화를 기억합니다</button>
                 </div>
 
 
