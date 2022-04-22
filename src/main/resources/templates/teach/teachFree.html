@@ -55,16 +55,16 @@
         }
 
         .userinput {
-            border:3px solid #444444;
-            color:#444;
-            padding-left:20px;
-            padding-right:20px;
-            height:50px;
-            font-size:18px;
-            line-height:55px;
+            border: 3px solid #444444;
+            color: #444;
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 50px;
+            font-size: 18px;
+            line-height: 55px;
             white-space: nowrap;
-            width:400px;
-            border-radius:10px 0px 10px 10px;
+            width: 400px;
+            border-radius: 10px 0px 10px 10px;
         }
 
         .userinput:focus {
@@ -72,16 +72,16 @@
         }
 
         .aiinput {
-            border:3px solid #ffb830;
-            color:#444;
-            padding-left:20px;
-            padding-right:20px;
-            height:50px;
-            font-size:18px;
-            line-height:55px;
+            border: 3px solid #ffb830;
+            color: #444;
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 50px;
+            font-size: 18px;
+            line-height: 55px;
             white-space: nowrap;
-            width:400px;
-            border-radius:0px 10px 10px 10px;
+            width: 400px;
+            border-radius: 0px 10px 10px 10px;
         }
 
         .aiinput:focus {
@@ -140,6 +140,7 @@
 
     </style>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let conditionCount = 0;
         $(function () {
@@ -180,6 +181,10 @@
                 data: JSON.stringify(data),
                 contentType: "application/json;charset=UTF-8",
             }).done(function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '앵무새는 이 가르치기를 기억할 것입니다.',
+                });
             }).fail(function () {
                 console.log("fail");
             });
@@ -380,8 +385,10 @@
                     </div>
                 </div>
 
-                <div style="height:0px;display:flex;margin-bottom:50px;margin-top:50px;align-items:center; justify-content:center;margin-bottom:40px">
-                    <button onclick="teachFree()" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height:38px">앵무새가 이 대화를 기억합니다</button>
+
+                <div style="height:0px;display:flex; margin-top:50px;align-items:center; justify-content:center">
+                    <button onclick="teachFree()" class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다
+                    </button>
                 </div>
 
 

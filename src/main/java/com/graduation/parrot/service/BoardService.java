@@ -14,11 +14,7 @@ public interface BoardService {
     Long update(Long board_id, BoardDto boardDto);
     void delete(Long board_id);
     BoardResponseDto getBoard(Long board_id);
-    Page<BoardListResponseDto> getBoardList(Pageable pageable);
-    Page<BoardListResponseDto> getBoardListPagingSearch(Pageable pageable, String type, String searchKeyword);
-    Page<BoardListResponseDto> getBoardRecommendList(Pageable pageable);
-    Page<BoardListResponseDto> getBoardRecommendListPagingSearch(Pageable pageable, String type, String searchKeyword);
-    Page<BoardListResponseDto> getBoardViewList(Pageable pageable);
-    Page<BoardListResponseDto> getBoardViewListPagingSearch(Pageable pageable, String type, String searchKeyword);
+    Page<BoardListResponseDto> getBoardList(Pageable pageable, String array);
+    Page<BoardListResponseDto> getBoardListPagingSearch(Pageable pageable, String type, String searchKeyword, String array);
     int updateView(Long board_id);
 }
