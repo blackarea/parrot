@@ -72,6 +72,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Page<BoardListResponseDto> getBoardList(Pageable pageable, String array) {
 
+        log.info("array : " + array);
         QueryResults<Board> boardQueryResults = queryFactory
                     .selectFrom(board)
                     .offset(pageable.getOffset())

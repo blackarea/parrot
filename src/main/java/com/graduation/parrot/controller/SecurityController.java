@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -66,28 +63,20 @@ public class SecurityController {
     }
 
     @GetMapping("/findpassword")
-    public String mail(){
-        return "security/testmail";
+    public String findPassword(){
+        return "security/findPassword";
     }
 
+    @ResponseBody
     @PostMapping("/findpassword")
-    public String findpwd(String email){
-        mailService.findPassword(email);
-        return "redirect:/";
+    public boolean sendPasswordMail(@RequestBody Map<String, String> mail){
+        return mailService.findPassword(mail.get("mail"));
     }
 
     private void expireCookie(HttpServletResponse response) {
         Cookie cookie = new Cookie("jwtToken", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-    }
-    @GetMapping("/findpassword")
-    public String findPassword(){
-        return "security/findPassword";
-    }
-    @GetMapping("/newpassword")
-    public String newPassword(){
-        return "security/newPassword";
     }
 
 }
