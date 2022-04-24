@@ -126,9 +126,8 @@
         }
     </style>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function teach() {
+        function teachPolar() {
             let question = document.getElementById("question").value;
             let positiveAnswer = document.getElementById("positiveAnswer").value;
             let negativeAnswer = document.getElementById("negativeAnswer").value;
@@ -144,10 +143,7 @@
                 data: JSON.stringify(data),
                 contentType: "application/json;charset=UTF-8",
             }).done(function (response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: '앵무새는 이 가르치기를 기억할 것입니다.',
-                });
+                
             });
 
 
@@ -239,7 +235,7 @@
 
                 <div style="height:100px;display:flex; align-items:center; justify-content:center">
 
-                    <button type="submit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height:38px">앵무새가 이 대화를 기억합니다</button>
+                    <button onclick="teachPolar()" type="submit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height:38px">앵무새가 이 대화를 기억합니다</button>
 
                 </div>
 
