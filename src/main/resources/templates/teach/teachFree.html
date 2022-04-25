@@ -61,7 +61,7 @@
             padding-right: 20px;
             height: 50px;
             font-size: 18px;
-            line-height: 55px;
+            line-height: 50px;
             white-space: nowrap;
             width: 400px;
             border-radius: 10px 0px 10px 10px;
@@ -78,7 +78,7 @@
             padding-right: 20px;
             height: 50px;
             font-size: 18px;
-            line-height: 55px;
+            line-height: 50px;
             white-space: nowrap;
             width: 400px;
             border-radius: 0px 10px 10px 10px;
@@ -96,6 +96,12 @@
         }
 
         .trash {
+            border: none;
+            padding: 5px;
+            margin-left: 10px;
+            line-height: 0
+        }
+        .add {
             border: none;
             padding: 5px;
             margin-left: 10px;
@@ -227,22 +233,27 @@
 
             let downContentSpan = document.createElement('span');
             downContentSpan.setAttribute('style', 'font-size:16px');
-            downContentSpan.innerText = '를 포함하면';
-            let trashButton = document.createElement('button');
-            trashButton.setAttribute('class', 'btn btn-outline-primary trash');
+            downContentSpan.innerText = '(을)를 포함하면';
 
+            let trashButton = document.createElement('button');
+            trashButton.setAttribute('class', 'btn btn-outline-secondary trash');
             let trashI = document.createElement('i');
+            downContentSpan.setAttribute('style', 'margin-right:260px');
             trashI.setAttribute('class', 'bi bi-trash3');
             trashI.setAttribute('style', 'font-size:22px');
+
 
             trashButton.addEventListener("click", function () {
                 deleteConditionAnswer(number);
             });
 
+
             trashButton.appendChild(trashI);
+
 
             downDiv.appendChild(downContentSpan);
             downDiv.appendChild(trashButton);
+
 
             secondDiv.appendChild(upDiv);
             secondDiv.appendChild(userInput);
@@ -317,9 +328,9 @@
         <div style="height:100px;background:#f1f1f1;border: 1px solid #f1f1f1">
             <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
 
-                <span style="font-size:14px">※무분별한 욕설 및 인종차별 언행은 계정정지의 대상입니다.</span>
-                <span style="font-size:14px">※이용을 방해하거나 지속적인 도배성 게시글 작성을 금지합니다.</span>
-                <span style="font-size:14px">※광고 및 홍보글의 작성을 금지합니다</span>
+                <span style="font-size:14px">※앵무는 비인도적이거나 폭력적인 언어를 싫어합니다</span>
+                <span style="font-size:14px">※개인정보 유출시 서비스 이용에 제한이 있을 수 있습니다</span>
+                <span style="font-size:14px">※성숙한 사람으로써 앵무를 대해주세요</span>
 
             </div>
         </div>
@@ -370,9 +381,13 @@
                     </div>-->
                 </div>
 
-                <button onclick="addConditionAnswer()">조건 추가</button>
 
-                <div style="height:120px;display:flex; align-items:center;justify-content:left">
+                <div style="height:0px;display:flex; margin-bottom:20px;margin-top:20px;align-items:center; justify-content:center">
+                    <button onclick="addConditionAnswer()" class="btn btn-primary" style="height:38px">조건 추가
+                    </button>
+                </div>
+
+                <div style="height:150px;display:flex; align-items:center;justify-content:left">
                     <div style="text-align:left">
                         <div style="display:flex; align-items:center;margin-bottom:10px">
                             <span style="font-size:16px">위 조건에 해당하지 않는다면</span>
@@ -386,7 +401,7 @@
                 </div>
 
 
-                <div style="height:0px;display:flex; margin-top:50px;align-items:center; justify-content:center">
+                <div style="height:0px;display:flex; margin-bottom:30px;margin-top:50px;align-items:center; justify-content:center">
                     <button onclick="teachFree()" class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다
                     </button>
                 </div>
