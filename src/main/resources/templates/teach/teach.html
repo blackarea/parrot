@@ -24,7 +24,6 @@
         }
 
         #chatlog {
-            height: 300px;
 
         }
 
@@ -44,7 +43,6 @@
 
         #conver {
             height: 70px;
-            background: #f1f1f1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -180,9 +178,9 @@
         <div style="height:100px;background:#f1f1f1;border: 1px solid #f7f7f7">
             <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
 
-                <span style="font-size:14px">※앵무는 비인도적이거나 폭력적인 언어를 싫어합니다</span>
-                <span style="font-size:14px">※개인정보 유출시 서비스 이용에 제한이 있을 수 있습니다</span>
-                <span style="font-size:14px">※성숙한 사람으로써 앵무를 대해주세요</span>
+                <span style="font-size:14px;color:#444;font-weight:bold">※앵무는 비인도적이거나 폭력적인 언어를 싫어합니다</span>
+                <span style="font-size:14px;color:#444;font-weight:bold">※개인정보 유출시 서비스 이용에 제한이 있을 수 있습니다</span>
+                <span style="font-size:14px;color:#444;font-weight:bold">※성숙한 사람으로써 앵무를 대해주세요</span>
 
             </div>
         </div>
@@ -195,7 +193,7 @@
                         <input id="userInput">
                         <div style="display:flex; align-items:center;margin-top:10px">
                             <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">1</span>
-                            <span style="font-size:18px">내가 이렇게 물어본다면</span>
+                            <span style="font-size:16px">내가 이렇게 물어본다면</span>
                         </div>
                     </div>
                 </div>
@@ -206,19 +204,16 @@
                         <input id="aiInput">
                         <div style="display:flex; align-items:center;margin-top:10px">
                             <span class="badge bg-secondary" style="margin-right:10px;font-size:12px">2</span>
-                            <span style="font-size:18px">앵무새가 이렇게 대답합니다</span>
+                            <span style="font-size:16px">앵무새가 이렇게 대답합니다</span>
                         </div>
                     </div>
                 </div>
 
-                <div style="height:100px;display:flex; align-items:center; justify-content:center">
-                    <button onclick="teach()" class="btn btn-secondary"
-                            style="height:38px">앵무새가 이 대화를 기억합니다
-                    </button>
-
-                </div>
-
             </div>
+        </div>
+        <div id="conver" style="height:80px;display:flex; align-items:center; justify-content:center">
+            <button  class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다
+            </button>
         </div>
 
     </div>
