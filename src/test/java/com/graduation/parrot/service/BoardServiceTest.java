@@ -99,7 +99,7 @@ class BoardServiceTest {
         boardService.create(build2, savedUser);
 
         Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "board_id");
-        Page<BoardListResponseDto> boardList = boardService.getBoardList(pageable);
+        Page<BoardListResponseDto> boardList = boardService.getBoardList(pageable, "all");
 
         assertThat(boardList.getTotalElements()).isEqualTo(2);
     }

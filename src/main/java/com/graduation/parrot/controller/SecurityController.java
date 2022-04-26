@@ -1,6 +1,7 @@
 package com.graduation.parrot.controller;
 
 import com.graduation.parrot.domain.dto.User.UserSaveDto;
+import com.graduation.parrot.service.MailService;
 import com.graduation.parrot.service.UserService;
 import com.graduation.parrot.validator.SignUpValidator;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SecurityController {
     private final UserService userService;
+    private final MailService mailService;
     private final SignUpValidator signUpValidator;
+
 
     @InitBinder
     public void validatorBinder(WebDataBinder binder) {
@@ -59,18 +62,21 @@ public class SecurityController {
         return "redirect:/";
     }
 
-    private void expireCookie(HttpServletResponse response) {
-        Cookie cookie = new Cookie("jwtToken", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-    }
     @GetMapping("/findpassword")
     public String findPassword(){
         return "security/findPassword";
     }
-    @GetMapping("/newpassword")
-    public String newPassword(){
-        return "security/newPassword";
+
+    @ResponseBody
+    @PostMapping("/findpassword")
+    public boolean sendPasswordMail(@RequestBody Map<String, String> mail){
+        return mailService.findPassword(mail.get("mail"));
+    }
+
+    private void expireCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwtToken", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 
 }

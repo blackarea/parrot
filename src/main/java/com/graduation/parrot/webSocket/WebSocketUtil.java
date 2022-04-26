@@ -24,7 +24,6 @@ public class WebSocketUtil extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        log.info("python to spring boot message : " + message);
         pythonMessage = message;
     }
 
