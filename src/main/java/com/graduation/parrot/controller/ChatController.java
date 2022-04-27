@@ -1,13 +1,11 @@
 package com.graduation.parrot.controller;
 
 import com.graduation.parrot.webSocket.WebSocketService;
-import com.graduation.parrot.webSocket.WebSocketUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.java_websocket.drafts.Draft_6455;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +17,8 @@ public class ChatController {
     WebSocketService webSocketService = new WebSocketService();
 
     @GetMapping()
-    public String chat() {
+    public String chat(String formIndex, Model model) {
+        model.addAttribute("formIndex", formIndex);
         return "chat/chat";
     }
 

@@ -27,7 +27,7 @@
         #chatlog {
             height: 600px;
             overflow: auto;
-            background:#fff;
+            background: #fff;
         }
 
         #chatlog::-webkit-scrollbar {
@@ -115,10 +115,33 @@
         }
     </style>
 
-    <script>
+    <script th:inline="javascript">
         let time = new Date().getTime();
         let parrotTalk = false;
         let parrotQuestion;
+
+        $(function () {
+            if (!([[${formIndex}]] == null)) {
+                let chatLogBox = document.getElementById('chatlogbox');
+                let userInput = document.getElementById('userInput');
+
+                let data = {
+                    chat: [[${formIndex}]]
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/chat',
+                    data: JSON.stringify(data),
+                    contentType: "application/json;charset=UTF-8",
+                }).done(function (response) {
+                    userDiv(chatLogBox, [[${formIndex}]]);
+                    parrotDiv(chatLogBox, response.chat);
+                    userInput.value = '';
+                    userInput.focus();
+                    parrotTalk = false;
+                });
+            }
+        });
 
         function chat() {
             time = new Date().getTime();
@@ -234,9 +257,9 @@
         <div style="height:80px;background:#e5e5e5;border: 1px solid #e5e5e5">
             <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
 
-              <!--  <span style="font-size:14px">※앵무는 비인도적이거나 폭력적인 언어를 싫어합니다</span>
-                <span style="font-size:14px">※개인정보 유출시 서비스 이용에 제한이 있을 수 있습니다</span>
-                <span style="font-size:14px">※성숙한 사람으로써 앵무를 대해주세요</span>-->
+                <!--  <span style="font-size:14px">※앵무는 비인도적이거나 폭력적인 언어를 싫어합니다</span>
+                  <span style="font-size:14px">※개인정보 유출시 서비스 이용에 제한이 있을 수 있습니다</span>
+                  <span style="font-size:14px">※성숙한 사람으로써 앵무를 대해주세요</span>-->
 
             </div>
         </div>

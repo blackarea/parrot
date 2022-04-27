@@ -163,7 +163,7 @@
                     <span style="font-size:15px;color:#444">계정관리에서 내가 가르친 말을 확인해 보세요</span>
                 </div>
                 <div class="modal-footer" style="display:flex;justify-content:center;height:60px;padding-bottom:30px">
-                    <button class="btn btn-primary" style="padding:0px;width:70px;height:40px"><span style="font-size:15px;font-weight:bold">확인</span></button>
+                    <button data-bs-dismiss="modal" class="btn btn-primary" style="padding:0px;width:70px;height:40px"><span style="font-size:15px;font-weight:bold">확인</span></button>
                 </div>
             </div>
         </div>
@@ -235,7 +235,8 @@
 
                 <div style="height:100px;display:flex; align-items:center; justify-content:center">
 
-                    <button onclick="teachPolar()" type="submit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height:38px">앵무새가 이 대화를 기억합니다</button>
+                    <button onclick="teachPolar()" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            class="btn btn-secondary" style="height:38px">앵무새가 이 대화를 기억합니다</button>
 
                 </div>
 

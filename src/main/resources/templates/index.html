@@ -13,7 +13,7 @@
 
     <script>
         function logout() {
-            var form = document.createElement('form');
+            let form = document.createElement('form');
             form.setAttribute('method', 'post');
             form.setAttribute('action', "/userlogout");
             document.body.appendChild(form);
@@ -22,13 +22,15 @@
 
     </script>
     <style>
-    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
-    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-    @font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;}
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
 
         h3 {
             text-align: center;
@@ -64,17 +66,17 @@
         body {
             height: 100%;
             font-family: 'NanumSquare';
-            transform : rotate(0.04deg);
-            overflow-x:hidden;
+            transform: rotate(0.04deg);
+            overflow-x: hidden;
         }
 
         .footer {
 
-            background-color:#F9F9F9;
+            background-color: #F9F9F9;
             padding-bottom: 20px;
             margin-top: 30px;
             padding-top: 20px;
-            height:100%;
+            height: 100%;
         }
 
         .row {
@@ -112,56 +114,64 @@
             justify-content: center;
 
         }
+
         section {
             width: 100%;
             height: 100%;
             margin-top: 30px;
         }
+
         header {
             padding: 10px;
             background: #444444;
         }
+
         .ololit {
             color: #000;
             font-family: 'NanumSquareRound';
             margin-bottom: -10px;
-            font-weight:bold;
+            font-weight: bold;
         }
-        #sidecoment{
+
+        #sidecoment {
             color: #000;
-            font-family:'NanumSquare';
+            font-family: 'NanumSquare';
             margin-bottom: 30px;
         }
 
         a {
             text-decoration: none !important
         }
-        .bi-chat-heart{
-            color:#444444;
+
+        .bi-chat-heart {
+            color: #444444;
             font-size: 6em;
         }
 
-        .bi-qr-code{
-            color:#444444;
-            font-size: 6em;
-        }
-        .bi-book{
-            color:#444444;
-            font-size: 6em;
-        }
-        .bi-people-fill{
-            color:#444444;
-            font-size: 6em;
-        }
-        .bi-pencil{
-            color:#444444;
-            font-size: 6em;
-        }
-        .bi-bookmark-star{
-            color:#444444;
+        .bi-qr-code {
+            color: #444444;
             font-size: 6em;
         }
 
+        .bi-book {
+            color: #444444;
+            font-size: 6em;
+        }
+
+        .bi-people-fill {
+            color: #444444;
+            font-size: 6em;
+        }
+
+        .bi-pencil {
+            color: #444444;
+            font-size: 6em;
+        }
+
+        .bi-bookmark-star {
+            color: #444444;
+            font-size: 6em;
+        }
 
 
     </style>
@@ -202,7 +212,7 @@
                    role="button" onclick="logout()">로그아웃</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light"  href="#">만든이</a>
+                <a class="nav-link text-light" href="#">만든이</a>
             </li>
             <li class="nav-item">
                 <a sec:authorize="isAuthenticated()" class="nav-link text-light"
@@ -216,14 +226,18 @@
             <div style="width:15px;height:200px;background-color:#FFB830;margin-right:20px"></div>
             <div id="serach">
                 <div class="ololit">
-                    <span style="font-size:40px;color:#444444">Made by<span style="font-size:60px">&nbspololit</span></span>
+                    <span style="font-size:40px;color:#444444">Made by<span
+                            style="font-size:60px">&nbspololit</span></span>
                 </div>
                 <div class="text">
                     <p id="sidecoment" style="font-size:23px;color:#444444">기존과는 다른 Ai챗봇</p>
                 </div>
-                <form class="d-flex">
-                    <input class="form-control me-2"style="border-radius: 2em; height:42px" type="search" placeholder="앵무에게 말을 걸어 보세요" aria-label="당신만의 앵무새">
-
+                <form th:action="@{/chat}" class="d-flex" method="get">
+                    <input class="form-control me-2" style="border-radius: 2em; height:42px" name="formIndex"
+                           placeholder="앵무에게 말을 걸어 보세요" aria-label="당신만의 앵무새">
+                    <button type="submit" style="background:none;border: none">
+                        <i class="bi bi-arrow-right-circle"></i>
+                    </button>
                 </form>
             </div>
 
@@ -235,10 +249,9 @@
         <h3 style="font-weight:bold; margin-bottom:20px;margin-top:30px">#프로젝트 소개</h3>
         <div class="presentation">
 
-
-            <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
+            <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
                 <div style="text-align:center">
-                <i class="bi bi-chat-heart"></i>
+                    <i class="bi bi-chat-heart"></i>
                 </div>
                 <div class="card-body">
                     <h5 style="font-weight:bold">애증이 있는 채팅 봇</h5>
@@ -249,7 +262,7 @@
 
             </div>
 
-            <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
+            <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
                 <div style="text-align:center">
                     <i class="bi bi-qr-code"></i>
                 </div>
@@ -261,10 +274,9 @@
                 </div>
             </div>
 
-
             <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
                 <div style="text-align:center">
-                <i class="bi bi-book"></i>
+                    <i class="bi bi-book"></i>
                 </div>
                 <div class="card-body">
                     <h5 style="font-weight:bold">자신만의 앵무새</h5>
@@ -276,7 +288,7 @@
         </div>
         <div class="presentation" style="margin-bottom:20px">
 
-            <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
+            <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
                 <div style="text-align:center">
                     <i class="bi bi-people-fill"></i>
                 </div>
@@ -289,7 +301,7 @@
 
             </div>
 
-            <div  style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
+            <div style="width: 16rem;height:22rem;background-color:#fff;padding:10px;border-radius:2em;margin:20px">
                 <div style="text-align:center">
                     <i class="bi bi-pencil"></i>
                 </div>

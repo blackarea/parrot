@@ -29,14 +29,19 @@ public class MailServiceImpl implements MailService {
         }
         String password = getRandomPassword(10);
 
-        foundUser.get().updatePassword(bCryptPasswordEncoder.encode(password));
+        sendMail(email, password);
 
+        foundUser.get().updatePassword(bCryptPasswordEncoder.encode(password));
+        return true;
+    }
+
+    public void sendMail(String email, String password) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Parrot 임시 비밀번호");
         message.setText("Parrot을 이용해주셔서 감사합니다. \n 임시 비밀번호는 " + password + " 입니다.");
+
         javaMailSender.send(message);
-        return true;
     }
 
     public String getRandomPassword(int size) {

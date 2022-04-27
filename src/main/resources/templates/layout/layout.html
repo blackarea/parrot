@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8"/>
-
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
             integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
@@ -15,8 +15,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <style>
-    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
-    @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
         hr {
             color: white;
@@ -26,7 +26,7 @@
             margin-top: -5px;
         }
 
-        tr,td{
+        tr, td {
             margin: 0px;
             padding: 0px;
         }
@@ -39,9 +39,9 @@
             overflow: auto;
             padding: 0;
             margin: 0;
-            transform : rotate(0.02deg);
-            background:#444444;
-            font-family:NanumSquare;
+            transform: rotate(0.02deg);
+            background: #444444;
+            font-family: NanumSquare;
         }
 
         .title {
@@ -61,120 +61,163 @@
             text-decoration: none !important
         }
 
-        .line{
+        .line {
             width: 200px;
-            }
+        }
 
-        #parrotgg{
+        #parrotgg {
             font-size: 22px;
         }
 
-        #sidebar:hover tbody tr:hover{
+        #sidebar:hover tbody tr:hover {
             background: #FFB830;
             border: 0px;
-            margin:0px;
-            padding:0px;
+            margin: 0px;
+            padding: 0px;
         }
-        td{
+
+        td {
             background: transparent;
         }
-        .chat{
+
+        .chat {
             display: flex;
             align-items: center;
         }
-        ul,li{
-            margin:0px;
-            padding:0px;
+
+        ul, li {
+            margin: 0px;
+            padding: 0px;
         }
-        .hr{
-            color:#A5A5A5;
+
+        .hr {
+            color: #A5A5A5;
         }
-        #bottombox{
-            height:80px;
-            background:#444;
-            display:flex;align-items:center;
+
+        #bottombox {
+            height: 80px;
+            background: #444;
+            display: flex;
+            align-items: center;
         }
-        #bottomline{
-            height:10px;
-            background:#ffb830;
+
+        .accountLink {
+            font-size: 13px;
+            color: #E8E8E8;
         }
+
     </style>
+    <script>
+        function logout() {
+            let form = document.createElement('form');
+            form.setAttribute('method', 'post');
+            form.setAttribute('action', "/userlogout");
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </head>
 
 <body>
 
-
-
 <div class="header">
-    <a id="parrotgg"style="font-weight:bold; margin: 20px" class="text-color light" th:href="@{/}">parrot.gg</a>
+    <a id="parrotgg" style="font-weight:bold; margin: 20px" class="text-color light" th:href="@{/}">parrot.gg</a>
+    <!--링크-->
     <div class="list" style="width:270px">
         <ul class="nav">
             <ul class="list-unstyled">
                 <table id="sidebar" class="table table-hover" style="margin:0px">
-                <tr>
-                    <td style="border:none;width:270px">
-                        <li>
-                            <div class="chat" style="height: 50px; border:none" >
-                            <button style="background:transparent;border:none"><a style="color:#fff; font-size:17px; margin-left:20px" onclick="location.href='/chat'">대화하기</a></button>
-                            </div>
-                        </li>
-                    </td>
-                </tr>
+                    <!--대화-->
+                    <tr>
+                        <td style="border:none;width:270px">
+                            <li>
+                                <div class="chat" style="height: 50px; border:none">
+                                    <button style="background:transparent;border:none"><a
+                                            style="color:#fff; font-size:17px; margin-left:20px"
+                                            onclick="location.href='/chat'">대화하기</a></button>
+                                </div>
+                            </li>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td style="border:none">
-                        <li>
-                    <div class="chat" style="height: 50px; border:none" >
-                    <button type="button"  style="background:transparent;border:none" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
-                        <a style="color:#fff; font-size:17px; margin-left:20px">가르치기</a>
-                    </button>
-                    </div>
-                    <div class="collapse show" id="dashboard-collapse" style="">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small mx-3">
-                            <li class="my-3"><a th:href="@{/teach}" style="color:#E8E8E8">&nbsp&nbsp 기본 가르치기</a></li>
-                            <li class="my-3"><a th:href="@{/teach/polar}" style="color:#E8E8E8">&nbsp&nbsp 긍정부정 가르치기</a></li>
-                            <li class="my-3"><a th:href="@{/teach/free}" style="color:#E8E8E8">&nbsp&nbsp 자유질문 가르치기</a></li>
-                            <li class="my-3"><a th:href="@{/mission}" style="color:#E8E8E8">&nbsp&nbsp 나쁜말 미션</a></li>
-                        </ul>
-                    </div>
-                        </li>
-                    </td>
-                </tr>
+                    <!--가르치기-->
                     <tr>
                         <td style="border:none">
                             <li>
-                            <div class="chat" style="height: 50px;border:none">
-                            <button style="background:transparent;border:none"><a style="color:#fff; font-size:17px; margin-left:20px" onclick="location.href='/boardlist'">광장가기</a></button>
-                            </div>
+                                <div class="chat" style="height: 50px; border:none">
+                                    <button type="button" style="background:transparent;border:none"
+                                            data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+                                            aria-expanded="true">
+                                        <a style="color:#fff; font-size:17px; margin-left:20px">가르치기</a>
+                                    </button>
+                                </div>
+                                <div class="collapse show" id="dashboard-collapse" style="">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small mx-3">
+                                        <li class="my-3"><a th:href="@{/teach}" style="color:#E8E8E8">&nbsp&nbsp 기본
+                                            가르치기</a></li>
+                                        <li class="my-3"><a th:href="@{/teach/polar}" style="color:#E8E8E8">&nbsp&nbsp
+                                            긍정부정 가르치기</a></li>
+                                        <li class="my-3"><a th:href="@{/teach/free}" style="color:#E8E8E8">&nbsp&nbsp
+                                            자유질문 가르치기</a></li>
+                                        <li class="my-3"><a th:href="@{/mission}" style="color:#E8E8E8">&nbsp&nbsp 나쁜말
+                                            미션</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </td>
+                    </tr>
+                    <!--광장-->
+                    <tr>
+                        <td style="border:none">
+                            <li>
+                                <div class="chat" style="height: 50px;border:none">
+                                    <button style="background:transparent;border:none"><a
+                                            style="color:#fff; font-size:17px; margin-left:20px"
+                                            onclick="location.href='/boardlist'">광장가기</a></button>
+                                </div>
                             </li>
                         </td>
                     </tr>
                 </table>
                 <div class="line">
-                <!--<li class="border-top my-3"></li>-->
+
                 </div>
             </ul>
         </ul>
     </div>
 
-    <!--<div id="bottomline"></div>-->
-
-    <div class="fixed-bottom" id="bottombox">
-        <div style="width:30%;display:flex;justify-content:center;background:#ffb830;height:100%"><i class="bi bi-person-circle" style="font-size:35px;color:#fff;display:flex;align-items:center"></i></div>
+    <!--로그인 하면-->
+    <div sec:authorize="isAuthenticated()" class="fixed-bottom" id="bottombox">
+        <div style="width:30%;display:flex;justify-content:center;background:#ffb830;height:100%"><i
+                class="bi bi-person-circle" style="font-size:35px;color:#fff;display:flex;align-items:center"></i></div>
         <div style="width:70%;margin-left:10px">
-            <div><span style="font-size:15px;color:#fff"><span style="font-weight:bold">다죽여버리겠어</span> <div class="btn btn-primary" style="padding:0px;width:50px;height:18px;margin-left:5px"><span style="font-size:13px"></span></div></span></div>
-            <div class="text-truncate" style="display:block;color:#E8E8E8"><span style="font-size:13px">dhtmddhfddfks2333@naver.com</span></div>
-            <div><span style="font-size:13px;color:#E8E8E8">계정관리 | 나의활동</span></div>
+            <div>
+                <span th:text="${#authentication.getPrincipal().getUser().getName()}"
+                      style="font-size:15px;color:#fff;font-weight:bold"></span>
+                <button class="btn btn-primary" onclick="logout()"
+                        style="padding:0;width:60px;height:18px;margin-left:5px;font-size:13px">로그아웃
+                </button>
+            </div>
+            <div class="text-truncate" style="display:block;color:#E8E8E8">
+                <span th:text="${#authentication.getPrincipal().getUser().getEmail()}" style="font-size:13px"></span>
+            </div>
+            <div class="accountLink" th:with="loginId = ${#authentication.name}">
+                <a style="display: inline" th:href="@{/account/{login_id}(login_id=${loginId})}">계정설정</a>
+                |
+                <a style="display: inline" th:href="@{/account/{login_id}/activity(login_id=${loginId})}">나의활동</a>
+            </div>
         </div>
     </div>
 
+    <!--로그인 안하면-->
+    <div class="fixed-bottom" sec:authorize="isAnonymous()">
+        <a th:href="@{/userlogin}">로그인을 해주세요</a>
     </div>
+
 </div>
 
-
-<!--<header th:replace="fragments/header :: headerFragment"></header>-->
 <div layout:fragment="content" style="margin-left: 280px"></div>
-<!--<footer th:replace="fragments/footer :: footerFragment"></footer>-->
+
 </body>
 
 </html>
