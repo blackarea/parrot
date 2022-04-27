@@ -232,13 +232,18 @@
                 <div class="text">
                     <p id="sidecoment" style="font-size:23px;color:#444444">기존과는 다른 Ai챗봇</p>
                 </div>
+
                 <form th:action="@{/chat}" class="d-flex" method="get">
-                    <input class="form-control me-2" style="border-radius: 2em; height:42px" name="formIndex"
+                    <div class="input-group"
+                         style="border:1px solid #d6d6d6;width:330px;border-radius: 2em;background-color:#FFFFFF;height:43px;">
+                    <input class="form-control" style="border-radius: 2em;border:0;solid: black;" name="formIndex"
                            placeholder="앵무에게 말을 걸어 보세요" aria-label="당신만의 앵무새">
-                    <button type="submit" style="background:none;border: none">
-                        <i class="bi bi-arrow-right-circle"></i>
+                    <button type="submit" style="background:none;border:none;margin-right:15px;display:flex;align-items:center">
+                        <i class="bi bi-arrow-right-circle" style="color: #999;font-size:20px"></i>
                     </button>
+                    </div>
                 </form>
+
             </div>
 
             <div id="section_img"><img src=img/ani1.gif></div>
