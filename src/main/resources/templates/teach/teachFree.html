@@ -110,6 +110,12 @@
 
         /* JS START */
         #mainDiv{
+            border-top:1px solid #e5e5e5;
+            border-right:0px solid #444;
+            border-left:0px solid #444;
+            border-bottom:1px solid #e5e5e5;
+
+            padding:30px;
 
         }
         .topDiv {
@@ -236,11 +242,15 @@
             downContentSpan.innerText = '(을)를 포함하면';
 
             let trashButton = document.createElement('button');
-            trashButton.setAttribute('class', 'btn btn-outline-secondary trash');
-            let trashI = document.createElement('i');
-            downContentSpan.setAttribute('style', 'margin-right:260px');
-            trashI.setAttribute('class', 'bi bi-trash3');
-            trashI.setAttribute('style', 'font-size:22px');
+            downContentSpan.setAttribute('style', 'margin-right:220px');
+            trashButton.setAttribute('class', 'btn btn-secondary');
+            let trashI = document.createElement('span');
+
+            trashI.setAttribute('style', 'font-size:14px');
+            trashI.innerText = '조건 삭제';
+            trashButton.setAttribute('style', 'height:38px');
+
+
 
 
             trashButton.addEventListener("click", function () {
@@ -348,15 +358,16 @@
                     </div>
                 </div>
 
-                <div id="mainDiv">
 
+                <div id="mainDiv"></div>
+
+                <div style="width:50%;height:30px;border-right:5px dotted #e5e5e5;margin-top:5px;margin-bottom:10px"></div>
+
+
+                <div style="height:30px;display:flex;align-items:center; justify-content:center">
+                    <button onclick="addConditionAnswer()" class="btn btn-outline-primary" style="width:100px;height:38px"><span style="font-size:14px;font-weight:bold">조건 추가</span></button>
                 </div>
 
-
-                <div style="height:0px;display:flex; margin-bottom:20px;margin-top:20px;align-items:center; justify-content:right">
-                    <button onclick="deleteConditionAnswer()" class="btn btn-secondary" style="height:38px;margin-right:10px"><span style="font-size:14px">조건 삭제</span></button>
-                    <button onclick="addConditionAnswer()" class="btn btn-primary" style="height:38px"><span style="font-size:14px">조건 추가</span></button>
-                </div>
 
                 <div style="height:150px;display:flex; align-items:center;justify-content:left">
                     <div style="text-align:left">
