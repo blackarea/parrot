@@ -3,6 +3,7 @@ package com.graduation.parrot.controller;
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.dto.User.UserActivityPageDto;
 import com.graduation.parrot.domain.dto.User.UserResponseDto;
+import com.graduation.parrot.domain.dto.User.UserTeachingListDto;
 import com.graduation.parrot.domain.dto.User.UserUpdateDto;
 import com.graduation.parrot.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -43,9 +47,17 @@ public class UserController {
         return "security/activity";
     }
 
-    @GetMapping("/taught")
-    public String taught(@PathVariable String login_id){
-        return "security/taught";
+    @GetMapping("/teaching")
+    public String teachingList(@PathVariable String login_id, Model model){
+        List<UserTeachingListDto> userTeachingList = userService.getUserTeachingList(login_id);
+        model.addAttribute("userTeachingList", userTeachingList);
+        return "security/teaching";
+    }
+
+    @ResponseBody
+    @PostMapping("/teaching")
+    public String teaching(@PathVariable String login_id, @RequestBody Map<String, String> teachingId){
+        return userService.getTeachContent(Long.valueOf(teachingId.get("teachingId")));
     }
 
     @ResponseBody

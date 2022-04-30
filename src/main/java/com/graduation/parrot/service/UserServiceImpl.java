@@ -1,10 +1,10 @@
 package com.graduation.parrot.service;
 
+import com.graduation.parrot.domain.TeachType;
+import com.graduation.parrot.domain.Teaching;
 import com.graduation.parrot.domain.User;
-import com.graduation.parrot.domain.dto.User.QUserActivityDto;
-import com.graduation.parrot.domain.dto.User.UserActivityListDto;
-import com.graduation.parrot.domain.dto.User.UserActivityPageDto;
-import com.graduation.parrot.domain.dto.User.UserSaveDto;
+import com.graduation.parrot.domain.dto.User.*;
+import com.graduation.parrot.repository.TeachingRepository;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import static com.graduation.parrot.domain.QBoard.board;
 import static com.graduation.parrot.domain.QComment.comment;
 import static com.graduation.parrot.domain.QRecommend.recommend;
+import static com.graduation.parrot.domain.QTeaching.teaching;
 
 @Service
 @Slf4j
@@ -31,12 +32,14 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
     private final JPAQueryFactory queryFactory;
+    private final TeachingRepository teachingRepository;
 
     public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository,
-                           EntityManager entityManager) {
+                           EntityManager entityManager, TeachingRepository teachingRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
         this.queryFactory = new JPAQueryFactory(entityManager);
+        this.teachingRepository = teachingRepository;
     }
 
     @Override
@@ -149,6 +152,29 @@ public class UserServiceImpl implements UserService {
 
         return new UserActivityPageDto(boardList.size(), commentList.size(),
                 new PageImpl<>(sortedAllList, pageable, sortedAllList.size()));
+    }
+
+    @Override
+    public void saveTeach(String login_id, TeachType teachType, String teachContent) {
+        User user = userRepository.findByLogin_id(login_id).get();
+        teachingRepository.save(new Teaching(teachType, teachContent, user));
+    }
+
+    @Override
+    public String getTeachContent(Long teachingId) {
+        return queryFactory
+                .selectFrom(teaching)
+                .where(teaching.id.eq(teachingId))
+                .fetchOne().getTeachContent();
+    }
+
+    @Override
+    public List<UserTeachingListDto> getUserTeachingList(String login_id) {
+        return queryFactory
+                .selectFrom(teaching)
+                .where(teaching.user.login_id.eq(login_id))
+                .orderBy(teaching.id.desc())
+                .fetch().stream().map(UserTeachingListDto::new).collect(Collectors.toList());
     }
 
     @Override

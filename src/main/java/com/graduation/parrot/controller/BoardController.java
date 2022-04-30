@@ -42,7 +42,6 @@ public class BoardController {
     @GetMapping("/boardlist")
     public String boardList(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails, @PageableDefault(size = 15, direction = Sort.Direction.DESC) Pageable pageable,
                             @RequestParam(defaultValue = "all") String type, String searchKeyword, @RequestParam(defaultValue = "all") String array) {
-        log.info(array);
         if (principalDetails != null) {
             model.addAttribute("userName", principalDetails.getUser().getName());
         }
