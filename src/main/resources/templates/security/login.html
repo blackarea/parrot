@@ -70,8 +70,9 @@
         }
 
         #left {
+            padding-top: 10px;
             width: 300px;
-            height: 330px;
+            height: 300px;
             display: flex;
             border-bottom: 1px solid #e5e5e5;
             flex-direction: column;
@@ -88,7 +89,7 @@
             align-items: center;
         }
 
-        #floatingInput {
+        #floatingId {
             width: 300px;
             height: 50px;
             border-radius: 2em;
@@ -132,10 +133,31 @@
 
         }
 
-        }
-
-
     </style>
+    <script>
+        function login() {
+            let id = document.getElementById('floatingId').value;
+            let password = document.getElementById('floatingPassword').value;
+
+            let data = {
+                login_id : id,
+                password : password
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/login',
+                data: JSON.stringify(data),
+                contentType: "application/json;charset=UTF-8",
+            }).done(function (response) {
+                window.location.replace("/");
+            }).fail(function (e) {
+                let wrongData = document.getElementById('wrongData');
+                wrongData.setAttribute('style', 'font-size:14px;color:#E50000;');
+            });
+
+        }
+    </script>
 </head>
 
 <div layout:fragment="content">
@@ -143,28 +165,23 @@
     <div class="flex-container">
         <div class="main">
             <div id="left">
-                <div id="smleft">
+                <div id="smleft" style="display:flex;justify-content:center;align-items:center;flex-direction:column">
                     <h2 class="fw-bold" id="title">로그인</h2>
-                    <form class th:action="@{/login}" method="post"
-                          style="display:flex;justify-content:center;align-items:center;flex-direction:column">
-                        <div class="form-floating">
-                            <input class="form-control rounded-4" id="floatingInput"
-                                   name="login_id" placeholder="name@example.com">
-                            <label for="floatingInput">Id</label>
-                        </div>
-                        <div class="form-floating">
-                            <input type="password" class="form-control rounded-4" id="floatingPassword"
-                                   name="password" placeholder="Password" style="color:#444">
-                            <label for="floatingPassword" style="color: #6d6d6d">Password</label>
-                        </div>
-                        <div class="forget" style="text-align:center">
-                            <button class="btn btn-lg rounded-4 btn-primary" id="signup" type="submit"
-                                    style="border-radius: 2em; margin-top: 20px;width: 300px; height: 50px">
-                                Login
-                            </button>
 
-                        </div>
-                    </form>
+                    <div class="form-floating">
+                        <input class="form-control rounded-4" id="floatingId" name="login_id">
+                        <label for="floatingId">Id</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" class="form-control rounded-4"
+                               id="floatingPassword" name="password" style="color:#444">
+                        <label for="floatingPassword" style="color: #6d6d6d">Password</label>
+                    </div>
+                    <div class="forget" style="text-align:center">
+                        <button class="btn btn-lg rounded-4 btn-primary" id="signup" type="submit" onclick="login()"
+                                style="border-radius: 2em; margin-top: 20px;width: 300px; height: 50px">Login</button>
+                    </div>
+                    <div><span id="wrongData" style="visibility: hidden">아이디나 비밀번호가 틀렸습니다.</span></div>
                 </div>
             </div>
 

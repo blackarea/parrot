@@ -43,6 +43,9 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Recommend> recommends = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Teaching> teachings = new ArrayList<>();
+
     @Builder
     public User(String login_id, String password, String name, String email) {
         this.login_id = login_id;

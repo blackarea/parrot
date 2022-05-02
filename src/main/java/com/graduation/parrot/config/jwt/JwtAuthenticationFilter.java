@@ -21,7 +21,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private boolean isApp = false;
 
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
@@ -32,30 +31,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
-        isApp = false;
         ObjectMapper om = new ObjectMapper();
         LoginRequestDto loginRequestDto = null;
         String login_id;
         String password;
 
-        String parameterLogin_id = request.getParameter("login_id");
-        String parameterPassword = request.getParameter("password");
-        if(parameterLogin_id == null){
-            isApp = true;
+        try {
+            loginRequestDto = om.readValue(request.getInputStream(), LoginRequestDto.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        if (isApp) {
-            try {
-                loginRequestDto = om.readValue(request.getInputStream(), LoginRequestDto.class);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            login_id = loginRequestDto == null ? null : loginRequestDto.getLogin_id();
-            password = loginRequestDto == null ? null : loginRequestDto.getPassword();
-        } else {
-            login_id = parameterLogin_id;
-            password = parameterPassword;
-        }
+        login_id = loginRequestDto == null ? null : loginRequestDto.getLogin_id();
+        password = loginRequestDto == null ? null : loginRequestDto.getPassword();
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(login_id, password);
@@ -74,23 +61,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String jwtToken = jwtUtil.createToken(user.getId(), user.getLogin_id());
 
-        if(isApp){
-            response.addHeader(JwtProperties.AUTHORIZATION, JwtProperties.TOKEN_PREFIX + jwtToken);
-        }else {
-            Cookie cookie = new Cookie("jwtToken", jwtToken);
-            cookie.setMaxAge(60 * 30); // 60초 * 30
-            cookie.setHttpOnly(true);
-            response.addCookie(cookie);
-            response.sendRedirect("/");
-        }
+        response.addHeader(JwtProperties.AUTHORIZATION, JwtProperties.TOKEN_PREFIX + jwtToken);
+        Cookie cookie = new Cookie("jwtToken", jwtToken);
+        cookie.setMaxAge(60 * 30); // 60초 * 30
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
         logger.warn("login fail message : "+failed.toString());
-        if (!isApp){
-            response.sendRedirect("/userlogin");
-        }
+        response.setStatus(401);
     }
 }

@@ -1,0 +1,682 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/teach-custom.css}">
+    <style>
+        @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+        @font-face {
+            font-family: 'NanumSquareRound';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .flex-container {
+            width: 100%;
+            height: 100vh;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+
+            font-family: NanumSquare;
+            transform: rotate(0.04deg);
+
+        }
+
+        #exampleModal {
+            font-family: NanumSquare;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        .main {
+            display: flex;
+            justify-content: center;
+            width: 1200px;
+            overflow: hidden;
+            height: 800px;
+        }
+
+        input {
+            margin-top: 10px;
+            width: 350px;
+            height: 50px;
+            outline: none;
+            font-size: 20px;
+            background-color: #FFFFFF
+        }
+
+        #ok {
+            width: 350px;
+            height: 50px;
+            background-color: #000000;
+            border-radius: 2em;
+            margin-top: 15px;
+            border: none;
+        }
+
+        #login {
+            margin: 0px auto;
+            width: 350px;
+        }
+
+        #left {
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+            width: 300px;
+            border-left: 1px solid #e5e5e5;
+
+        }
+
+        #right {
+            width: 800px;
+            margin: 0;
+            background-color: #f1f1f1;
+        }
+
+        #section {
+            margin: 0;
+            width: 1000px;
+            height: 800px;
+        }
+
+        #floatingInput {
+            width: 300px;
+            height: 50px;
+            border-radius: 2em;
+        }
+
+        #floatingPassword {
+            width: 300px;
+            height: 50px;
+            border-radius: 2em;
+        }
+
+        #forget {
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        #account {
+            font-size: 13px;
+        }
+
+        #smleft {
+            margin: auto;
+            width: 300px;
+            text-align: center;
+        }
+
+        .modal-dialog-scrollable .modal-content {
+            max-height: 100%;
+            overflow: scroll;
+            -ms-overflow-style: none;
+
+        }
+
+        .modal-dialog-scrollable .modal-content::-webkit-scrollbar {
+            display: none;
+            width: 0 !important;
+        }
+
+        .modal-dialog-scrollable .modal-body {
+
+            overflow: scroll;
+            -ms-overflow-style: none;
+        }
+
+        .modal-dialog-scrollable .modal-body::-webkit-scrollbar {
+            display: none;
+            width: 0 !important;
+        }
+
+        .teachingList {
+            height: 70px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px
+        }
+
+        .clickButton {
+            font-size: 14px;
+            width: 70px;
+            height: 30px;
+            padding: 5px 0 0;
+        }
+
+    </style>
+    <script>
+        function normalModal(teachingId) {
+            let data = {
+                teachingId: teachingId
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/account/1/teaching',
+                data: JSON.stringify(data),
+                contentType: "application/json;charset=UTF-8",
+            }).done(function (response) {
+                let content = response.split(',');
+                let question = document.getElementById('normalQuestion');
+                let answer = document.getElementById('normalAnswer');
+                question.innerText = content[0];
+                answer.innerText = content[1];
+            });
+        }
+
+        function polarModal(teachingId) {
+            let data = {
+                teachingId: teachingId
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/account/1/teaching',
+                data: JSON.stringify(data),
+                contentType: "application/json;charset=UTF-8",
+            }).done(function (response) {
+                let content = response.split(',');
+                let question = document.getElementsByClassName('polarQuestion');
+                for (let i = 0; i < question.length; i++) {
+                    question[i].innerHTML = content[0];
+                }
+                document.getElementById('polarPositive').innerText = content[1];
+                document.getElementById('polarNegative').innerText = content[2];
+            });
+        }
+
+        function freeModal(teachingId) {
+            closeCollapse();
+            let data = {
+                teachingId: teachingId
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/account/1/teaching',
+                data: JSON.stringify(data),
+                contentType: "application/json;charset=UTF-8",
+            }).done(function (response) {
+                let content = response.split(',');
+                let conditionCount = (content.length - 2) / 2;
+
+                let question = document.getElementsByClassName('freeQuestion');
+                for (let i = 0; i < question.length; i++) {
+                    question[i].innerHTML = content[0];
+                }
+
+                for (let i = 1; i <= 5; i++) {
+                    let button = document.getElementById('conditionButton' + i);
+                    button.setAttribute('style', 'display:none');
+                }
+                for (let i = 1; i <= conditionCount; i++) {
+                    let button = document.getElementById('conditionButton' + i);
+                    button.setAttribute('style', 'width:360px;height:30px;padding:0;font-size: 15px');
+                    button.innerText = '[' + content[i * 2 - 1] + '] 이 말이 포함 되면';
+
+                    let conditionGroup = document.getElementsByClassName('condition' + i);
+                    for (let j = 0; j < conditionGroup.length; j++) {
+                        if (j === 0) {
+                            conditionGroup[j].innerHTML = '[' + content[i * 2 - 1] + ']';
+                        } else {
+                            conditionGroup[j].innerHTML = content[i * 2 - 1];
+                        }
+                    }
+
+                    let answer = document.getElementById('answer' + i);
+                    answer.innerText = content[i * 2];
+
+                }
+
+                document.getElementById('notIncludeAnswer').innerText = content[content.length - 1];
+            });
+        }
+
+        function closeCollapse() {
+            $('.collapse').collapse('hide');
+        }
+    </script>
+</head>
+
+<div layout:fragment="content">
+
+    <!--기본-->
+    <div class="modal fade" id="normalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="width:400px">
+                <div class="modal-body" style="display:flex;flex-direction:column;align-items:center">
+
+                    <div style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span style="font-size:15px;color:#444;font-weight:bold">기본답변 시나리오</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span id="normalQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span id="normalAnswer" style="font-size:15px;color:#444"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
+                    <div data-bs-dismiss="modal"
+                         style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:100%;height:100%;background:#ffb830">
+                        <span style="color:#fff">확인</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--긍정부정-->
+    <div class="modal fade" id="polarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="width:400px">
+                <div class="modal-body" style="display:flex;flex-direction:column;align-items:center">
+
+                    <div style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span style="font-size:15px;color:#444;font-weight:bold">긍정답변 시나리오</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span class="polarQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">ㅇㅇ, 그래</span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span id="polarPositive"
+                                                             style="font-size:15px;color:#444"></span></div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;flex-direction:column;justify-content:center;border-top:1px solid #e5e5e5;padding-top:15px;padding-bottom:10px">
+                            <div style="margin-bottom:5px">
+                                <span style="font-size:15px;color:#444;font-weight:bold">부정답변 시나리오</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span class="polarQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">ㄴㄴ, 아니</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:18%"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span id="polarNegative"
+                                                             style="font-size:15px;color:#444"></span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
+                    <div data-bs-dismiss="modal"
+                         style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:100%;height:100%;background:#ffb830">
+                        <span style="color:#fff">확인</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--자유-->
+    <div class="modal fade" id="freeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content" style="width:400px">
+                <div class="modal-body" style="display:flex;flex-direction:column;align-items:center">
+
+                    <p style="margin-bottom:10px">
+                        <button id="conditionButton1" onclick="closeCollapse()" class="btn btn-outline-primary"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#condition1"
+                                aria-expanded="false" aria-controls="condition1"></button>
+                    </p>
+                    <p style="margin-bottom:10px">
+                        <button id="conditionButton2" onclick="closeCollapse()" class="btn btn-outline-primary"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#condition2"
+                                aria-expanded="false" aria-controls="condition2"></button>
+                    </p>
+                    <p style="margin-bottom:10px">
+                        <button id="conditionButton3" onclick="closeCollapse()" class="btn btn-outline-primary"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#condition3"
+                                aria-expanded="false" aria-controls="condition3"></button>
+                    </p>
+                    <p style="margin-bottom:10px">
+                        <button id="conditionButton4" onclick="closeCollapse()" class="btn btn-outline-primary"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#condition4"
+                                aria-expanded="false" aria-controls="condition4"></button>
+                    </p>
+                    <p style="margin-bottom:10px">
+                        <button id="conditionButton5" onclick="closeCollapse()" class="btn btn-outline-primary"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#condition5"
+                                aria-expanded="false" aria-controls="condition5"></button>
+                    </p>
+
+                    <div style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;padding-top:15px;padding-bottom:10px">
+                            <div style="margin-bottom:5px">
+                                <span style="font-size:15px;color:#444;font-weight:bold">위 조건에 해당하는 말이 없을 때</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span class="freeQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span style="font-size:15px;color:#444">(사용자 지정 대화)</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:18%"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span id="notIncludeAnswer"
+                                                             style="font-size:15px;color:#444"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse" id="condition1" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span class="condition1" style="font-size:15px;color:#444;font-weight:bold"></span>
+                                <span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span class="freeQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span class="condition1" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span id="answer1" style="font-size:15px;color:#444"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="collapse" id="condition2" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span class="condition2" style="font-size:15px;color:#444;font-weight:bold"></span>
+                                <span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span class="freeQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span class="condition2" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span id="answer2" style="font-size:15px;color:#444"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="collapse" id="condition3" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="margin-bottom:5px">
+                                <span class="condition3" style="font-size:15px;color:#444;font-weight:bold"></span>
+                                <span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span class="freeQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span class="condition3" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span id="answer3" style="font-size:15px;color:#444"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse" id="condition4" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="">
+                                <span class="condition4" style="font-size:15px;color:#444;font-weight:bold"></span>
+                                <span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span class="freeQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span class="condition4" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span id="answer4" style="font-size:15px;color:#444"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collapse" id="condition5" style="width:90%">
+                        <div style="display:flex;flex-direction:column;justify-content:center;justify-content:center;padding-top:10px;padding-bottom:15px">
+                            <div style="">
+                                <span class="condition5" style="font-size:15px;color:#444;font-weight:bold"></span>
+                                <span style="font-size:14px;color:#777">&nbsp이 말이 포함됐을 때</span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                &nbsp&nbsp<span class="freeQuestion" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex;margin-bottom:5px">
+                                <div style="width:50px"><span
+                                        style="font-size:14px;font-weight:bold;color:#aaa">사용자</span></div>
+                                &nbsp&nbsp<span class="condition5" style="font-size:15px;color:#444"></span>
+                            </div>
+                            <div style="display:flex">
+                                <div style="width:18%"><span
+                                        style="font-size:14px;font-weight:bold;color:#ffb830">앵무</span></div>
+                                <div style="width:82%"><span id="answer5" style="font-size:15px;color:#444"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
+                    <div data-bs-dismiss="modal" style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:100%;height:100%;background:#ffb830">
+                        <span style="color:#fff">확인</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-container">
+        <div class="main">
+            <div id="left">
+                <div id="smleft" style="margin-top:80px">
+                    <div style="display:flex;align-items:center;justify-content:center">
+                        <div style="margin-right:15px">
+                            <i class="bi bi-person-circle"
+                               style="font-size:50px;color:#444;display:flex;justify-content:center"></i>
+                        </div>
+                        <div style="text-align:left">
+                            <span style="display:block;font-size:22px;color:#444;font-weight:bold">다죽여버리겠어</span>
+                            <span style="display:block;font-size:15px;color:#444">님이 가르친 말</span>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:center;margin-top:20px">
+                        <div style="display:flex; align-items:center; flex-direction:column; margin:7px">
+                            <div>
+                                <i class="bi bi-text-left" style="color:#aaa;font-size:15px"></i>
+                                <span style="color:#aaa;font-size:15px">기본질문</span>
+                            </div>
+                            <span style="display:block;font-size:15px;color:#777;font-weight:bold">10</span>
+                        </div>
+                        <div style="display:flex; align-items:center; flex-direction:column;margin:7px">
+                            <div>
+                                <i class="bi bi-chat-right-text" style="color:#aaa;font-size:13px"></i>
+                                <span style="color:#aaa;font-size:15px">긍정부정</span>
+                            </div>
+                            <span style="font-size:15px;color:#777;font-weight:bold">10</span>
+
+                        </div>
+                        <div style="display:flex; align-items:center; flex-direction:column;margin:7px">
+                            <div>
+                                <i class="bi bi-chat-right-text" style="color:#aaa;font-size:13px"></i>
+                                <span style="color:#aaa;font-size:15px">자유질문</span>
+                            </div>
+                            <span style="font-size:15px;color:#777;font-weight:bold">10</span>
+
+                        </div>
+                        <!--<div style="display:flex; align-items:center; flex-direction:column;margin:7px">
+
+                            <div>
+                                <i class="bi bi-book" style="color:#aaa;font-size:13px"></i>
+                                <span style="color:#aaa;font-size:14px">가르친말</span>
+                            </div>
+                            <span style="font-size:14px;color:#777;font-weight:bold">10</span>
+                        </div>-->
+                    </div>
+                    <table id="accounttable"
+                           style="margin-top:50px;display:flex;align-items:center;justify-content:center">
+                        <tr>
+                            <td style="width: 250px;height:60px;display:flex;align-items:center;">
+                                <i id="accounticon" class="bi bi-person-lines-fill"
+                                   style="font-size:30px;margin-left:20px;float:right;color:#444"></i>
+                                <a id="accountsetting" th:href="@{/account/{login_id}(login_id=${login_id})}"
+                                   style="font-size:17px;margin-left:20px;color:#444;text-decoration: none">계정설정</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 250px;height:60px;display:flex;align-items:center">
+                                <i class="bi bi-person-workspace"
+                                   style="font-size:30px;margin-left:20px;color:#444"></i>
+                                <a th:href="@{/account/{login_id}/activity(login_id=${login_id})}"
+                                   style="font-size:17px;margin-left:20px;color:#444;text-decoration: none">나의활동</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 250px;height:60px;display:flex;align-items:center;background:#ffb830">
+                                <i class="bi bi bi-chat-text" style="font-size:30px;margin-left:20px;color:#fff"></i>
+                                <a th:href="@{/account/{login_id}/taught(login_id=${login_id})}"
+                                   style="font-size:17px;margin-left:20px;color:#fff;text-decoration: none !important">가르치기
+                                    내역</a>
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+            <div id="right" style="display:flex;align-items:center;justify-content:center;flex-direction:column">
+                <div id="activity" style="width:90%;height:90%">
+
+                    <div th:each="teaching : ${userTeachingList}"
+                         th:with="type = ${T(com.graduation.parrot.domain.TeachType)}" class="teachingList">
+                        <div style="width:20%;display:flex;justify-content:center">
+                            <span th:if="${teaching.getTeachType() == type.NORMAL}"
+                                  style="font-size:15px;color:#aaa">기본질문</span>
+                            <span th:if="${teaching.getTeachType() == type.POLAR}"
+                                  style="font-size:15px;color:#aaa">긍정부정</span>
+                            <span th:if="${teaching.getTeachType() == type.FREE}"
+                                  style="font-size:15px;color:#aaa">자유질문</span>
+                        </div>
+                        <div style="width:73%;display:flex">
+                            <div style="width:30%">
+                                <span th:if="${teaching.getTeachType() == type.NORMAL}"
+                                      style="font-size:14px;color:#aaa;font-weight:bold">내가 이렇게 말한다면</span>
+                                <span th:if="${teaching.getTeachType() == type.POLAR}"
+                                      style="font-size:14px;color:#aaa;font-weight:bold">앵무가 이렇게 말한다면</span>
+                                <span th:if="${teaching.getTeachType() == type.FREE}"
+                                      style="font-size:14px;color:#aaa;font-weight:bold">앵무가 이렇게 말한다면</span>
+                            </div>
+
+                            <div style="width:70%">&nbsp&nbsp
+                                <span th:text="${teaching.getQuestion()}" style="font-size:15px;color:#444"></span>
+                            </div>
+                        </div>
+                        <div style="width:17%">
+                            <button th:if="${teaching.getTeachType() == type.NORMAL}"
+                                    class="btn btn-primary clickButton"
+                                    th:attr="onclick=|normalModal('${teaching.id}')|"
+                                    data-bs-toggle="modal" data-bs-target="#normalModal">전체보기
+                            </button>
+                            <button th:if="${teaching.getTeachType() == type.POLAR}" class="btn btn-primary clickButton"
+                                    th:attr="onclick=|polarModal('${teaching.id}')|"
+                                    data-bs-toggle="modal" data-bs-target="#polarModal">전체보기
+                            </button>
+                            <button th:if="${teaching.getTeachType() == type.FREE}" class="btn btn-primary clickButton"
+                                    th:attr="onclick=|freeModal('${teaching.id}')|"
+                                    data-bs-toggle="modal" data-bs-target="#freeModal">전체보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</html>

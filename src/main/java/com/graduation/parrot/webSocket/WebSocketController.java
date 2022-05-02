@@ -38,4 +38,19 @@ public class WebSocketController {
 
         webSocketService.sendWebSocket(login_id.concat(",").concat(requestChat), "ws://localhost:8888/ws/delete");
     }
+
+    @PostMapping("/app/parrottalk")
+    public Map<String, String> parrotTalk(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
+        String state = chatParameter.get("state");
+
+        String pythonMessage = webSocketService.sendWebSocket(state, "ws://localhost:8888/ws/app/parrottalk");
+
+        String[] splitPythonMessage = pythonMessage.split(",");
+
+        Map<String, String> responseChat = new HashMap<>();
+        responseChat.put("question", splitPythonMessage[0]);
+        responseChat.put("answer", splitPythonMessage[1]);
+
+        return responseChat;
+    }
 }

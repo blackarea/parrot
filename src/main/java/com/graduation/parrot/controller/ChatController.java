@@ -25,10 +25,8 @@ public class ChatController {
     @ResponseBody
     @PostMapping()
     public Map<String, String> chat(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
-        String requestChat = chatParameter.get("chat");
-
-        String pythonMessage = webSocketService.sendWebSocket(requestChat, "ws://localhost:8888/ws/web/chat");
-
+        String pythonMessage = webSocketService.sendWebSocket(chatParameter.get("chat"),
+                "ws://localhost:8888/ws/web/chat");
         Map<String, String> responseChat = new HashMap<>();
         responseChat.put("chat", pythonMessage);
 
