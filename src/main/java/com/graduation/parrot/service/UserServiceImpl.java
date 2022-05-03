@@ -146,9 +146,6 @@ public class UserServiceImpl implements UserService {
                 Comparator.comparing(UserActivityListDto::getCreatedDate, Comparator.reverseOrder());
         List<UserActivityListDto> sortedAllList =
                 allList.stream().sorted(comparingNameNatural).collect(Collectors.toList());
-        for (UserActivityListDto userActivityListDto : sortedAllList) {
-            System.out.println(userActivityListDto);
-        }
 
         return new UserActivityPageDto(boardList.size(), commentList.size(),
                 new PageImpl<>(sortedAllList, pageable, sortedAllList.size()));
