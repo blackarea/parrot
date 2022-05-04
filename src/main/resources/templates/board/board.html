@@ -405,7 +405,8 @@
         function updateComment(id, commentContentDiv) {
             let updateTextarea = document.createElement('textarea');
             updateTextarea.value = commentContentDiv.innerText;
-            updateTextarea.setAttribute('class', 'commentTextarea');
+            updateTextarea.setAttribute('class', 'form-control commentTextarea');
+            updateTextarea.setAttribute('style', 'border:1px solid #e5e5e5');
 
             let tempText = commentContentDiv.innerText;
             commentContentDiv.innerText = '';
