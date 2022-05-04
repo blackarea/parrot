@@ -258,19 +258,32 @@
                 </div>
 
                 <nav aria-label="Page navigation example" style="padding:0px;margin:0px">
-                    <ul class="pagination pagination-sm" style="padding:0px;margin:0px">
-                        <li class="page-item" style="padding:0px;margin:0px">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true"><</span>
-                            </a>
+                    <ul class="pagination pagination-sm" style="padding:0px;margin:0px"
+                        th:with="start=${(userActivityListDto.number/10)*10+1},
+                                end=${start + 9 < userActivityListDto.getTotalPages() ? start + 9 : userActivityListDto.getTotalPages()}">
+                        <li class="page-item" th:if="${userActivityListDto.number != 0}">
+                            <a th:href="@{/account/{login_id}/activity(login_id=${login_Id})}"
+                               class="page-link" th:text="'<<'"></a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">></span>
-                            </a>
+
+                        <li class="page-item" th:if="${start > 1}">
+                            <a th:href="@{/account/{login_id}/activity(page=${((userActivityListDto.number/10)*10)-10},login_id=${login_Id})}"
+                               class="page-link" th:text="'<'"></a>
+                        </li>
+
+                        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                            <a th:href="@{/account/{login_id}/activity(page=${page - 1},login_id=${login_Id})}"
+                               class="page-link" th:text="${page}">1</a>
+                        </li>
+
+                        <li class="page-item" th:if="${end < userActivityListDto.getTotalPages()}">
+                            <a th:href="@{/account/{login_id}/activity(page=${(userActivityListDto.number/10)*10+10},login_id=${login_Id})}"
+                               class="page-link" th:text="'>'"></a>
+                        </li>
+
+                        <li class="page-item" th:if="${userActivityListDto.number != userActivityListDto.getTotalPages()-1}">
+                            <a th:href="@{/account/{login_id}/activity(page=${userActivityListDto.getTotalPages()-1},login_id=${login_Id})}"
+                               class="page-link" th:text="'>>'"></a>
                         </li>
                     </ul>
                 </nav>
