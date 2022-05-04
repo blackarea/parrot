@@ -1,15 +1,19 @@
 package com.graduation.parrot.service;
 
+import com.graduation.parrot.domain.ParrotState;
 import com.graduation.parrot.domain.TeachType;
 import com.graduation.parrot.domain.Teaching;
 import com.graduation.parrot.domain.User;
+import com.graduation.parrot.domain.dto.ParrotStateDto;
 import com.graduation.parrot.domain.dto.User.*;
+import com.graduation.parrot.repository.ParrotStateRepository;
 import com.graduation.parrot.repository.TeachingRepository;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,17 +35,20 @@ public class UserServiceImpl implements UserService {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
+    private final ParrotStateRepository parrotStateRepository;
     private final JPAQueryFactory queryFactory;
     private final TeachingRepository teachingRepository;
 
     public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository,
-                           EntityManager entityManager, TeachingRepository teachingRepository) {
+                           ParrotStateRepository parrotStateRepository, EntityManager entityManager, TeachingRepository teachingRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
+        this.parrotStateRepository = parrotStateRepository;
         this.queryFactory = new JPAQueryFactory(entityManager);
         this.teachingRepository = teachingRepository;
     }
 
+    @Transactional
     @Override
     public User create(UserSaveDto userSaveDto) {
         User user;
@@ -59,7 +66,10 @@ public class UserServiceImpl implements UserService {
                     .email(userSaveDto.getEmail())
                     .build();
         }
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        ParrotState savedParrotState = parrotStateRepository.save(new ParrotState());
+        savedUser.setParrotState(savedParrotState);
         return user;
     }
 
@@ -146,9 +156,6 @@ public class UserServiceImpl implements UserService {
                 Comparator.comparing(UserActivityListDto::getCreatedDate, Comparator.reverseOrder());
         List<UserActivityListDto> sortedAllList =
                 allList.stream().sorted(comparingNameNatural).collect(Collectors.toList());
-        for (UserActivityListDto userActivityListDto : sortedAllList) {
-            System.out.println(userActivityListDto);
-        }
 
         return new UserActivityPageDto(boardList.size(), commentList.size(),
                 new PageImpl<>(sortedAllList, pageable, sortedAllList.size()));
@@ -199,6 +206,22 @@ public class UserServiceImpl implements UserService {
         }
 
         return validatorResult;
+    }
+
+    @Override
+    public ParrotStateDto getParrotState(String login_id) {
+        User user = userRepository.findByLogin_id(login_id).get();
+
+        return new ParrotStateDto(user.getParrotState());
+    }
+
+    @Transactional
+    @Override
+    public void setParrotState(String login_id, ParrotStateDto parrotStateDto) {
+        User user = userRepository.findByLogin_id(login_id).get();
+
+        ParrotState parrotState = user.getParrotState();
+        parrotState.updateState(parrotStateDto.toEntity());
     }
 
 }

@@ -4,8 +4,10 @@ import com.graduation.parrot.domain.Board;
 import com.graduation.parrot.domain.Comment;
 import com.graduation.parrot.domain.Recommend;
 import com.graduation.parrot.domain.User;
+import com.graduation.parrot.domain.dto.ParrotStateDto;
 import com.graduation.parrot.domain.dto.User.UserActivityListDto;
 import com.graduation.parrot.domain.dto.User.UserActivityPageDto;
+import com.graduation.parrot.domain.dto.User.UserSaveDto;
 import com.graduation.parrot.repository.BoardRepository;
 import com.graduation.parrot.repository.CommentRepository;
 import com.graduation.parrot.repository.RecommendRepository;
@@ -20,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -90,5 +93,19 @@ class UserServiceTest {
         UserActivityPageDto userActivityPageDto = userService.getUserActivityPaging("login", pageable);
         assertThat(userActivityPageDto.getPage().getNumberOfElements()).isEqualTo(4);
 
+    }
+
+    @Test
+    void parrotStateTest(){
+        UserSaveDto userSaveDto = new UserSaveDto("login", "pwd", "name", "email");
+        userService.create(userSaveDto);
+
+        ParrotStateDto makeParrotStateDto = ParrotStateDto.builder()
+                .hunger("hunger").stress("stresss").boredom("boredom")
+                .affection("affection").level("level")
+                .counter("counter").lastTime(123).build();
+        userService.setParrotState("login", makeParrotStateDto);
+        ParrotStateDto parrotStateDto = userService.getParrotState("login");
+        assertThat(parrotStateDto.getStress()).isEqualTo("stresss");
     }
 }

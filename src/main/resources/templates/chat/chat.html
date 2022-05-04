@@ -177,14 +177,34 @@
                     data: JSON.stringify(data),
                     contentType: "application/json;charset=UTF-8",
                 }).done(function (response) {
+                    setTimeout(function () {
+                        $('.gif').remove();
+                        parrotDiv(chatLogBox, response.chat);
+                    }, 1000);
                     userDiv(chatLogBox, userInput.value);
-                    parrotDiv(chatLogBox, response.chat);
+                    printDelay(chatLogBox);
+                    $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
                     userInput.value = '';
                     userInput.focus();
-                    $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
                     parrotTalk = false;
                 });
             }
+
+        }
+
+        function printDelay(chatLogBox) {
+            let chatLeftDiv = document.createElement('div');
+            chatLeftDiv.setAttribute('class', 'chatLeftDiv gif');
+
+            let img = document.createElement('img');
+            img.setAttribute('class', 'gif');
+
+            img.height = 80;
+            img.width = 80;
+            img.src='/img/loading8.gif';
+
+            chatLeftDiv.appendChild(img);
+            chatLogBox.appendChild(chatLeftDiv);
 
         }
 
@@ -265,7 +285,6 @@
 
         <div id="chatlog">
             <div id="chatlogbox">
-          
 
             </div>
         </div>
