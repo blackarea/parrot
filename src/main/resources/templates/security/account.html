@@ -211,57 +211,36 @@
                  style="width:320px;display:flex;flex-direction:column;justify-content:center;align-items:center">
 
                 <div class="modal-header" style="height:20%; padding-top:20px;padding-bottom:20px">
-                    <span class="modal-title" id="e-maillabel"><span
-                            th:text="${userResponseDto.username}"></span>님의 <span
-                            style="font-weight:bold;color:#ffb830">이메일</span>을 수정합니다</span>
+                    <span class="modal-title" id="e-maillabel"><span th:text="${userResponseDto.username}"></span>님의 <span style="font-weight:bold;color:#ffb830">이메일</span>을 수정합니다</span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-
-
-                    <div class="modal-body" style="width:100%;height:80%;display:flex;flex-direction:column;justify-content:center;padding-top:20px">
-                        <form onsubmit="updateEmail()">
-                            <div style="padding:1rem">
-
-                        <div style="margin-bottom:15px">
-                            <span style="font-size:15px">기존 이메일</span>
-                            <input class="form-control" th:placeholder="${userResponseDto.getEmail()}"
-                                   style="height:40px;margin:0px" disabled>
-                        </div>
-                        <div>
-                            <span style="font-size:15px">변경할 이메일</span>
-                            <input type="email" id="inputEmail" class="form-control" style="height:40px;margin:0px" required>
-                        </div>
-
+                <div class="modal-body" style="width:100%;height:80%;display:flex;flex-direction:column;justify-content:center;padding-top:20px">
+                    <form onsubmit="updateEmail()">
+                        <div style="padding:1rem">
+                            <div style="margin-bottom:15px">
+                                <span style="font-size:15px">기존 이메일</span>
+                                <input class="form-control" th:placeholder="${userResponseDto.getEmail()}"
+                                           style="height:40px;margin:0px" disabled>
                             </div>
-
+                            <div>
+                                    <span style="font-size:15px">변경할 이메일</span>
+                                    <input type="email" id="inputEmail" class="form-control" style="height:40px;margin:0px" required>
+                            </div>
+                        </div>
                         <div style="border-bottom-left-radius:10px;width:100%;height:100%;display:flex;padding-top:20px">
 
-                        <button type="submit"
-                             style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:60px;background:#ffb830;border:0px solid #000">
-                            <span style="color:#fff">확인</span>
-                        </button>
-                        <div data-bs-dismiss="modal"
-                             style="display:flex;justify-content:center;align-items:center;width:50%;height:60px;background:#666">
-                            <span style="color:#fff">취소</span>
+                            <button type="submit"
+                                     style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:60px;background:#ffb830;border:0px solid #000">
+                                    <span style="color:#fff">확인</span>
+                            </button>
+                            <div data-bs-dismiss="modal"
+                                     style="display:flex;justify-content:center;align-items:center;width:50%;height:60px;background:#666">
+                                <span style="color:#fff">취소</span>
+                            </div>
                         </div>
-
-                        </div>
-
-                        </form>
-                    </div>
-
-                    <!--<div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:15%">
-                        <div onclick="updateEmail()"
-                             style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:100%;background:#ffb830">
-                            <span style="color:#fff">확인</span>
-                        </div>
-                        <div data-bs-dismiss="modal"
-                             style="display:flex;justify-content:center;align-items:center;width:50%;height:100%;background:#666">
-                            <span style="color:#fff">취소</span>
-                        </div>
-                    </div>-->
-
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -270,39 +249,40 @@
     <div class="modal fade" id="nickname" tabindex="-1" aria-labelledby="nicknamellabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content"
-                 style="width:320px;height:400px;display:flex;flex-direction:column;justify-content:center;align-items:center">
+                 style="width:320px;display:flex;flex-direction:column;justify-content:center;align-items:center">
 
-                <div class="modal-header" style="height:20%">
+                <div class="modal-header" style="height:20%; padding-top:20px;padding-bottom:20px">
                     <span class="modal-title" id="nicknamellabel"><span th:text="${userResponseDto.username}"></span>님의 <span style="font-weight:bold;color:#ffb830">닉네임</span>을 수정합니다</span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-                <form onsubmit="updateUsername()">
-                    <div class="modal-body"
-                         style="width:300px;height:65%;display:flex;flex-direction:column;justify-content:center">
-                        <div style="margin-bottom:15px">
-                            <span style="font-size:15px">기존 닉네임</span>
-                            <input class="form-control" th:placeholder="${userResponseDto.username}"
-                                   style="height:40px;margin:0px" disabled>
+                <div class="modal-body" style="width:100%;height:80%;display:flex;flex-direction:column;justify-content:center;padding-top:20px">
+                    <form onsubmit="updateUsername()">
+                        <div style="padding:1rem">
+                            <div style="margin-bottom:15px">
+                                <span style="font-size:15px">기존 닉네임</span>
+                                <input class="form-control" th:placeholder="${userResponseDto.username}"
+                                           style="height:40px;margin:0px" disabled>
+                            </div>
+                            <div>
+                                <span style="font-size:15px">변경할 닉네임</span>
+                                <input type="text" id="inputUsername" class="form-control" style="height:40px;margin:0px" required>
+                                <span id="duplicateId"
+                                          style="font-size:12px;color:#E50000;visibility: hidden">중복되는 닉네임입니다</span>
+                            </div>
                         </div>
-                        <div>
-                            <span style="font-size:15px">변경할 닉네임</span>
-                            <input id="inputUsername" class="form-control" style="height:40px;margin:0px">
-                            <span id="duplicateId"
-                                  style="font-size:12px;color:#E50000;visibility: hidden">중복되는 닉네임입니다</span>
+
+                        <div style="border-bottom-left-radius:10px;width:100%;height:100%;display:flex;padding-top:20px">
+                            <button type="submit"
+                                    style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:60px;background:#ffb830;border:0px solid #000">
+                                <span style="color:#fff">확인</span>
+                            </button>
+                            <div data-bs-dismiss="modal"
+                                 style="display:flex;justify-content:center;align-items:center;width:50%;height:60px;background:#666">
+                                <span style="color:#fff">취소</span>
+                            </div>
                         </div>
-
-                    </div>
-
-                    <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:15%">
-                        <button type="submit"
-                             style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:100%;background:#ffb830;border:none">
-                            <span style="color:#fff">확인</span></button>
-                        <div data-bs-dismiss="modal"
-                             style="display:flex;justify-content:center;align-items:center;width:50%;height:100%;background:#666">
-                            <span style="color:#fff">취소</span></div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -347,41 +327,45 @@
     <div class="modal fade" id="password" tabindex="-1" aria-labelledby="passwordlabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content"
-                 style="width:320px;height:480px;display:flex;flex-direction:column;justify-content:center;align-items:center">
+                 style="width:320px;display:flex;flex-direction:column;justify-content:center;align-items:center">
 
-                <div class="modal-header" style="height:20%">
-                    <span class="modal-title" id="passwordlabel"><span th:text="${userResponseDto.username}"></span>님의 <span style="font-weight:bold;color:#ffb830">비밀번호</span>를 수정합니다</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body"
-                     style="width:300px;height:65%;display:flex;flex-direction:column;justify-content:center">
-                    <div style="margin-bottom:5px">
-                        <span style="font-size:15px">기존 비밀번호</span>
-                        <input id="oldPassword" class="form-control" type="password" style="height:40px;margin:0px">
-                        <div style="height:14px">
-                            <span id="wrongPasswordSpan" style="font-size:12px;color:#E50000;visibility: hidden">비밀번호가 틀렸습니다</span>
+                    <div class="modal-header" style="height:20%; padding-top:20px;padding_bottom:20px">
+                        <span class="modal-title" id="passwordlabel"><span th:text="${userResponseDto.username}"></span>님의 <span style="font-weight:bold;color:#ffb830">비밀번호</span>를 수정합니다</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                <div class="modal-body" style="width:100%;height:80%;display:flex;flex-direction:column;justify-content:center;padding-top:5px">
+                        <form onsubmit="updatePassword()">
+                            <div style="padding:1rem">
+                                <div style="margin-bottom:15px">
+                                    <span style="font-size:15px">기존 비밀번호</span>
+                                    <input id="oldPassword" class="form-control" type="password" style="height:40px;margin:0px" required>
+                                    <div style="height:14px">
+                                        <span id="wrongPasswordSpan" style="font-size:12px;color:#E50000;visibility: hidden">비밀번호가 틀렸습니다</span>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom:5px">
+                                    <span style="font-size:15px">변경할 비밀번호</span>
+                                    <input id="newPassword" class="form-control" type="password" style="height:40px;margin:0px" required>
+                                    <div style="height:14px">
+                                        <!--<span style="font-size:12px;color:#FF0606">비밀번호가 틀렸습니다</span>--></div>
+                                </div>
+                                <div style="margin-bottom:5px">
+                                    <span style="font-size:15px">변경할 비밀번호 확인</span>
+                                    <input class="form-control" type="password" style="height:40px;margin:0px" required>
+                                    <!--<div style="height:14px"><span style="font-size:12px;color:#FF0606">비밀번호가 틀렸습니다</span></div>-->
+                                </div>
+                            </div>
+                        <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
+                            <button type="submit"
+                                 style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:60px;background:#ffb830;border:0px solid #000">
+                                <span style="color:#fff">확인</span>
+                            </button>
+                            <div data-bs-dismiss="modal"
+                                 style="display:flex;justify-content:center;align-items:center;width:50%;height:60px;background:#666">
+                                <span style="color:#fff">취소</span>
+                            </div>
                         </div>
-                    </div>
-                    <div style="margin-bottom:5px">
-                        <span style="font-size:15px">변경할 비밀번호</span>
-                        <input id="newPassword" class="form-control" type="password" style="height:40px;margin:0px">
-                        <div style="height:14px">
-                            <!--<span style="font-size:12px;color:#FF0606">비밀번호가 틀렸습니다</span>--></div>
-                    </div>
-                    <div style="margin-bottom:5px">
-                        <span style="font-size:15px">변경할 비밀번호 확인</span>
-                        <input class="form-control" type="password" style="height:40px;margin:0px">
-                        <!--<div style="height:14px"><span style="font-size:12px;color:#FF0606">비밀번호가 틀렸습니다</span></div>-->
-                    </div>
-                </div>
-                <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
-                    <div onclick="updatePassword()"
-                         style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:100%;background:#ffb830">
-                        <span style="color:#fff">확인</span></div>
-                    <div data-bs-dismiss="modal"
-                         style="display:flex;justify-content:center;align-items:center;width:50%;height:100%;background:#666">
-                        <span style="color:#fff">취소</span></div>
+                    </form>
                 </div>
             </div>
         </div>
