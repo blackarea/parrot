@@ -46,6 +46,10 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Teaching> teachings = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "parrot_state_id")
+    private ParrotState parrotState;
+
     @Builder
     public User(String login_id, String password, String name, String email) {
         this.login_id = login_id;
@@ -64,5 +68,9 @@ public class User extends BaseTimeEntity{
 
     public void updateEmail(String email) {
         this.email = email;
+    }
+
+    public void setParrotState(ParrotState parrotState){
+        this.parrotState = parrotState;
     }
 }
