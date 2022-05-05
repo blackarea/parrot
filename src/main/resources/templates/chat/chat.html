@@ -26,7 +26,7 @@
         }
 
         #chatlog {
-            height: 600px;
+            height: 700px;
             overflow: auto;
             background: #fff;
         }
@@ -47,7 +47,7 @@
 
         #conver {
             height: 70px;
-            background: #f1f1f1;
+            background: #e5e5e5;
             display: flex;
             justify-content: right;
             align-items: center;
@@ -278,32 +278,47 @@
 
 <div layout:fragment="content">
 
-    <div class="body" style="margin: auto; width: 1000px; padding-top:50px">
-        <div class="top">
+    <div class="body" style="margin: auto; width: 1000px;padding-top:50px">
 
+        <div class="top">
             <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#대화하기</span>
         </div>
 
-        <div style="height:100px;background:#f1f1f1;border: 1px solid #f7f7f7">
-            <div style="display:flex;flex-direction: column; margin-left:20px;margin-top:20px">
+        <div style="display:flex;flex-direction:column;align-items:center">
+            <div style="display:flex;justify-content:center;width:1000px;background:#e5e5e5">
+
+            <div style="width:500px;display:flex;flex-direction:column;justify-content:center">
+
+        <!--<div style="height:80px;">
+            <div style="display:flex;flex-direction: column; margin-left:20px">
                 <span style="font-size:14px">※앵무는 비인도적이거나 폭력적인 언어를 싫어합니다</span>
                 <span style="font-size:14px">※개인정보 유출시 서비스 이용에 제한이 있을 수 있습니다</span>
                 <span style="font-size:14px">※성숙한 사람으로써 앵무를 대해주세요</span>
             </div>
-        </div>
+        </div>-->
 
-        <div id="chatlog">
-            <div id="chatlogbox">
+            <div id="chatlog" style="width:400px;background:#fff">
+
+                <div id="chatlogbox">
+
+                </div>
+            </div>
+
+                <div id="conver" style="">
+                    <input class="form-control me-2" style="border-radius: 2em; height:50px; width:400px; border:none;"
+                        id="userInput" onkeypress="if(window.event.keyCode == 13){chat()}" placeholder="대화말을 입력해보세요">
+                </div>
+            </div>
+
+            <div style="width:400px;flex:display;flex-direction:column">
+                <div class="top"></div>
+
+            </div>
 
             </div>
         </div>
-
-        <div id="conver" style="">
-            <input class="form-control me-2" style="border-radius: 2em; height:50px; width:400px; border:none;"
-                   id="userInput" onkeypress="if(window.event.keyCode == 13){chat()}" placeholder="대화말을 입력해보세요">
-        </div>
+    </div>
 
     </div>
 </div>
-
 </html>
