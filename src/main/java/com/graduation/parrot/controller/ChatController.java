@@ -25,7 +25,7 @@ public class ChatController {
     @ResponseBody
     @PostMapping()
     public Map<String, String> chat(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
-        String pythonMessage = webSocketService.sendWebSocket(chatParameter.get("chat"),
+        String pythonMessage = webSocketService.sendAndReceive(chatParameter.get("chat"),
                 "ws://localhost:8888/ws/web/chat");
         Map<String, String> responseChat = new HashMap<>();
         responseChat.put("chat", pythonMessage);
@@ -36,7 +36,7 @@ public class ChatController {
     @ResponseBody
     @GetMapping("/parrottalk")
     public Map<String, String> parrotFirst() throws InterruptedException {
-        String pythonMessage = webSocketService.sendWebSocket("parrotTalk", "ws://localhost:8888/ws/parrottalk");
+        String pythonMessage = webSocketService.sendAndReceive("parrotTalk", "ws://localhost:8888/ws/parrottalk");
         Map<String, String> responseChat = new HashMap<>();
         responseChat.put("chat", pythonMessage);
 
@@ -48,7 +48,7 @@ public class ChatController {
     public Map<String, String> parrotAnswer(@RequestBody Map<String, String> chatParameter) throws InterruptedException {
         String requestChat = chatParameter.get("question").concat(",").concat(chatParameter.get("answer"));
 
-        String pythonMessage = webSocketService.sendWebSocket(requestChat, "ws://localhost:8888/ws/parrotanswer");
+        String pythonMessage = webSocketService.sendAndReceive(requestChat, "ws://localhost:8888/ws/parrotanswer");
         Map<String, String> responseChat = new HashMap<>();
         responseChat.put("chat", pythonMessage);
 

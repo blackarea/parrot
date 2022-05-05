@@ -149,6 +149,9 @@
             let chatLogBox = document.getElementById('chatlogbox');
             let userInput = document.getElementById('userInput');
 
+            userDiv(chatLogBox, userInput.value);
+            printDelay(chatLogBox);
+            $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
             if (parrotTalk === true) {
                 let data = {
                     question: parrotQuestion,
@@ -160,8 +163,10 @@
                     data: JSON.stringify(data),
                     contentType: "application/json;charset=UTF-8",
                 }).done(function (response) {
-                    userDiv(chatLogBox, userInput.value);
-                    parrotDiv(chatLogBox, response.chat);
+                    setTimeout(function () {
+                        $('.gif').remove();
+                        parrotDiv(chatLogBox, response.chat);
+                    }, 500);
                     userInput.value = '';
                     userInput.focus();
                     $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
@@ -180,9 +185,7 @@
                     setTimeout(function () {
                         $('.gif').remove();
                         parrotDiv(chatLogBox, response.chat);
-                    }, 1000);
-                    userDiv(chatLogBox, userInput.value);
-                    printDelay(chatLogBox);
+                    }, 500);
                     $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
                     userInput.value = '';
                     userInput.focus();
@@ -251,11 +254,17 @@
 
         function parrotFirst() {
             let chatLogBox = document.getElementById('chatlogbox');
+
+            printDelay(chatLogBox);
+            $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
             $.ajax({
                 type: 'GET',
                 url: '/chat/parrottalk'
             }).done(function (response) {
-                parrotDiv(chatLogBox, response.chat);
+                setTimeout(function () {
+                    $('.gif').remove();
+                    parrotDiv(chatLogBox, response.chat);
+                }, 500);
                 parrotQuestion = response.chat;
                 parrotTalk = true;
                 $('#chatlog').scrollTop($('#chatlog')[0].scrollHeight);
