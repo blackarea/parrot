@@ -25,6 +25,7 @@ public interface UserService {
     boolean validateDuplicateUser(String login_id);
     boolean validateDuplicateUsername(String username);
     Map<String, String> validateHandling(Errors errors);
+    void withdraw(String login_id);
     ParrotStateDto getParrotState(String login_id);
     void setParrotState(String login_id, ParrotStateDto parrotStateDto);
 }
