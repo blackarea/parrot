@@ -34,12 +34,13 @@ public class UserController {
     }
 
     @GetMapping("/activity")
-    public String activity(@PathVariable String login_id, Model model, @PageableDefault(size = 10) Pageable pageable,
+    public String activity(@PathVariable String login_id, Model model, @PageableDefault(size = 8) Pageable pageable,
                            @AuthenticationPrincipal PrincipalDetails principalDetails) {
         UserActivityPageDto userActivityPaging = userService.getUserActivityPaging(login_id, pageable);
         int boardCount = userActivityPaging.getBoardCount();
         int commentCount = userActivityPaging.getCommentCount();
 
+        model.addAttribute("login_Id", login_id);
         model.addAttribute("boardCount", boardCount);
         model.addAttribute("commentCount", commentCount);
         model.addAttribute("userName", principalDetails.getUser().getName());
@@ -77,5 +78,12 @@ public class UserController {
     @PutMapping("/email")
     public void updateEmail(@PathVariable String login_id, @RequestBody UserUpdateDto userUpdateDto) {
         userService.updateEmail(login_id, userUpdateDto.getEmail());
+    }
+
+    @ResponseBody
+    @PostMapping("/withdraw")
+    public void withdraw(@PathVariable String login_id) {
+        userService.withdraw(login_id);
+        log.info(login_id);
     }
 }

@@ -11,6 +11,7 @@ import com.graduation.parrot.repository.TeachingRepository;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
@@ -150,15 +151,18 @@ public class UserServiceImpl implements UserService {
         allList.addAll(boardList);
         allList.addAll(commentList);
         allList.addAll(recommendList);
-
         //날짜순 정렬
         Comparator<UserActivityListDto> comparingNameNatural =
                 Comparator.comparing(UserActivityListDto::getCreatedDate, Comparator.reverseOrder());
         List<UserActivityListDto> sortedAllList =
                 allList.stream().sorted(comparingNameNatural).collect(Collectors.toList());
 
-        return new UserActivityPageDto(boardList.size(), commentList.size(),
-                new PageImpl<>(sortedAllList, pageable, sortedAllList.size()));
+        int start = (int)pageable.getOffset();
+        int end = (start+ pageable.getPageSize()) > sortedAllList.size() ? sortedAllList.size() : (start + pageable.getPageSize());
+
+        Page<UserActivityListDto> userActivity = new PageImpl<>(sortedAllList.subList(start,end),pageable,sortedAllList.size());
+
+        return new UserActivityPageDto(boardList.size(), commentList.size(), userActivity);
     }
 
     @Override
@@ -208,6 +212,12 @@ public class UserServiceImpl implements UserService {
         return validatorResult;
     }
 
+    public void withdraw(String login_id) {
+        User user = userRepository.findByLogin_id(login_id)
+                .orElseThrow(() -> new NoSuchElementException("해당 유저가 없습니다 login_id = " + login_id));
+        userRepository.delete(user);
+    }
+
     @Override
     public ParrotStateDto getParrotState(String login_id) {
         User user = userRepository.findByLogin_id(login_id).get();
@@ -223,5 +233,4 @@ public class UserServiceImpl implements UserService {
         ParrotState parrotState = user.getParrotState();
         parrotState.updateState(parrotStateDto.toEntity());
     }
-
 }

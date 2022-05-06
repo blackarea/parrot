@@ -2,7 +2,6 @@ package com.graduation.parrot.controller;
 
 import com.graduation.parrot.config.auth.PrincipalDetails;
 import com.graduation.parrot.domain.TeachType;
-import com.graduation.parrot.domain.Teaching;
 import com.graduation.parrot.domain.dto.TeachFreeDto;
 import com.graduation.parrot.service.UserService;
 import com.graduation.parrot.webSocket.WebSocketService;
@@ -34,7 +33,7 @@ public class TeachController {
                       @AuthenticationPrincipal PrincipalDetails principalDetails) throws InterruptedException {
         String teaching = teachParameter.get("question") + "," + teachParameter.get("answer");
 
-        webSocketService.sendWebSocket(teaching, "ws://localhost:8888/ws/teach");
+        webSocketService.send(teaching, "ws://localhost:8888/ws/teach");
         userService.saveTeach(principalDetails.getUser().getLogin_id(), TeachType.NORMAL, teaching);
     }
 
@@ -50,7 +49,7 @@ public class TeachController {
         String teaching = teachPolarParameter.get("question") + "," +
                 teachPolarParameter.get("positive") + "," + teachPolarParameter.get("negative");
 
-        webSocketService.sendWebSocket(teaching, "ws://localhost:8888/ws/teachpolar");
+        webSocketService.send(teaching, "ws://localhost:8888/ws/teachpolar");
         userService.saveTeach(principalDetails.getUser().getLogin_id(), TeachType.POLAR, teaching);
     }
 
@@ -74,7 +73,7 @@ public class TeachController {
 
         String teaching = teachFreeDto.getQuestion() + "," + conditionAnswer + teachFreeDto.getNotIncludeAnswer();
 
-        webSocketService.sendWebSocket(teaching, "ws://localhost:8888/ws/teachfree");
+        webSocketService.send(teaching, "ws://localhost:8888/ws/teachfree");
         userService.saveTeach(principalDetails.getUser().getLogin_id(), TeachType.FREE, teaching);
     }
 
