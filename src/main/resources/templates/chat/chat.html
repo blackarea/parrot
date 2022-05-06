@@ -3,8 +3,9 @@
       layout:decorate="~{layout/layout}">
 
 <head>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
     <style>
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
         @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
         @font-face {
@@ -28,28 +29,20 @@
         #chatlog {
             height: 700px;
             overflow: auto;
+            -ms-overflow-style: none;
             background: #fff;
         }
 
         #chatlog::-webkit-scrollbar {
-            width: 6px;
+            display: none;
         }
 
-        #chatlog::-webkit-scrollbar-thumb {
-            height: 10%;
-            background-color: #7f7f7f;
-            border-radius: 10px;
-        }
 
-        #chatlog::-webkit-scrollbar-track {
-            background-color: #e5e5e5;
-        }
 
         #conver {
-            height: 70px;
+            height: 80px;
             background: #e5e5e5;
             display: flex;
-            justify-content: right;
             align-items: center;
         }
 
@@ -80,8 +73,8 @@
             display: block;
             padding-left: 10px;
             padding-right: 10px;
-            height: 60px;
-            line-height: 60px;
+            height: 50px;
+            line-height: 50px;
             white-space: nowrap;
             background: #FFB830;
             border-radius: 0px 10px 10px 10px;
@@ -92,8 +85,8 @@
             padding-left: 10px;
             padding-right: 10px;
             display: block;
-            height: 60px;
-            line-height: 60px;
+            height: 50px;
+            line-height: 50px;
             white-space: nowrap;
             background: #444;
             border-radius: 10px 0px 10px 10px;
@@ -275,39 +268,57 @@
             <span id="create" style="font-size: 30px;color:#444444;font-weight:bold">#대화하기</span>
         </div>
 
-        <div style="display:flex;flex-direction:column;align-items:center">
-            <div style="display:flex;justify-content:center;width:1000px;background:#e5e5e5">
+            <div style="display:flex;justify-content:center;width:870px;height:800px;background:#e5e5e5">
 
-            <div style="width:500px;display:flex;flex-direction:column;justify-content:center">
 
-        <!--<div style="height:80px;">
-            <div style="display:flex;flex-direction: column; margin-left:20px">
-                <span style="font-size:14px">※앵무는 비인도적이거나 폭력적인 언어를 싫어합니다</span>
-                <span style="font-size:14px">※개인정보 유출시 서비스 이용에 제한이 있을 수 있습니다</span>
-                <span style="font-size:14px">※성숙한 사람으로써 앵무를 대해주세요</span>
-            </div>
-        </div>-->
 
-            <div id="chatlog" style="width:400px;background:#fff">
+                <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;padding-right:20px">
+                <div id="chatlog" style="width:450px;margin-top:20px;background:#fff;border-radius:10px">
 
-                <div id="chatlogbox">
+                    <div id="chatlogbox">
+
+                    </div>
 
                 </div>
-            </div>
 
                 <div id="conver" style="">
-                    <input class="form-control me-2" style="border-radius: 2em; height:50px; width:400px; border:none;"
+                    <input class="form-control" style="border-radius: 2em; height:50px; width:450px; border:none;"
                         id="userInput" onkeypress="if(window.event.keyCode == 13){chat()}" placeholder="대화말을 입력해보세요">
                 </div>
+                </div>
+
+                <div style="display:flex;flex-direction:column;align-items:center">
+
+
+
+                    <!--<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:350px;margin-top:20px;background:#fff;border-radius:10px;height:50px">
+                    </div>-->
+                    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:350px;margin-top:20px;background:#fff;border-radius:10px;height:320px">
+                        <div style="display:flex;width:100%;justify-content:right">
+                            <button class="btn btn-outline-primary" style="padding:5px;line-height:0;margin-right:5px"><i class="bi bi-emoji-smile" style="font-size:20px"></i></button>
+                            <button class="btn btn-outline-primary" style="padding:5px;line-height:0;margin-right:5px"><i class="bi bi-emoji-smile" style="font-size:20px"></i></button>
+                            <button class="btn btn-outline-primary" style="padding:5px;line-height:0;margin-right:20px"><i class="bi bi-emoji-smile" style="font-size:20px"></i></button>
+
+                        </div>
+                        <img src=img/animated_relay.gif style="width:250px;height:250px">
+                    </div>
+
+                    <div style="display:flex;flex-direction:column;justify-content:bottom;width:350px;margin-top:20px;border-radius:10px">
+                        <span style="display:block;font-size:30px;color:#444;font-weight:bold">Project-P</span>
+                        <span style="display:block;font-size:17px;color:#666">@Made by ololit</span>
+                        <span style="display:block;font-size:14px;color:#666">※ 앵무는 비인도적이거나 폭력적인 언어를 싫어합니다</span>
+                        <span style="display:block;font-size:14px;color:#666">※ 개인정보 유출시 서비스 이용에 제한이 있을 수 있습니다</span>
+                        <span style="display:block;font-size:14px;color:#666">※ 성숙한 사람으로써 앵무를 대해주세요</span>
+                    </div>
+
+
+
+                </div>
+
+
+
             </div>
 
-            <div style="width:400px;flex:display;flex-direction:column">
-                <div class="top"></div>
-
-            </div>
-
-            </div>
-        </div>
     </div>
 
     </div>
