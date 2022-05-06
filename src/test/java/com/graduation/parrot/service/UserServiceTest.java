@@ -108,4 +108,14 @@ class UserServiceTest {
         ParrotStateDto parrotStateDto = userService.getParrotState("login");
         assertThat(parrotStateDto.getStress()).isEqualTo("stresss");
     }
+
+    @Test
+    void withdrawTest(){
+        UserSaveDto userSaveDto = new UserSaveDto("login", "pwd", "name", "email");
+        userService.create(userSaveDto);
+
+        userService.withdraw("login");
+        List<User> all = userRepository.findAll();
+        assertThat(all.size()).isEqualTo(0);
+    }
 }
