@@ -80,10 +80,4 @@ public class UserController {
         userService.updateEmail(login_id, userUpdateDto.getEmail());
     }
 
-    @ResponseBody
-    @PostMapping("/withdraw")
-    public void withdraw(@PathVariable String login_id) {
-        userService.withdraw(login_id);
-        log.info(login_id);
-    }
 }

@@ -490,7 +490,11 @@
                 }
                 recommendCheck();
             });
-        };
+        }
+        
+        function report() {
+            alert("신고가 완료되었습니다");
+        }
 
     </script>
 </head>
@@ -550,12 +554,17 @@
             </div>
 
             <div class="report">
-                <div style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
+                <div th:if="${author} == true" style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
                     <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}"
                        style="font-size:15px; color: #7f7f7f">수정하기</a>
                     <button type="submit" onclick="deleteBoard()"
                             style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
                         삭제하기
+                    </button>
+                </div>
+                <div th:if="${author} == false" style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
+                    <button onclick="report()" style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
+                        신고하기
                     </button>
                 </div>
 

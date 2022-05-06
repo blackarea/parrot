@@ -73,10 +73,19 @@ public class SecurityController {
         return mailService.findPassword(mail.get("mail"));
     }
 
+    @ResponseBody
+    @PostMapping("/withdraw/{login_id}")
+    public void withdraw(@PathVariable String login_id, HttpServletResponse response) {
+        expireCookie(response);
+        userService.withdraw(login_id);
+    }
+
     private void expireCookie(HttpServletResponse response) {
         Cookie cookie = new Cookie("jwtToken", null);
+        cookie.setPath("/");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
     }
+
 
 }

@@ -64,6 +64,11 @@ public class BoardController {
         BoardResponseDto boardResponseDto = boardService.getBoard(id);
         List<CommentResponseDto> commentDtoList = commentService.getCommentList(id);
 
+        if(boardResponseDto.getAuthor().equals(user.getName())){
+            model.addAttribute("author", true);
+        }else{
+            model.addAttribute("author", false);
+        }
         model.addAttribute("userResponseDto", userResponseDto);
         model.addAttribute("boardResponseDto", boardResponseDto);
         model.addAttribute("commentDtoList", commentDtoList);
