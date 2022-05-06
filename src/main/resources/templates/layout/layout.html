@@ -124,7 +124,7 @@
 <body>
 
 <div class="header">
-    <a id="parrotgg" style="font-weight:bold; margin: 20px" class="text-color light" th:href="@{/}">parrot.gg</a>
+    <a id="parrotgg" style="font-weight:bold; margin: 20px" class="text-color light" th:href="@{/}">Project-p</a>
     <!--링크-->
     <div class="list" style="width:270px">
         <ul class="nav">
@@ -213,8 +213,12 @@
     </div>
 
     <!--로그인 안하면-->
-    <div class="fixed-bottom" sec:authorize="isAnonymous()" style="">
+
+    <div class="fixed-bottom" sec:authorize="isAnonymous()" style="height:100px;display:flex;justify-content:center;align-items:center">
+        <div class="btn btn-primary" style="display:flex;justify-content:center;align-items:center">
+        <i class="bi bi-lock-fill" style="color:#fff;font-size:20px;margin-right:5px"></i>
         <a th:href="@{/userlogin}">로그인을 해주세요</a>
+        </div>
     </div>
 
 </div>
