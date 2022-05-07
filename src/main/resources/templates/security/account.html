@@ -173,7 +173,6 @@
                     }).done(function (response) {
                         window.location.replace("/account/" + [[${userResponseDto.login_id}]]);
                     });
-                    location.reload();
                 }
             });
         }
@@ -181,24 +180,29 @@
         function updatePassword() {
             let oldPassword = document.getElementById("oldPassword").value;
             let newPassword = document.getElementById("newPassword").value;
-            let newPasswordCheck = documnet.getElementById("newPasswordCheck").value;
+            let newPasswordCheck = document.getElementById("newPasswordCheck").value;
             let data = {
                 oldPassword: oldPassword,
                 newPassword: newPassword,
             }
-            if (newPassword.equals(newPasswordCheck)) {
+
+            if (newPassword === newPasswordCheck) {
                 $.ajax({
                     type: 'PUT',
                     url: '/account/' + [[${userResponseDto.login_id}]] + '/password',
                     data: JSON.stringify(data),
                     contentType: "application/json;charset=UTF-8",
                 }).done(function (response) {
-                    if (response == true) {
+                    console.log(response)
+                    if (response === true) {
                         window.location.replace("/account/" + [[${userResponseDto.login_id}]]);
                     } else {
                         document.getElementById('wrongPasswordSpan').setAttribute('style', 'font-size:12px;color:#FF0606;');
                     }
                 });
+            }else{
+                let checkSpan = document.getElementById('checkPasswordSpan');
+                checkSpan.setAttribute('style', 'font-size:12px;color:#FF0606');
             }
         }
 
@@ -274,7 +278,7 @@
                 </div>
                 <div class="modal-body"
                      style="width:100%;height:80%;display:flex;flex-direction:column;justify-content:center;padding-top:20px">
-                    <form onsubmit="updateUsername()">
+                    <form onsubmit="updateUsername();return false;">
                         <div style="padding:1rem">
                             <div style="margin-bottom:15px">
                                 <span style="font-size:15px">기존 닉네임</span>
@@ -357,7 +361,7 @@
                 </div>
                 <div class="modal-body"
                      style="width:100%;height:80%;display:flex;flex-direction:column;justify-content:center;padding-top:5px">
-                    <form onsubmit="updatePassword()">
+                    <form onsubmit="updatePassword();return false;">
                         <div style="padding:1rem">
                             <div style="margin-bottom:15px">
                                 <span style="font-size:15px">기존 비밀번호</span>
@@ -368,18 +372,18 @@
                                           style="font-size:12px;color:#E50000;visibility: hidden">비밀번호가 틀렸습니다</span>
                                 </div>
                             </div>
-                            <div style="margin-bottom:5px">
+                            <div style="margin-bottom:20px">
                                 <span style="font-size:15px">변경할 비밀번호</span>
                                 <input id="newPassword" class="form-control" type="password"
                                        style="height:40px;margin:0px" required>
-                                <div style="height:14px">
-                                    <!--<span style="font-size:12px;color:#FF0606">비밀번호가 틀렸습니다</span>--></div>
                             </div>
                             <div style="margin-bottom:5px">
                                 <span style="font-size:15px">변경할 비밀번호 확인</span>
                                 <input id="newPasswordCheck" class="form-control" type="password"
                                        style="height:40px;margin:0px" required>
-                                <!--<div style="height:14px"><span style="font-size:12px;color:#FF0606">비밀번호가 틀렸습니다</span></div>-->
+                                <div style="height:14px">
+                                    <span id="checkPasswordSpan" style="visibility: hidden">비밀번호가 일치하지 않습니다.</span>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:60px">
@@ -418,9 +422,11 @@
                     <i class="bi bi-person-circle"
                        style="font-size:80px;color:#444;display:flex;justify-content:center"></i>
                     <div style="display:flex; margin-top: 50px">
-                        <span style="font-size:18px;display:block;color:#444;font-weight:bold" th:text="${userResponseDto.username}"></span>
+                        <span style="font-size:18px;display:block;color:#444;font-weight:bold"
+                              th:text="${userResponseDto.username}"></span>
                         <span style="font-size:18px;display:block;color:#444;font-weight:bold">(</span>
-                        <span style="font-size:18px;display:block;color:#444;font-weight:bold" th:text="${userResponseDto.login_id}"></span>
+                        <span style="font-size:18px;display:block;color:#444;font-weight:bold"
+                              th:text="${userResponseDto.login_id}"></span>
                         <span style="font-size:18px;display:block;color:#444;font-weight:bold">)</span>
                     </div>
 
@@ -429,7 +435,8 @@
                 </div>
 
                 <div class="modal-footer" style="border-bottom-left-radius:10px;width:100%;height:15%">
-                    <div onclick="withdraw()" style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:100%;background:#ffb830">
+                    <div onclick="withdraw()"
+                         style="display:flex;justify-content:center;align-items:center;border-bottom-left-radius: calc(0.3rem - 1px);width:50%;height:100%;background:#ffb830">
                         <span style="color:#fff">확인</span>
                     </div>
                     <div data-bs-dismiss="modal"
