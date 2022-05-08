@@ -54,13 +54,15 @@
 
         /* JS */
         .chatLeftDiv {
-            height: 100px;
             display: flex;
+            padding-top:25px;
+            padding-bottom:25px;
             align-items: center;
         }
 
         .chatRightDiv {
-            height: 100px;
+            padding-top:25px;
+            padding-bottom:25px;
             display: flex;
             align-items: center;
             justify-content: right;
@@ -70,23 +72,27 @@
         .leftbox {
             float: left;
             display: block;
-            padding-left: 10px;
-            padding-right: 10px;
-            height: 50px;
+            padding-left:10px;
+            padding-right:10px;
+            padding-top:5px
+            padding-bottom:5px;
+            max-width:350px;
             line-height: 50px;
-            white-space: nowrap;
+            white-space: normal;
             background: #FFB830;
             border-radius: 0px 10px 10px 10px;
         }
 
         .rightbox {
             float: right;
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left:10px;
+            padding-right:10px;
+            padding-top:5px
+            padding-bottom:5px;
+            white-space:normal;
+            max-width:350px;
             display: block;
-            height: 50px;
             line-height: 50px;
-            white-space: nowrap;
             background: #444;
             border-radius: 10px 0px 10px 10px;
         }
@@ -268,7 +274,7 @@
 
         function changeParrotImg() {
             let parrotImg = document.getElementById('parrotImg');
-            let srcArray = ['/img/animated_embressed.gif', '/img/animated_angry1.gif', '/img/animated_glad1.gif',
+            let srcArray = ['/img/animated_embressed.gif', '/img/animated_angry.gif', '/img/animated_glad1.gif',
                 '/img/animated_motion1.gif', '/img/animated_motion2.gif', '/img/animated_motion3.gif'];
 
             let rand = Math.floor(Math.random() * 6);
@@ -279,7 +285,7 @@
             } else if (rand === 1 || rand === 2) {
                 imgTime = 2200;
             } else {
-                imgTime = 2300;
+                imgTime = 2100;
             }
 
             setTimeout(function () {
@@ -311,7 +317,7 @@
 
                 <div id="conver" style="">
                     <input class="form-control" style="border-radius: 2em; height:50px; width:450px; border:none;"
-                           id="userInput" onKeyPress="if(window.event.keyCode == 13){chat(), changeParrotImg()}"
+                           id="userInput" maxlength="30" onKeyPress="if(window.event.keyCode == 13){chat(), changeParrotImg()}"
                            placeholder="대화말을 입력해보세요">
                 </div>
             </div>
