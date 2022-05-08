@@ -140,6 +140,14 @@
 
         }
 
+        input[type=password] {
+            font-family: "나눔스퀘어 아닐때 쓸 글꼴";
+
+        }
+        ::placeholder {
+            font-family: "NanumSquare";
+        }
+
 
     </style>
     <script>
@@ -185,6 +193,18 @@
                 }
             });
         };
+
+        function checkPassword() {
+            let password = document.getElementById('password').value;
+            let passwordCheck = document.getElementById('passwordCheck').value;
+            let span = document.getElementById('passwordCheckSpan');
+
+            if(password === passwordCheck){
+                span.setAttribute('style', 'visibility: hidden');
+            }else{
+                span.setAttribute('style', 'font-size:14px;color:red');
+            }
+        }
     </script>
 </head>
 
@@ -217,18 +237,19 @@
                         <div style="margin-bottom:20px">
                             <span style="font-size:14px">비밀번호</span>
                             <div class="d-flex">
-                                <input class="form-control me-2" style="border-radius: 0.5em; height:45px; margin:0px"
+                                <input id="password" class="form-control me-2" style="border-radius: 0.5em; height:45px; margin:0px"
                                        name="password"
-                                       type="search" placeholder="영문, 숫자를 포함하여 8자 내외" required>
+                                       type="password" placeholder="영문, 숫자를 포함하여 8자 내외" required>
                             </div>
                         </div>
 
-                        <div style="margin-bottom:20px">
+                        <div style="margin-bottom:10px">
                             <span style="font-size:14px">비밀번호 확인</span>
                             <div class="d-flex">
-                                <input class="form-control me-2" style="border-radius: 0.5em; height:45px; margin:0px"
-                                       type="search" required>
+                                <input onblur="checkPassword()" id="passwordCheck" class="form-control me-2" style="border-radius: 0.5em; height:45px; margin:0px"
+                                       type="password" required>
                             </div>
+                            <span id="passwordCheckSpan" style="visibility: hidden">비밀번호가 서로 다릅니다.</span>
                         </div>
 
                         <div style="margin-bottom:20px">
