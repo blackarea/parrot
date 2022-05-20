@@ -1,9 +1,9 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.TeachType;
-import com.graduation.parrot.domain.Teaching;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.ParrotStateDto;
+import com.graduation.parrot.domain.dto.User.ParrotDataDto;
 import com.graduation.parrot.domain.dto.User.UserActivityPageDto;
 import com.graduation.parrot.domain.dto.User.UserSaveDto;
 import com.graduation.parrot.domain.dto.User.UserTeachingListDto;
@@ -12,6 +12,7 @@ import org.springframework.validation.Errors;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface UserService {
     User create(UserSaveDto userSaveDto);
@@ -28,4 +29,7 @@ public interface UserService {
     void withdraw(String login_id);
     ParrotStateDto getParrotState(String login_id);
     void setParrotState(String login_id, ParrotStateDto parrotStateDto);
+    Optional<ParrotDataDto> getParrotData(String login_id, int page);
+    void setParrotData(String login_id, ParrotDataDto parrotDataDto);
+    int getParrotDataPageSize(String login_id);
 }

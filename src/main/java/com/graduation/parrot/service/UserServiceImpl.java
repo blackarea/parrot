@@ -1,11 +1,9 @@
 package com.graduation.parrot.service;
 
-import com.graduation.parrot.domain.ParrotState;
-import com.graduation.parrot.domain.TeachType;
-import com.graduation.parrot.domain.Teaching;
-import com.graduation.parrot.domain.User;
+import com.graduation.parrot.domain.*;
 import com.graduation.parrot.domain.dto.ParrotStateDto;
 import com.graduation.parrot.domain.dto.User.*;
+import com.graduation.parrot.repository.ParrotDataRepository;
 import com.graduation.parrot.repository.ParrotStateRepository;
 import com.graduation.parrot.repository.TeachingRepository;
 import com.graduation.parrot.repository.UserRepository;
@@ -14,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,14 +34,16 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepository userRepository;
     private final ParrotStateRepository parrotStateRepository;
+    private final ParrotDataRepository parrotDataRepository;
     private final JPAQueryFactory queryFactory;
     private final TeachingRepository teachingRepository;
 
     public UserServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository,
-                           ParrotStateRepository parrotStateRepository, EntityManager entityManager, TeachingRepository teachingRepository) {
+                           ParrotStateRepository parrotStateRepository, ParrotDataRepository parrotDataRepository, EntityManager entityManager, TeachingRepository teachingRepository) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userRepository = userRepository;
         this.parrotStateRepository = parrotStateRepository;
+        this.parrotDataRepository = parrotDataRepository;
         this.queryFactory = new JPAQueryFactory(entityManager);
         this.teachingRepository = teachingRepository;
     }
@@ -233,4 +232,30 @@ public class UserServiceImpl implements UserService {
         ParrotState parrotState = user.getParrotState();
         parrotState.updateState(parrotStateDto.toEntity());
     }
+
+    @Override
+    public Optional<ParrotDataDto> getParrotData(String login_id, int page) {
+        Optional<ParrotData> parrotData = parrotDataRepository.findByPageAndUserLogin_id(page, login_id);
+        return parrotData.map(ParrotDataDto::new);
+    }
+
+    @Transactional
+    @Override
+    public void setParrotData(String login_id, ParrotDataDto parrotDataDto) {
+        User user = userRepository.findByLogin_id(login_id).get();
+
+        Optional<ParrotData> foundParrotData = parrotDataRepository.findByPageAndUserLogin_id(parrotDataDto.getPage(), login_id);
+        if(foundParrotData.isPresent()){
+            foundParrotData.get().update(parrotDataDto.toEntity());
+        }else {
+            parrotDataRepository.save(new ParrotData(parrotDataDto, user));
+        }
+    }
+
+    @Override
+    public int getParrotDataPageSize(String login_id) {
+        Optional<List<ParrotData>> parrotDataList = parrotDataRepository.findByUserLogin_id(login_id);
+        return parrotDataList.map(List::size).orElse(0);
+    }
+
 }
