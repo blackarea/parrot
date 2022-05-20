@@ -246,7 +246,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<ParrotData> foundParrotData = parrotDataRepository.findByPageAndUserLogin_id(parrotDataDto.getPage(), login_id);
         if(foundParrotData.isPresent()){
-            foundParrotData.get().update(parrotDataDto.toEntity());
+            foundParrotData.get().update(parrotDataDto);
         }else {
             parrotDataRepository.save(new ParrotData(parrotDataDto, user));
         }
