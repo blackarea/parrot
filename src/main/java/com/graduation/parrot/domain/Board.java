@@ -20,6 +20,7 @@ public class Board extends BaseTimeEntity{
     @Column(nullable = false)
     private String title;
 
+    @Column(length = 10000)
     private String content;
     private String author;
 
