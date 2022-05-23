@@ -20,6 +20,7 @@ public class Board extends BaseTimeEntity{
     @Column(nullable = false)
     private String title;
 
+    @Column(length = 10000)
     private String content;
     private String author;
 
@@ -42,12 +43,28 @@ public class Board extends BaseTimeEntity{
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Recommend> recommends = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "file_id")
+    private List<File> files = new ArrayList<>();
+
     @Builder
     public Board(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.author = user.getName();
         setUser(user);
+    }
+
+    public Board(String title, String content, User user, File file) {
+        this.title = title;
+        this.content = content;
+        this.author = user.getName();
+        setUser(user);
+        setFile(file);
+    }
+
+    private void setFile(File file) {
+        this.files.add(file);
     }
 
     public void setUser(User user) {
