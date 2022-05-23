@@ -333,7 +333,7 @@
                                    class="page-link" th:text="'<'"></a>
                             </li>
 
-                            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                            <li class="page-item" th:if="${boardList.getTotalPages() != 0}" th:each="page: ${#numbers.sequence(start, end)}">
                                 <a th:href="@{/boardlist(page=${page - 1}, array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="${page}">1</a>
                             </li>
@@ -343,7 +343,7 @@
                                    class="page-link" th:text="'>'"></a>
                             </li>
 
-                            <li class="page-item" th:if="${boardList.number != boardList.getTotalPages()-1}">
+                            <li class="page-item" th:if="${boardList.number < boardList.getTotalPages()-1}">
                                 <a th:href="@{/boardlist(page=${boardList.getTotalPages()-1}, array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="'>>'"></a>
                             </li>
