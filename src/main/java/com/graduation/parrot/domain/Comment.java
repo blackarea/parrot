@@ -3,6 +3,8 @@ package com.graduation.parrot.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,6 +20,9 @@ public class Comment extends BaseTimeEntity{
     private String content;
     private String author;
 
+    @Column(columnDefinition = "integer default 0")
+    private int recommendCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -25,6 +30,9 @@ public class Comment extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    private List<CommentRecommend> commentRecommends = new ArrayList<>();
 
     @Builder
     public Comment(String content, User user, Board board) {
@@ -47,5 +55,9 @@ public class Comment extends BaseTimeEntity{
 
     public void update(String content){
         this.content = content;
+    }
+
+    public void updateRecommend(int point){
+        this.recommendCount += point;
     }
 }

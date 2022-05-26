@@ -4,6 +4,7 @@ import com.graduation.parrot.domain.Board;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
 import com.graduation.parrot.domain.dto.BoardListResponseDto;
+import com.graduation.parrot.domain.dto.User.UserSaveDto;
 import com.graduation.parrot.repository.BoardRepository;
 import com.graduation.parrot.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,8 @@ class BoardServiceTest {
     BoardRepository boardRepository;
     @Autowired
     BoardService boardService;
+    @Autowired
+    UserService userService;
 
     @BeforeEach
     public void before(){
@@ -73,30 +76,26 @@ class BoardServiceTest {
         Long board_id = boardService.create(build, savedUser);
 
         boardService.delete(board_id);
-        //assertThat(boardRepository.count()).isEqualTo(0L);
+        assertThat(boardRepository.count()).isEqualTo(0L);
     }
 
     @Test
     public void boardListTest(){
-        User user = User.builder()
-                .login_id("login")
-                .password("pwd")
-                .name("name")
-                .build();
-        User savedUser = userRepository.save(user);
+        UserSaveDto userSaveDto = new UserSaveDto("login", "pwd", "name", "email");
+        User user = userService.create(userSaveDto);
 
         BoardDto build = BoardDto.builder()
                 .title("title")
                 .content("content")
                 .build();
 
-        boardService.create(build, savedUser);
+        boardService.create(build, user);
 
         BoardDto build2 = BoardDto.builder()
                 .title("title2")
                 .content("content2")
                 .build();
-        boardService.create(build2, savedUser);
+        boardService.create(build2, user);
 
         Pageable pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "board_id");
         Page<BoardListResponseDto> boardList = boardService.getBoardList(pageable, "all");

@@ -295,8 +295,31 @@
 
                     recommendUp.setAttribute("class", "bi bi-caret-up-fill");
                     recommendDown.setAttribute("class", "bi bi-caret-down-fill");
-                    recommendCount.setAttribute("class", "recommendCount");
-                    recommendCount.innerText = '0';
+                    recommendCount.setAttribute("class", "recommendCount"+index);
+                    recommendCount.innerText = item.recommendCount;
+
+                    //추천 했는지 확인하고 색칠하기
+                    $.ajax({
+                        type: 'POST',
+                        url: '/comment/recommendcheck/' + item.id,
+                    }).done(function (response) {
+                        if(response.recommend === 'yes'){
+                            if(response.point == '1'){
+                                recommendUp.setAttribute('style', 'color:#ffb830');
+                            }else {
+                                recommendDown.setAttribute('style', 'color:#ffb830');
+                            }
+                        }
+                    }).fail(function (e) {
+                        console.log(e);
+                    });
+
+                    recommendUp.addEventListener("click", function () {
+                        commentLike(item.id, recommendCount, recommendUp);
+                    });
+                    recommendDown.addEventListener("click", function () {
+                        commentHate(item.id, recommendCount, recommendDown);
+                    });
 
                     commentRecommendTd.appendChild(recommendUp);
                     commentRecommendTd.appendChild(recommendCount);
@@ -494,6 +517,38 @@
         
         function report() {
             alert("신고가 완료되었습니다");
+        }
+
+        function commentLike(id, recommendCount, recommendUp){
+            $.ajax({
+                type: 'POST',
+                url: '/comment/like/' + id,
+            }).done(function (response) {
+                if(response.canRecommend == true){
+                    recommendCount.innerText = response.recommendCount;
+                    recommendUp.setAttribute('style', 'color:#ffb830');
+                }else{
+                    alert('추천을 수정할 수 없습니다.');
+                }
+            }).fail(function (e) {
+                console.log(e);
+            });
+        }
+
+        function commentHate(id, recommendCount, recommendDown){
+            $.ajax({
+                type: 'POST',
+                url: '/comment/hate/' + id,
+            }).done(function (response) {
+                if(response.canRecommend == true){
+                    recommendCount.innerText = response.recommendCount;
+                    recommendDown.setAttribute('style', 'color:#ffb830');
+                }else{
+                    alert('추천을 수정할 수 없습니다.');
+                }
+            }).fail(function (e) {
+                console.log(e);
+            });
         }
 
     </script>
