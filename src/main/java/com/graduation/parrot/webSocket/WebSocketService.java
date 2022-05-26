@@ -42,6 +42,9 @@ public class WebSocketService {
         WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create(url), new Draft_6455());
         webSocketUtil.connectBlocking();
 
+        log.info("file getOriginalFilename() = {}", multipartFile.getOriginalFilename());
+        log.info("file getName() = {}", multipartFile.getName());
+
         File file = convertToFile(multipartFile);
         byte[] bytes = Files.readAllBytes(file.toPath());
 
