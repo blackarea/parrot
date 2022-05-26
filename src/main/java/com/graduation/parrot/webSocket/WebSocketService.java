@@ -38,27 +38,4 @@ public class WebSocketService {
         return pythonMessage;
     }
 
-    public void sendImage(MultipartFile multipartFile, String url) throws InterruptedException, IOException {
-        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create(url), new Draft_6455());
-        webSocketUtil.connectBlocking();
-
-        log.info("file getOriginalFilename() = {}", multipartFile.getOriginalFilename());
-        log.info("file getName() = {}", multipartFile.getName());
-
-        File file = convertToFile(multipartFile);
-        byte[] bytes = Files.readAllBytes(file.toPath());
-
-        String s = Base64.encodeBytes(bytes);
-        // ByteBuffer 를 클라이언트로 보낸다.
-        webSocketUtil.send(s);
-        webSocketUtil.run();
-        webSocketUtil.close();
-    }
-
-    public File convertToFile(MultipartFile multipartFile) throws IOException {
-        File file = new File(multipartFile.getOriginalFilename());
-        multipartFile.transferTo(file);
-        return file;
-    }
-
 }

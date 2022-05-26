@@ -5,12 +5,11 @@ import com.graduation.parrot.service.FileService;
 import com.graduation.parrot.webSocket.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -32,10 +31,8 @@ public class FileController {
     }
 
     @PostMapping("/file/sendimage")
-    public void sendImage(MultipartFile multipartFile) throws IOException, InterruptedException {
-        if(multipartFile.isEmpty()){
-            return;
-        }
-        webSocketService.sendImage(multipartFile, "ws://localhost:8888/ws/image");
+    public void sendImage(@RequestBody Map<String, String> image) throws InterruptedException {
+        String encodedImage = image.get("image");
+        webSocketService.send(encodedImage, "ws://localhost:8888/ws/image");
     }
 }
