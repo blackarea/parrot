@@ -38,4 +38,16 @@ public class WebSocketService {
         return pythonMessage;
     }
 
+    public String sendImage(String type, String message, String url) throws InterruptedException {
+        WebSocketUtil webSocketUtil = new WebSocketUtil(URI.create(url), new Draft_6455());
+        webSocketUtil.connectBlocking();
+        webSocketUtil.send(type + "," + message);
+        webSocketUtil.run();
+        String pythonMessage = webSocketUtil.getPythonMessage();
+
+        webSocketUtil.close();
+        return pythonMessage;
+    }
+
+
 }

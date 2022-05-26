@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -31,8 +32,13 @@ public class FileController {
     }
 
     @PostMapping("/file/sendimage")
-    public void sendImage(@RequestBody Map<String, String> image) throws InterruptedException {
+    public Map<String, String> sendImage(@RequestBody Map<String, String> image) throws InterruptedException {
+        String type = image.get("type");
         String encodedImage = image.get("image");
-        webSocketService.send(encodedImage, "ws://localhost:8888/ws/image");
+        String receiveData = webSocketService.sendImage(type, encodedImage, "ws://localhost:8888/ws/image");
+        Map<String, String> map = new HashMap<>();
+        map.put("image", receiveData);
+
+        return map;
     }
 }
