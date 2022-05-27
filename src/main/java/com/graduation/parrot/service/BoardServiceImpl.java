@@ -1,6 +1,7 @@
 package com.graduation.parrot.service;
 
 import com.graduation.parrot.domain.Board;
+import com.graduation.parrot.domain.QParrotState;
 import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.BoardDto;
 import com.graduation.parrot.domain.dto.BoardListResponseDto;
@@ -72,13 +73,14 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public Page<BoardListResponseDto> getBoardList(Pageable pageable, String array) {
         QueryResults<Board> boardQueryResults = queryFactory
-                    .selectFrom(board)
-                    .offset(pageable.getOffset())
-                    .limit(pageable.getPageSize())
-                    .join(board.user, user).fetchJoin()
-                    .orderBy(boardSort(array))
-                    .orderBy(board.id.desc())
-                    .fetchResults();
+                .selectFrom(board)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .join(board.user, user).fetchJoin()
+                .join(user.parrotState, QParrotState.parrotState).fetchJoin()
+                .orderBy(boardSort(array))
+                .orderBy(board.id.desc())
+                .fetchResults();
 
         long total = boardQueryResults.getTotal();
         List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
@@ -91,14 +93,15 @@ public class BoardServiceImpl implements BoardService {
     public Page<BoardListResponseDto> getBoardListPagingSearch(Pageable pageable, String type, String searchKeyword, String array) {
 
         QueryResults<Board> boardQueryResults = queryFactory
-                    .selectFrom(board)
-                    .where(decideWhere(type, searchKeyword))
-                    .join(board.user, user).fetchJoin()
-                    .offset(pageable.getOffset())
-                    .limit(pageable.getPageSize())
-                    .orderBy(boardSort(array))
-                    .orderBy(board.id.desc())
-                    .fetchResults();
+                .selectFrom(board)
+                .where(decideWhere(type, searchKeyword))
+                .join(board.user, user).fetchJoin()
+                .join(user.parrotState, QParrotState.parrotState).fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .orderBy(boardSort(array))
+                .orderBy(board.id.desc())
+                .fetchResults();
 
         long total = boardQueryResults.getTotal();
         List<BoardListResponseDto> results = boardQueryResults.getResults().stream()
@@ -113,42 +116,42 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.updateView(board_id);
     }
 
-    private BooleanExpression decideWhere(String type, String searchKeyword){
-        if(type.equals("all")){
+    private BooleanExpression decideWhere(String type, String searchKeyword) {
+        if (type.equals("all")) {
             return allEq(searchKeyword);
-        }else if(type.equals("title")){
+        } else if (type.equals("title")) {
             return titleEq(searchKeyword);
-        }else if(type.equals("content")){
+        } else if (type.equals("content")) {
             return contentEq(searchKeyword);
-        }else if(type.equals("user")){
+        } else if (type.equals("user")) {
             return writerEq(searchKeyword);
-        }else
+        } else
             return null;
     }
 
-    private BooleanExpression titleEq(String searchKeyword){
+    private BooleanExpression titleEq(String searchKeyword) {
         return searchKeyword == null ? null : board.title.contains(searchKeyword);
     }
 
-    private BooleanExpression contentEq(String searchKeyword){
+    private BooleanExpression contentEq(String searchKeyword) {
         return searchKeyword == null ? null : board.content.contains(searchKeyword);
     }
 
-    private BooleanExpression writerEq(String searchKeyword){
+    private BooleanExpression writerEq(String searchKeyword) {
         return searchKeyword == null ? null : board.user.name.contains(searchKeyword);
     }
 
-    private BooleanExpression allEq(String searchKeyword){
+    private BooleanExpression allEq(String searchKeyword) {
         return titleEq(searchKeyword).or(contentEq(searchKeyword).or(writerEq(searchKeyword)));
     }
 
     private OrderSpecifier<?> boardSort(String array) {
-        switch(array) {
-            case "all" :
+        switch (array) {
+            case "all":
                 return new OrderSpecifier(Order.DESC, board.id);
-            case "recommend" :
+            case "recommend":
                 return new OrderSpecifier(Order.DESC, board.recommendCount);
-            case "view" :
+            case "view":
                 return new OrderSpecifier(Order.DESC, board.view);
         }
         return null;

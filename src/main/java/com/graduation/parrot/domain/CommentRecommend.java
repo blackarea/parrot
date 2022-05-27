@@ -8,14 +8,14 @@ import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
-@Entity
-public class Recommend extends BaseTimeEntity{
+@Entity(name = "comment_recommend")
+public class CommentRecommend {
 
     @Id @GeneratedValue
-    @Column(name = "recommend_id")
+    @Column(name = "comment_recommend_id")
     private Long id;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(columnDefinition = "integer default 0", updatable = false)
     private int point;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -23,14 +23,13 @@ public class Recommend extends BaseTimeEntity{
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", updatable = false)
-    private Board board;
+    @JoinColumn(name = "comment_id", updatable = false)
+    private Comment comment;
 
     @Builder
-    public Recommend(User user, Board board, int point){
+    public CommentRecommend(User user, Comment comment, int point){
         this.user = user;
-        this.board = board;
+        this.comment = comment;
         this.point = point;
     }
-
 }

@@ -1,36 +1,30 @@
 package com.graduation.parrot.service;
 
-import com.graduation.parrot.domain.Board;
-import com.graduation.parrot.domain.Comment;
-import com.graduation.parrot.domain.Recommend;
-import com.graduation.parrot.domain.User;
+import com.graduation.parrot.domain.*;
 import com.graduation.parrot.domain.dto.ParrotStateDto;
-import com.graduation.parrot.domain.dto.User.UserActivityListDto;
+import com.graduation.parrot.domain.dto.User.ParrotDataDto;
 import com.graduation.parrot.domain.dto.User.UserActivityPageDto;
 import com.graduation.parrot.domain.dto.User.UserSaveDto;
-import com.graduation.parrot.repository.BoardRepository;
-import com.graduation.parrot.repository.CommentRepository;
-import com.graduation.parrot.repository.RecommendRepository;
-import com.graduation.parrot.repository.UserRepository;
+import com.graduation.parrot.repository.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static com.graduation.parrot.domain.QBoard.board;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 class UserServiceTest {
@@ -45,6 +39,8 @@ class UserServiceTest {
     CommentRepository commentRepository;
     @Autowired
     RecommendRepository recommendRepository;
+    @Autowired
+    ParrotDataRepository parrotDataRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @PersistenceContext
@@ -97,8 +93,7 @@ class UserServiceTest {
 
     @Test
     void parrotStateTest(){
-        UserSaveDto userSaveDto = new UserSaveDto("login", "pwd", "name", "email");
-        userService.create(userSaveDto);
+        User user = makeUser();
 
         ParrotStateDto makeParrotStateDto = ParrotStateDto.builder()
                 .hunger("hunger").stress("stresss").boredom("boredom")
@@ -111,11 +106,46 @@ class UserServiceTest {
 
     @Test
     void withdrawTest(){
-        UserSaveDto userSaveDto = new UserSaveDto("login", "pwd", "name", "email");
-        userService.create(userSaveDto);
+        User user = makeUser();
 
         userService.withdraw("login");
         List<User> all = userRepository.findAll();
         assertThat(all.size()).isEqualTo(0);
+    }
+
+    @Test
+    void ParrotData(){
+        User user = makeUser();
+        makeParrotData();
+
+        Optional<ParrotData> foundData = parrotDataRepository.findByPageAndUserLogin_id(1, user.getLogin_id());
+        assertThat(foundData).isPresent();
+
+        Optional<ParrotDataDto> foundParrotDataDto = userService.getParrotData(user.getLogin_id(), 1);
+        assertThat(foundParrotDataDto.get().getPage()).isEqualTo(1);
+        assertThat(foundParrotDataDto.get().getDate()).isEqualTo("2022-05-20");
+        Optional<ParrotDataDto> foundParrotDataDto2 = userService.getParrotData(user.getLogin_id(), 2);
+        assertThat(foundParrotDataDto2).isEmpty();
+    }
+
+    @Test
+    void parrotDataSize(){
+        User user = makeUser();
+        assertThat(userService.getParrotDataPageSize(user.getLogin_id())).isEqualTo(0);
+        makeParrotData();
+
+        assertThat(userService.getParrotDataPageSize(user.getLogin_id())).isEqualTo(1);
+    }
+
+    private User makeUser() {
+        UserSaveDto userSaveDto = new UserSaveDto("login", "pwd", "name", "email");
+        return userService.create(userSaveDto);
+    }
+
+    private void makeParrotData() {
+        ParrotDataDto parrotDataDto =
+                new ParrotDataDto(1, "2022-05-20", 1, 1, 1,
+                        1, 1, 1);
+        userService.setParrotData("login", parrotDataDto);
     }
 }

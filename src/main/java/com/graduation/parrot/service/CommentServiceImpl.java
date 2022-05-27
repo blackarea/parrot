@@ -1,10 +1,10 @@
 package com.graduation.parrot.service;
 
-import com.graduation.parrot.domain.Board;
-import com.graduation.parrot.domain.Comment;
-import com.graduation.parrot.domain.User;
+import com.graduation.parrot.domain.*;
 import com.graduation.parrot.domain.dto.CommentResponseDto;
+import com.graduation.parrot.domain.dto.RecommendDto;
 import com.graduation.parrot.repository.BoardRepository;
+import com.graduation.parrot.repository.CommentRecommendRepository;
 import com.graduation.parrot.repository.CommentRepository;
 import com.graduation.parrot.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -12,8 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.graduation.parrot.domain.QComment.comment;
@@ -24,13 +23,15 @@ public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
+    private final CommentRecommendRepository commentRecommendRepository;
     private final JPAQueryFactory queryFactory;
 
     public CommentServiceImpl(CommentRepository commentRepository, UserRepository userRepository,
-                              BoardRepository boardRepository, EntityManager entityManager) {
+                              BoardRepository boardRepository, CommentRecommendRepository commentRecommendRepository, EntityManager entityManager) {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
+        this.commentRecommendRepository = commentRecommendRepository;
         queryFactory = new JPAQueryFactory(entityManager);
     }
 
@@ -80,6 +81,40 @@ public class CommentServiceImpl implements CommentService{
                 commentList.stream().map(CommentResponseDto::new).collect(Collectors.toList());
 
         return commentDtoList;
+    }
+
+    @Transactional
+    @Override
+    public RecommendDto recommend(User user, Long comment_id, int point) {
+        Comment comment = commentRepository.findById(comment_id).get();
+
+        if (alreadyExistRecommend(user, comment)) {
+            return new RecommendDto(false);
+        }
+        commentRecommendRepository.save(new CommentRecommend(user, comment, point));
+        comment.updateRecommend(point);
+        return new RecommendDto(true, comment.getRecommendCount());
+    }
+
+    @Override
+    public Map<String, String> recommendCheck(User user, Long comment_id) {
+        Comment comment = commentRepository.findById(comment_id).get();
+        Map<String, String> map = new HashMap<>();
+
+        Optional<CommentRecommend> presentRecommend = commentRecommendRepository.findByUserAndComment(user, comment);
+        if(presentRecommend.isPresent()){
+            CommentRecommend commentRecommend = presentRecommend.get();
+            map.put("recommend", "yes");
+            map.put("point", String.valueOf(commentRecommend.getPoint()));
+            return map;
+        }
+
+        map.put("recommend", "no");
+        return map;
+    }
+
+    private boolean alreadyExistRecommend(User user, Comment comment) {
+        return commentRecommendRepository.findByUserAndComment(user, comment).isPresent();
     }
 
 
