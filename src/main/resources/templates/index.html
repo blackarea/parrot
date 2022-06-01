@@ -179,7 +179,8 @@
 
 <div class="home">
     <header>
-        <ul class="nav justify-content-center">
+        <div>
+        <ul class="nav justify-content-center align-items-center" style="height:60px;border-radius:10px">
             <h4 style="color:#ffffff;font-weight:bold">Project-p</h4>
             <li class="nav-item dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
@@ -219,6 +220,7 @@
                    th:href="@{/account/{login_id}(login_id=${login_id})}">계정설정</a>
             </li>
         </ul>
+
     </header>
 
     <section>

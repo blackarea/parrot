@@ -17,6 +17,7 @@ public class CommentResponseDto {
     private String content;
     private String createdDate;
     private String modifiedDate;
+    private int recommendCount;
 
     public CommentResponseDto(Comment comment) {
         this.id = comment.getId();
@@ -24,5 +25,6 @@ public class CommentResponseDto {
         this.content = comment.getContent();
         this.createdDate = comment.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.modifiedDate = comment.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.recommendCount = comment.getRecommendCount();
     }
 }

@@ -44,6 +44,9 @@ public class User extends BaseTimeEntity{
     private List<Recommend> recommends = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CommentRecommend> commentRecommends = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Teaching> teachings = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

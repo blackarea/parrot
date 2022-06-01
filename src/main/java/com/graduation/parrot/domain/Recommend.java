@@ -15,7 +15,7 @@ public class Recommend extends BaseTimeEntity{
     @Column(name = "recommend_id")
     private Long id;
 
-    @Column(columnDefinition = "integer default 0", updatable = false)
+    @Column(columnDefinition = "integer default 0")
     private int point;
 
     @ManyToOne(fetch = FetchType.LAZY)
