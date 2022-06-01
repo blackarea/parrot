@@ -32,7 +32,7 @@ class BoardServiceTest {
         userRepository.deleteAll();
         boardRepository.deleteAll();
     }
-    
+
     @Test
     public void boardUpdateTest(){
         User user = User.builder()
@@ -49,7 +49,7 @@ class BoardServiceTest {
 
         Long board_id = boardService.create(build, savedUser);
 
-        Long update_id = boardService.update(board_id, new BoardDto("title2", "content2"));
+        Long update_id = boardService.update(board_id, new BoardDto("title2", "content2","2"));
         Board board = boardRepository.findById(update_id).get();
 
         assertThat(board.getTitle()).isEqualTo("title2");

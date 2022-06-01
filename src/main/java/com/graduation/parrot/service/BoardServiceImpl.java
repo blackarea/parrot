@@ -41,14 +41,14 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Long create(BoardDto boardDto, User user) {
-        return boardRepository.save(new Board(boardDto.getTitle(), boardDto.getContent(), user)).getId();
+        return boardRepository.save(new Board(boardDto.getTitle(), boardDto.getContent(), user, boardDto.getNotice())).getId();
     }
 
     @Override
     public Long update(Long board_id, BoardDto boardDto) {
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new NoSuchElementException("board update - 해당 게시글이 없습니다. id = " + board_id));
-        board.update(boardDto.getTitle(), boardDto.getContent());
+        board.update(boardDto.getTitle(), boardDto.getContent(), boardDto.getNotice());
         boardRepository.save(board);
 
         return board_id;
@@ -76,6 +76,7 @@ public class BoardServiceImpl implements BoardService {
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
                     .join(board.user, user).fetchJoin()
+                    .orderBy(board.notice.desc())
                     .orderBy(boardSort(array))
                     .orderBy(board.id.desc())
                     .fetchResults();
@@ -96,6 +97,7 @@ public class BoardServiceImpl implements BoardService {
                     .join(board.user, user).fetchJoin()
                     .offset(pageable.getOffset())
                     .limit(pageable.getPageSize())
+                    .orderBy(board.notice.desc())
                     .orderBy(boardSort(array))
                     .orderBy(board.id.desc())
                     .fetchResults();
