@@ -196,11 +196,14 @@
         /*댓글 추천 다운*/
         .bi-caret-down-fill {
             font-size: 17px;
+            color:#777;
+
         }
 
         /*댓글 추천 업*/
         .bi-caret-up-fill {
             font-size: 17px;
+            color:#777;
         }
 
         /*JS 시작*/
@@ -593,7 +596,7 @@
                             data-bs-target="#collapseExample"
                             style="width:50px;height:40px;display:flex;justify-content:center"
                             class="btn btn-outline-primary">
-                        <i class="bi bi-caret-up-fill"></i>
+                        <i class="bi bi-hand-thumbs-up-fill" style="color:none"></i>
                     </button>
 
                     <span id="recommendCount" class="recommendCount" th:text="${boardResponseDto.recommendCount}"></span>
@@ -602,7 +605,7 @@
                             data-bs-target="#collapseExample"
                             style="width:50px;height:40px;display:flex;justify-content:center"
                             class="btn btn-outline-secondary">
-                        <i class="bi bi-caret-down-fill"></i>
+                        <i class="bi bi-hand-thumbs-down-fill"></i>
                     </button>
 
                 </div>
@@ -610,22 +613,53 @@
 
             <div class="report">
                 <div th:if="${author} == true" style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
+                    <div style="display:flex;align-items:center;margin-top:3px">
+                    <i class="bi bi-eraser-fill" style="font-size:15px; color: #7f7f7f; margin-right:5px"></i>
                     <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}"
-                       style="font-size:15px; color: #7f7f7f">수정하기</a>
-                    <button type="submit" onclick="deleteBoard()"
-                            style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
-                        삭제하기
+                       style="font-size:13px; color: #7f7f7f">수정하기</a>
+                    </div>
+                    <button type="submit" onclick="deleteBoard()" style="margin-right:10px;border:none;background:transparent">
+                        <i class="bi bi-trash3-fill" style="font-size:13px; color: #7f7f7f"></i>
+                        <span style="font-size:13px; color: #7f7f7f">삭제하기</span>
                     </button>
                 </div>
                 <div th:if="${author} == false" style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
                     <button onclick="report()" style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
-                        신고하기
+                        <i class="bi bi-exclamation-diamond-fill" style="font-size:13px; color: #7f7f7f"></i>
+                        <span style="font-size:13px; color: #7f7f7f">신고하기</span>
                     </button>
                 </div>
-
             </div>
 
-            <div class="comment" style="margin-top:20px">
+            <div class="comment"style="margin-bottom:50px">
+
+
+                <div style="margin-top:15px;margin-bottom:5px"><span style="font-size:15px;font-weight:bold;color:#7f7f7f">총 댓글 <span style="font-size:15px;font-weight:bold;color:#ffb830">(1)</span></span></div>
+
+                <div style="background:#FFF4E1">
+                <div style="padding-top:10px;padding-left:15px">
+
+                    <span style="font-size:14px;font-weight:bold;color:#FFA071">베스트 <span style="font-size:14px;font-weight:bold;color:#333">댓글</span></span>
+                </div>
+
+                <div style="display:flex">
+
+                    <div style="padding-top: 10px;padding-bottom: 10px;text-align: center;width: 70px;padding: -30px;">
+
+                    </div>
+                    <div style="width:730px;height:100px">
+
+                    </div>
+                </div>
+                </div>
+
+                <div class="comment-view">
+                    <table id="commentTable">
+
+
+                    </table>
+                </div>
+
                 <div class="input-group" style="height:100px">
                     <textarea id="commentCreate" type="text" class="form-control"
                               placeholder="욕설, 비방, 과도한 표현은 제재의 대상이 될 수 있습니다."
@@ -636,11 +670,6 @@
                     </button>
                 </div>
 
-                <div class="comment-view" style="margin-bottom:50px">
-                    <table id="commentTable">
-
-                    </table>
-                </div>
             </div>
 
         </div>
