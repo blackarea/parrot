@@ -14,6 +14,7 @@ public interface CommentService {
     void update(Long comment_id, String content);
     void delete(Long board_id, Long comment_id);
     List<CommentResponseDto> getCommentList(Long board_id);
+    List<CommentResponseDto> getBestCommentList(Long board_id);
     RecommendDto recommend(User user, Long comment_id, int point);
     Map<String, String> recommendCheck(User user, Long comment_id);
 }

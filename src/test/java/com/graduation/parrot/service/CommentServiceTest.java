@@ -92,4 +92,27 @@ class CommentServiceTest {
         List<CommentResponseDto> commentList = commentService.getCommentList(foundBoard.getId());
         assertThat(commentList.size()).isEqualTo(1);
     }
+
+    @Test
+    void getBestCommentList() {
+        User user = userRepository.findByLogin_id("login").get();
+        Board foundBoard = queryFactory
+                .selectFrom(board)
+                .where(board.title.eq("제목"))
+                .fetchOne();
+        Long[] commentId = new Long[3];
+        for (int i = 0; i < 3; i++) {
+            commentId[i] = commentService.create(user, foundBoard.getId(), "test" + i);
+        }
+        for (int i = 0; i < 5; i++) {
+            User savedUser = userRepository.save(new User("login" + i, "pwd" + i, "name" + i, "test"));
+            commentService.recommend(savedUser, commentId[0], 1);
+            commentService.recommend(savedUser, commentId[1], 1);
+            commentService.recommend(savedUser, commentId[2], 1);
+        }
+        List<CommentResponseDto> bestCommentList = commentService.getBestCommentList(foundBoard.getId());
+        assertThat(bestCommentList.size()).isEqualTo(3);
+        assertThat(bestCommentList.get(0).getRecommendCount()).isEqualTo(5);
+    }
+
 }
