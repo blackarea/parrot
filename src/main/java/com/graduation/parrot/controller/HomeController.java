@@ -36,7 +36,7 @@ public class HomeController {
                     .build();
             User user = userService.create(userSaveDto);
 
-            BoardDto boardDto = BoardDto.builder().title("title" + i).content("content" + i).build();
+            BoardDto boardDto = BoardDto.builder().title("title" + i).content("content" + i).notice("1").build();
             Long boardId = boardService.create(boardDto, user);
             Board board = boardRepository.findById(boardId).get();
 
