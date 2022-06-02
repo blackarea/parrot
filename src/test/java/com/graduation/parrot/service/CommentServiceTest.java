@@ -54,6 +54,7 @@ class CommentServiceTest {
                 .user(foundUser)
                 .title("제목")
                 .content("내용")
+                .notice("1")
                 .build();
         Board foundBoard = boardRepository.save(board);
 

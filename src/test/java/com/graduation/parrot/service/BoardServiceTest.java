@@ -48,6 +48,7 @@ class BoardServiceTest {
         BoardDto build = BoardDto.builder()
                 .title("title")
                 .content("content")
+                .notice("1")
                 .build();
 
         Long board_id = boardService.create(build, savedUser);
@@ -71,6 +72,7 @@ class BoardServiceTest {
         BoardDto build = BoardDto.builder()
                 .title("title")
                 .content("content")
+                .notice("1")
                 .build();
 
         Long board_id = boardService.create(build, savedUser);
@@ -87,6 +89,7 @@ class BoardServiceTest {
         BoardDto build = BoardDto.builder()
                 .title("title")
                 .content("content")
+                .notice("1")
                 .build();
 
         boardService.create(build, user);
@@ -94,6 +97,7 @@ class BoardServiceTest {
         BoardDto build2 = BoardDto.builder()
                 .title("title2")
                 .content("content2")
+                .notice("1")
                 .build();
         boardService.create(build2, user);
 

@@ -57,7 +57,7 @@ class UserServiceTest {
     void updateNameTest(){
         User user = userRepository.save(User.builder().login_id("login").password("pwd").name("name").build());
         IntStream.rangeClosed(1, 5).forEach(i -> {
-            Board board = new Board("title"+i, "content" + i, user);
+            Board board = new Board("title"+i, "content" + i, user, "1");
             boardRepository.save(board);
         });
         userService.updateName("login", "변경된이름");
@@ -77,7 +77,7 @@ class UserServiceTest {
         User user = userRepository.save(User.builder().login_id("login").password("pwd").name("name").build());
         User user2 = userRepository.save(User.builder().login_id("login2").password("pwd2").name("name2").build());
         IntStream.rangeClosed(1, 2).forEach(i -> {
-            Board board = new Board("title"+i, "content" + i, user2);
+            Board board = new Board("title"+i, "content" + i, user2, "1");
             boardRepository.save(board);
             Comment comment = new Comment("comment content" + i, user, board);
             commentRepository.save(comment);

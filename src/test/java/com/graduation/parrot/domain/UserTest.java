@@ -34,7 +34,7 @@ class UserTest {
                 .build();
         User savedUser = userRepository.save(user);
 
-        Board board = new Board("title", "content", savedUser);
+        Board board = new Board("title", "content", savedUser, "1");
         Board savedBoard = boardRepository.save(board);
 
         assertThat(boardRepository.count()).isEqualTo(1L);

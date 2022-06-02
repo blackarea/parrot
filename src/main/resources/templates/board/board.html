@@ -33,12 +33,12 @@
             align-items: center;
         }
 
-        .recommendCount{
-            font-size:20px;
-            font-weight:bold;
-            color:#696969;
-            margin-left:20px;
-            margin-right:20px;
+        .recommendCount {
+            font-size: 20px;
+            font-weight: bold;
+            color: #696969;
+            margin-left: 20px;
+            margin-right: 20px;
         }
 
         .recommendButton {
@@ -196,14 +196,14 @@
         /*댓글 추천 다운*/
         .bi-caret-down-fill {
             font-size: 17px;
-            color:#777;
+            color: #777;
 
         }
 
         /*댓글 추천 업*/
         .bi-caret-up-fill {
             font-size: 17px;
-            color:#777;
+            color: #777;
         }
 
         /*JS 시작*/
@@ -214,7 +214,6 @@
             border-left: none;
             border-right: none;
             border-top: none;
-
         }
 
         /*테이블 추천 td*/
@@ -262,7 +261,7 @@
             margin-right: 10px;
         }
 
-        .commentTextarea{
+        .commentTextarea {
             resize: none;
             width: 730px;
             height: 70px;
@@ -270,14 +269,89 @@
     </style>
     <script th:inline="javascript">
         $(function () {
-            printCommentList();
+            printBestCommentList();
+            setTimeout(function () {
+                printCommentList();
+            }, 30);
             printBoard();
             recommendCheck();
         });
 
         function printBoard() {
+            //summernote를 이용하므로 db에 html태그들이 함께 저장이 된다.
+            //그러므로 불러올 때 html을 그대로 적용
             $('#contents').html([[${boardResponseDto.content}]]);
         }
+
+        //베스트 댓글 출력 함수
+        function printBestCommentList() {
+            let url = "/board/" + [[${boardResponseDto.id}]] + "/comment/best";
+            $.get(url, function (response) {
+                let table = document.getElementById('bestCommentTable');
+                $('.bestCommentTr').remove();
+                $.each(response, function (index, item) {
+                    //댓글 TR
+                    let bestCommentTr = document.createElement('tr');
+                    bestCommentTr.setAttribute("class", "bestCommentTr");
+
+                    //comment 추천
+                    let commentRecommendTd = document.createElement('td');
+                    commentRecommendTd.setAttribute("class", "commentRecommendTd");
+
+                    let recommendCount = document.createElement('div');
+                    recommendCount.setAttribute("class", "recommendCount"+index);
+                    recommendCount.innerText = item.recommendCount;
+                    commentRecommendTd.appendChild(recommendCount);
+
+                    //comment 내용
+                    //Table 이어서 Td안에 Div가 있는 형태
+                    let commentContentTd = document.createElement('td');
+                    commentContentTd.setAttribute("class", "commentContentTd");
+
+                    let commentContentDiv = document.createElement('div');
+                    commentContentDiv.setAttribute("class", "commentContentDiv");
+
+                    let commentAuthor = document.createElement('span');
+                    let commentDate = document.createElement('span');
+                    let commentContent = document.createElement('div');
+                    commentAuthor.setAttribute("class", "commentAuthor");
+                    commentDate.setAttribute("class", "commentDate");
+                    commentContent.setAttribute("class", "commentContent");
+                    commentAuthor.innerText = item.author;
+                    commentDate.innerText = item.createdDate;
+                    commentContent.innerText = item.content;
+
+                    commentContentDiv.appendChild(commentAuthor);
+                    commentContentDiv.appendChild(commentDate);
+                    commentContentDiv.appendChild(commentContent);
+
+                    //댓글 수정, 삭제
+                    if (item.author == [[${userResponseDto.username}]]) {
+                        let commentUpdate = document.createElement('span');
+                        let commentDelete = document.createElement('span');
+                        commentUpdate.setAttribute("class", "commentButton " + item.id);
+                        commentDelete.setAttribute("class", "commentButton " + item.id);
+
+                        commentUpdate.innerText = "수정";
+                        commentDelete.innerText = "삭제";
+                        commentContentDiv.appendChild(commentUpdate);
+                        commentContentDiv.appendChild(commentDelete);
+                        commentUpdate.addEventListener("click", function () {
+                            updateComment(item.id, commentContent);
+                        });
+                        commentDelete.addEventListener("click", function () {
+                            deleteComment(item.id);
+                        })
+                    }
+
+                    commentContentTd.appendChild(commentContentDiv);
+
+                    bestCommentTr.appendChild(commentRecommendTd);
+                    bestCommentTr.appendChild(commentContentTd);
+                    table.appendChild(bestCommentTr);
+                });
+            })
+        };
 
         function printCommentList() {
             let url = "/board/" + [[${boardResponseDto.id}]] + "/comment";
@@ -298,7 +372,7 @@
 
                     recommendUp.setAttribute("class", "bi bi-caret-up-fill");
                     recommendDown.setAttribute("class", "bi bi-caret-down-fill");
-                    recommendCount.setAttribute("class", "recommendCount"+index);
+                    recommendCount.setAttribute("class", "recommendCount" + index);
                     recommendCount.innerText = item.recommendCount;
 
                     //추천 했는지 확인하고 색칠하기
@@ -306,10 +380,10 @@
                         type: 'POST',
                         url: '/comment/recommendcheck/' + item.id,
                     }).done(function (response) {
-                        if(response.recommend === 'yes'){
-                            if(response.point == '1'){
+                        if (response.recommend === 'yes') {
+                            if (response.point == '1') {
                                 recommendUp.setAttribute('style', 'color:#ffb830');
-                            }else {
+                            } else {
                                 recommendDown.setAttribute('style', 'color:#ffb830');
                             }
                         }
@@ -379,7 +453,7 @@
 
         function deleteBoard() {
             let check = confirm("정말로 삭제하시겠습니까?");
-            if(check){
+            if (check) {
                 $.ajax({
                     type: 'DELETE',
                     url: '/board/' + [[${boardResponseDto.id}]]
@@ -391,16 +465,16 @@
             }
         }
 
-        function recommendCheck(){
+        function recommendCheck() {
             $.ajax({
                 type: 'POST',
                 url: '/recommendcheck/' + [[${boardResponseDto.id}]]
             }).done(function (response) {
-                if(response.recommend == 'yes'){
-                    if(response.point == '1'){
+                if (response.recommend == 'yes') {
+                    if (response.point == '1') {
                         let likeButton = document.getElementById('boardLikeButton');
                         likeButton.setAttribute("style", 'background-color: #FFB830; color:white; width:50px; border:none')
-                    }else {
+                    } else {
                         let hateButton = document.getElementById('boardHateButton');
                         hateButton.setAttribute("style", 'background-color: #6c757d; color:white; width:50px; border:none')
                     }
@@ -436,7 +510,7 @@
 
             let tempText = commentContentDiv.innerText;
             commentContentDiv.innerText = '';
-            $('.'+id).remove();
+            $('.' + id).remove();
 
             let commentUpdate = document.createElement('span');
             let commentCancel = document.createElement('span');
@@ -447,7 +521,7 @@
             commentCancel.innerText = "취소";
             commentUpdate.addEventListener("click", function () {
                 let data = {
-                    commentContent : updateTextarea.value
+                    commentContent: updateTextarea.value
                 }
                 $.ajax({
                     type: 'PUT',
@@ -493,9 +567,9 @@
                 type: 'POST',
                 url: '/like/' + [[${boardResponseDto.id}]]
             }).done(function (response) {
-                if(response.canRecommend == true){
+                if (response.canRecommend == true) {
                     recommendCountSpan.innerText = response.recommendCount;
-                }else{
+                } else {
                     alert('추천을 수정할 수 없습니다.');
                 }
                 recommendCheck();
@@ -509,28 +583,28 @@
                 type: 'POST',
                 url: '/hate/' + [[${boardResponseDto.id}]]
             }).done(function (response) {
-                if(response.canRecommend == true){
+                if (response.canRecommend == true) {
                     recommendCountSpan.innerText = response.recommendCount;
-                }else{
+                } else {
                     alert('추천을 수정할 수 없습니다.');
                 }
                 recommendCheck();
             });
         }
-        
+
         function report() {
             alert("신고가 완료되었습니다");
         }
 
-        function commentLike(id, recommendCount, recommendUp){
+        function commentLike(id, recommendCount, recommendUp) {
             $.ajax({
                 type: 'POST',
                 url: '/comment/like/' + id,
             }).done(function (response) {
-                if(response.canRecommend == true){
+                if (response.canRecommend == true) {
                     recommendCount.innerText = response.recommendCount;
                     recommendUp.setAttribute('style', 'color:#ffb830');
-                }else{
+                } else {
                     alert('추천을 수정할 수 없습니다.');
                 }
             }).fail(function (e) {
@@ -538,15 +612,15 @@
             });
         }
 
-        function commentHate(id, recommendCount, recommendDown){
+        function commentHate(id, recommendCount, recommendDown) {
             $.ajax({
                 type: 'POST',
                 url: '/comment/hate/' + id,
             }).done(function (response) {
-                if(response.canRecommend == true){
+                if (response.canRecommend == true) {
                     recommendCount.innerText = response.recommendCount;
                     recommendDown.setAttribute('style', 'color:#ffb830');
-                }else{
+                } else {
                     alert('추천을 수정할 수 없습니다.');
                 }
             }).fail(function (e) {
@@ -599,7 +673,8 @@
                         <i class="bi bi-hand-thumbs-up-fill" style="color:none"></i>
                     </button>
 
-                    <span id="recommendCount" class="recommendCount" th:text="${boardResponseDto.recommendCount}"></span>
+                    <span id="recommendCount" class="recommendCount"
+                          th:text="${boardResponseDto.recommendCount}"></span>
 
                     <button id="boardHateButton" onclick="hate()" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseExample"
@@ -612,45 +687,50 @@
             </div>
 
             <div class="report">
-                <div th:if="${author} == true" style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
+                <div th:if="${author} == true"
+                     style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
                     <div style="display:flex;align-items:center;margin-top:3px">
-                    <i class="bi bi-eraser-fill" style="font-size:15px; color: #7f7f7f; margin-right:5px"></i>
-                    <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}"
-                       style="font-size:13px; color: #7f7f7f">수정하기</a>
+                        <i class="bi bi-eraser-fill" style="font-size:15px; color: #7f7f7f; margin-right:5px"></i>
+                        <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}"
+                           style="font-size:13px; color: #7f7f7f">수정하기</a>
                     </div>
-                    <button type="submit" onclick="deleteBoard()" style="margin-right:10px;border:none;background:transparent">
+                    <button type="submit" onclick="deleteBoard()"
+                            style="margin-right:10px;border:none;background:transparent">
                         <i class="bi bi-trash3-fill" style="font-size:13px; color: #7f7f7f"></i>
                         <span style="font-size:13px; color: #7f7f7f">삭제하기</span>
                     </button>
                 </div>
-                <div th:if="${author} == false" style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
-                    <button onclick="report()" style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
+                <div th:if="${author} == false"
+                     style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
+                    <button onclick="report()"
+                            style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
                         <i class="bi bi-exclamation-diamond-fill" style="font-size:13px; color: #7f7f7f"></i>
                         <span style="font-size:13px; color: #7f7f7f">신고하기</span>
                     </button>
                 </div>
             </div>
 
-            <div class="comment"style="margin-bottom:50px">
+            <div class="comment" style="margin-bottom:50px">
 
 
-                <div style="margin-top:15px;margin-bottom:5px"><span style="font-size:15px;font-weight:bold;color:#7f7f7f">총 댓글 <span style="font-size:15px;font-weight:bold;color:#ffb830">(1)</span></span></div>
+                <div style="margin-top:15px;margin-bottom:5px">
+                    <span style="font-size:15px;font-weight:bold;color:#7f7f7f">총 댓글
+                        <span style="font-size:15px;font-weight:bold;color:#ffb830">(<span th:text="${boardResponseDto.commentCount}"></span>)</span>
+                    </span>
+                </div>
 
                 <div style="background:#FFF4E1">
-                <div style="padding-top:10px;padding-left:15px">
-
-                    <span style="font-size:14px;font-weight:bold;color:#FFA071">베스트 <span style="font-size:14px;font-weight:bold;color:#333">댓글</span></span>
-                </div>
-
-                <div style="display:flex">
-
-                    <div style="padding-top: 10px;padding-bottom: 10px;text-align: center;width: 70px;padding: -30px;">
-
+                    <div th:if="${bestCommentListSize} > 0" style="padding-top:10px;padding-left:15px">
+                        <span style="font-size:14px;font-weight:bold;color:#FFA071">베스트
+                            <span style="font-size:14px;font-weight:bold;color:#333">댓글</span>
+                        </span>
                     </div>
-                    <div style="width:730px;height:100px">
 
+                    <div style="display:flex">
+                        <table id="bestCommentTable">
+
+                        </table>
                     </div>
-                </div>
                 </div>
 
                 <div class="comment-view">

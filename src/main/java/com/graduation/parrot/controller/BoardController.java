@@ -72,6 +72,7 @@ public class BoardController {
         model.addAttribute("userResponseDto", userResponseDto);
         model.addAttribute("boardResponseDto", boardResponseDto);
         model.addAttribute("commentDtoList", commentDtoList);
+        model.addAttribute("bestCommentListSize", commentService.getBestCommentList(id).size());
         return "board/board";
     }
 

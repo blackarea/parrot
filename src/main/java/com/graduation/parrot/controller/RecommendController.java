@@ -50,7 +50,6 @@ public class RecommendController {
 
     @PostMapping("/comment/recommendcheck/{comment_id}")
     public Map<String, String> commentRecommendCheck(@PathVariable Long comment_id, @AuthenticationPrincipal PrincipalDetails principalDetails){
-        log.info("commentRecommendCheck");
         return commentService.recommendCheck(principalDetails.getUser(), comment_id);
     }
 }

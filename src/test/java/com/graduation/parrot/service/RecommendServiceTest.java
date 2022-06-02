@@ -52,6 +52,7 @@ class RecommendServiceTest {
         BoardDto build = BoardDto.builder()
                 .title("title")
                 .content("content")
+                .notice("1")
                 .build();
         Long board_id = boardService.create(build, savedUser);
 
