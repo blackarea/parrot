@@ -24,6 +24,9 @@ public class Board extends BaseTimeEntity{
     private String content;
     private String author;
 
+    @Column(nullable = false)
+    private String notice;
+
     @Column(columnDefinition = "integer default 0")
     private int view;
 
@@ -48,17 +51,19 @@ public class Board extends BaseTimeEntity{
     private List<File> files = new ArrayList<>();
 
     @Builder
-    public Board(String title, String content, User user) {
+    public Board(String title, String content, User user, String notice) {
         this.title = title;
         this.content = content;
         this.author = user.getName();
+        this.notice = notice;
         setUser(user);
     }
 
-    public Board(String title, String content, User user, File file) {
+    public Board(String title, String content, User user, File file, String notice) {
         this.title = title;
         this.content = content;
         this.author = user.getName();
+        this.notice = notice;
         setUser(user);
         setFile(file);
     }
@@ -72,9 +77,10 @@ public class Board extends BaseTimeEntity{
         user.getBoards().add(this);
     }
 
-    public void update(String title, String content) {
+    public void update(String title, String content, String notice) {
         this.title = title;
         this.content = content;
+        this.notice = notice;
     }
 
     public void updateCommentCount(int point){

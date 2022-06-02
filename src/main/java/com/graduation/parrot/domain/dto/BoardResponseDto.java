@@ -17,6 +17,7 @@ public class BoardResponseDto {
     private int view;
     private int commentCount;
     private int recommendCount;
+    private String notice;
     private String createdDate;
     private String modifiedDate;
     private Long author_id;
@@ -31,6 +32,7 @@ public class BoardResponseDto {
         this.recommendCount = board.getRecommendCount();
         this.createdDate = board.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.modifiedDate = board.getModifiedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.notice = board.getNotice();
         this.author_id = author_id;
     }
 }

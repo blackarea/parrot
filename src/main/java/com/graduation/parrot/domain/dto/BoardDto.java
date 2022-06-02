@@ -12,11 +12,13 @@ public class BoardDto {
 
     private String title;
     private String content;
+    private String notice;
 
     @Builder
-    public BoardDto(String title, String content) {
+    public BoardDto(String title, String content, String notice) {
         this.title = title;
         this.content = content;
+        this.notice = notice;
     }
 
 }
