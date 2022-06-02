@@ -226,28 +226,46 @@
                     <div class="col">
                         <table class="table">
                             <!--공지-->
-                            <tr style="background-color:#efefef;height:70px;display:flex;align-items:center">
-                                <td>
-                                    <div class="container" style="width: 810px">
+                           
+                            <!--게시글-->
+                            <tr th:each="boardListResponseDto : ${boardList}" style="height:70px;display:flex;align-items:center">
+                                <td th:if="${boardListResponseDto.getNotice() == '2'}">
+                                    <div class="container" style="width: 810px;">
                                         <div class="row">
+                                            <!--왼쪽 (그림, 추천수)-->
                                             <div class="col-sm-1"
                                                  style="text-align: center; margin-bottom: auto; margin-top: auto">
-                                                <i class="bi bi-megaphone-fill"></i>
+                                                <div class="row">
+                                                    <i class="bi bi-megaphone-fill"></i>
+                                                </div>
                                             </div>
+                                            <!--중앙과 오른쪽-->
                                             <div class="col-sm-11">
                                                 <div class="row">
                                                     <div>
+                                                        <!--윗 줄(제목)-->
                                                         <div class="row" style="height: 24px">
-                                                            <div class="col">
-                                                                <span style="font-size: 15px; vertical-align:top; font-weight:bold; color:#000">공지사항</span>
+                                                            <div class="col" id="boardtitle">
+
+                                                                <a style="font-size: 15px; vertical-align:top; font-weight:bold; color:#000"
+                                                                   th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
+                                                                   th:text="${boardListResponseDto.title}"></a>
                                                             </div>
-                                                        </div>
-                                                        <div class="row" style="height: 24px">
-                                                            <div class="col">
-                                                                <span style="font-size: 14px">게시물 번호</span>
-                                                                <span style="margin-left:10px; font-size: 14px">조회수 831</span>
-                                                                <span style="margin-left:10px; font-size: 14px;">2022-03-27 04:27</span>
-                                                                <span style="font-size: 15px; float:right; font-weight:bold; font-color:#666666">운영자</span>
+
+                                                            <!--아랫 줄-->
+                                                            <div class="row" style="height: 24px">
+                                                                <div class="col" style="display:flex">
+                                                                    <div style="width:15%;text-align:left">
+                                                                        <span style="font-size: 14px; ">글 번호</span>
+                                                                        <span style="font-size: 14px; " th:text="${boardListResponseDto.id}"></span>
+                                                                    </div>
+                                                                    <div style="width:15%;text-align:center">
+                                                                        <span style="font-size: 14px; ">조회</span>
+                                                                        <span style="font-size: 14px; " th:text="${boardListResponseDto.view}"></span>
+                                                                    </div>
+                                                                    <div style="width:25%;margin-left:10px;text-align:center"><span style="font-size: 14px;" th:text="${boardListResponseDto.createdDate}"></span></div>
+                                                                    <div style="width:70%"><span style="font-size: 15px; float:right; font-weight:bold; font-color:#666666" th:text="${boardListResponseDto.getAuthor}"></span></div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -256,10 +274,8 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
-                            <!--게시글-->
-                            <tr th:each="boardListResponseDto : ${boardList}" style="height:70px;display:flex;align-items:center">
-                                <td>
+
+                                <td th:unless="${boardListResponseDto.getNotice() == '2'}">
                                     <div class="container" style="width: 810px;">
                                         <div class="row">
                                             <!--왼쪽 (그림, 추천수)-->
@@ -302,6 +318,7 @@
                                                                 </div>
                                                                 <div style="width:25%;margin-left:10px;text-align:center"><span style="font-size: 14px; color:#7C7C7C" th:text="${boardListResponseDto.createdDate}"></span></div>
                                                                 <div style="width:70%"><span style="font-size: 14px;float:right;font-weight:bold" th:text="${boardListResponseDto.getAuthor}"></span></div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -311,7 +328,6 @@
                                     </div>
                                 </td>
                             </tr>
-
                         </table>
                     </div>
                 </div>
@@ -333,7 +349,7 @@
                                    class="page-link" th:text="'<'"></a>
                             </li>
 
-                            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}">
+                            <li class="page-item" th:if="${boardList.getTotalPages() != 0}" th:each="page: ${#numbers.sequence(start, end)}">
                                 <a th:href="@{/boardlist(page=${page - 1}, array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="${page}">1</a>
                             </li>
@@ -343,7 +359,7 @@
                                    class="page-link" th:text="'>'"></a>
                             </li>
 
-                            <li class="page-item" th:if="${boardList.number != boardList.getTotalPages()-1}">
+                            <li class="page-item" th:if="${boardList.number < boardList.getTotalPages()-1}">
                                 <a th:href="@{/boardlist(page=${boardList.getTotalPages()-1}, array=${param.array}, searchKeyword=${param.searchKeyword}, type=${param.type})}"
                                    class="page-link" th:text="'>>'"></a>
                             </li>

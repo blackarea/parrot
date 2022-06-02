@@ -1,12 +1,10 @@
 package com.graduation.parrot.controller;
 
 import com.graduation.parrot.config.auth.PrincipalDetails;
-import com.graduation.parrot.domain.User;
 import com.graduation.parrot.domain.dto.CommentResponseDto;
 import com.graduation.parrot.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +19,12 @@ public class CommentController {
 
     @GetMapping()
     public List<CommentResponseDto> getCommentList(@PathVariable Long board_id){
-        List<CommentResponseDto> commentList = commentService.getCommentList(board_id);
-        return commentList;
+        return commentService.getCommentList(board_id);
+    }
+
+    @GetMapping("/best")
+    public List<CommentResponseDto> getBestCommentList(@PathVariable Long board_id){
+        return commentService.getBestCommentList(board_id);
     }
 
     @PostMapping()
@@ -34,7 +36,6 @@ public class CommentController {
     @PutMapping("/{comment_id}")
     public void updateComment(@PathVariable String board_id, @PathVariable Long comment_id,
                               @RequestBody Map<String, String> content){
-        System.out.println("content.get(\"commentContent\") = " + content.get("commentContent"));
         commentService.update(comment_id, content.get("commentContent"));
     }
 

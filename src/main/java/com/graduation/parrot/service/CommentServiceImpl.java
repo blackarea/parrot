@@ -72,15 +72,24 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public List<CommentResponseDto> getCommentList(Long board_id) {
-        List<Comment> commentList = queryFactory
+        return queryFactory
                 .selectFrom(comment)
                 .where(comment.board.id.eq(board_id))
-                .fetch();
+                .fetch()
+                .stream().map(CommentResponseDto::new).collect(Collectors.toList());
+    }
 
-        List<CommentResponseDto> commentDtoList =
-                commentList.stream().map(CommentResponseDto::new).collect(Collectors.toList());
-
-        return commentDtoList;
+    @Override
+    public List<CommentResponseDto> getBestCommentList(Long board_id) {
+        return queryFactory
+                .selectFrom(comment)
+                .where(comment.board.id.eq(board_id))
+                .where(comment.recommendCount.goe(2))
+                .orderBy(comment.recommendCount.desc(), comment.id.asc())
+                .limit(5)
+                .fetch()
+                .stream().map(CommentResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     @Transactional

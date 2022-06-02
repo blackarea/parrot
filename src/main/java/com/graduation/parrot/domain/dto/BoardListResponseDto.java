@@ -20,12 +20,14 @@ public class BoardListResponseDto {
     private int recommendCount;
     private String createdDate;
     private String modifiedDate;
+    private String notice;
 
     public BoardListResponseDto(Board board) {
         this.id = board.getId();
         this.title = board.getTitle();
         this.author = board.getAuthor();
         this.view = board.getView();
+        this.notice = board.getNotice();
         this.commentCount = board.getCommentCount();
         this.recommendCount = board.getRecommendCount();
         this.createdDate = board.getCreatedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));

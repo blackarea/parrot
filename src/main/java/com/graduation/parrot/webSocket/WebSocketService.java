@@ -2,13 +2,8 @@ package com.graduation.parrot.webSocket;
 
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.drafts.Draft_6455;
-import org.java_websocket.util.Base64;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
 
 @Slf4j
 public class WebSocketService {
@@ -44,6 +39,7 @@ public class WebSocketService {
         webSocketUtil.send(type + "," + message);
         webSocketUtil.run();
         String pythonMessage = webSocketUtil.getPythonMessage();
+        log.info("python to spring : " + pythonMessage);
 
         webSocketUtil.close();
         return pythonMessage;
