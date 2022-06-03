@@ -237,6 +237,9 @@
             margin-top: auto;
             margin-bottom: auto;
             vertical-align: middle;
+            margin-top:10px;
+            margin-bottom:10px;
+            padding-bottom:10px;
         }
 
         .commentAuthor {
@@ -713,14 +716,15 @@
             <div class="comment" style="margin-bottom:50px">
 
 
-                <div style="margin-top:15px;margin-bottom:5px">
+                <div style="margin-top:15px">
                     <span style="font-size:15px;font-weight:bold;color:#7f7f7f">총 댓글
                         <span style="font-size:15px;font-weight:bold;color:#ffb830">(<span th:text="${boardResponseDto.commentCount}"></span>)</span>
                     </span>
                 </div>
 
-                <div style="background:#FFF4E1">
-                    <div th:if="${bestCommentListSize} > 0" style="padding-top:10px;padding-left:15px">
+
+                <div style="background:#FFF4E1;margin-top:5px">
+                    <div th:if="${bestCommentListSize} > 0" style="padding-top:10px;margin-left:15px">
                         <span style="font-size:14px;font-weight:bold;color:#FFA071">베스트
                             <span style="font-size:14px;font-weight:bold;color:#333">댓글</span>
                         </span>
@@ -732,6 +736,7 @@
                         </table>
                     </div>
                 </div>
+
 
                 <div class="comment-view">
                     <table id="commentTable">

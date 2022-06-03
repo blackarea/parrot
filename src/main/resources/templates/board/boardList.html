@@ -228,10 +228,10 @@
                             <!--공지-->
                            
                             <!--게시글-->
-                            <tr th:each="boardListResponseDto : ${boardList}" style="height:70px;display:flex;align-items:center">
-                                <td th:if="${boardListResponseDto.getNotice() == '2'}">
-                                    <div class="container" style="width: 810px;">
-                                        <div class="row">
+                            <tr th:each="boardListResponseDto : ${boardList}">
+                                <td th:if="${boardListResponseDto.getNotice() == '2'}" style="height:70px;display:flex;align-items:center;background:#e5e5e5">
+                                    <div class="container" style="width: 810px">
+                                        <div class="row" style="height:48px">
                                             <!--왼쪽 (그림, 추천수)-->
                                             <div class="col-sm-1"
                                                  style="text-align: center; margin-bottom: auto; margin-top: auto">
@@ -264,7 +264,7 @@
                                                                         <span style="font-size: 14px; " th:text="${boardListResponseDto.view}"></span>
                                                                     </div>
                                                                     <div style="width:25%;margin-left:10px;text-align:center"><span style="font-size: 14px;" th:text="${boardListResponseDto.createdDate}"></span></div>
-                                                                    <div style="width:70%"><span style="font-size: 15px; float:right; font-weight:bold; font-color:#666666" th:text="${boardListResponseDto.getAuthor}"></span></div>
+                                                                    <div style="width:70%"><span style="font-size: 14px; float:right; font-weight:bold; font-color:#666666" th:text="${boardListResponseDto.getAuthor}"></span></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -275,7 +275,7 @@
                                     </div>
                                 </td>
 
-                                <td th:unless="${boardListResponseDto.getNotice() == '2'}">
+                                <td th:unless="${boardListResponseDto.getNotice() == '2'}" style="height:70px;display:flex;align-items:center">
                                     <div class="container" style="width: 810px;">
                                         <div class="row">
                                             <!--왼쪽 (그림, 추천수)-->
@@ -296,7 +296,7 @@
                                                     <div>
                                                         <!--윗 줄(제목)-->
                                                         <div class="row" style="height: 24px">
-                                                            <div class="col" id="boardtitle">
+                                                            <div class="col">
 
                                                                 <a style="font-size: 16px;;font-weight:bold; color:#444444"
                                                                    th:href="@{/board/{id}(id=${boardListResponseDto.id})}"
@@ -327,6 +327,8 @@
                                         </div>
                                     </div>
                                 </td>
+
+
                             </tr>
                         </table>
                     </div>
