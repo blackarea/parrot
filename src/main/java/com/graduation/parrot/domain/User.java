@@ -52,6 +52,9 @@ public class User extends BaseTimeEntity{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ParrotData> parrotDataList;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ChatData> chatDataList = new ArrayList<>();
+
     @OneToOne
     @JoinColumn(name = "parrot_state_id")
     private ParrotState parrotState;
