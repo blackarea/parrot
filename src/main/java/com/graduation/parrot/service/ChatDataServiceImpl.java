@@ -32,9 +32,9 @@ public class ChatDataServiceImpl implements ChatDataService{
 
     @Transactional
     @Override
-    public void updateChatData(String login_id, Long chatData_id, int radio) {
-        ChatData chatData = chatDataRepository.findByUserIdAndId(login_id, chatData_id);
-        chatData.updateRadio(radio);
+    public void updateChatData(String login_id, int radio) {
+        User user = userRepository.findByLogin_id(login_id).get();
+        chatDataRepository.updateAllRadio(radio, user);
     }
 
     @Override

@@ -113,10 +113,9 @@ public class RestApiController {
         return map;
     }
 
-    @PutMapping("/chatdata/{login_id}/{chatdata_id}")
-    public void updateChatData(@PathVariable String login_id, @PathVariable Long chatdata_id,
-                               @RequestBody Map<String, Integer> radio) {
-        chatDataService.updateChatData(login_id, chatdata_id, radio.get("radio"));
+    @PutMapping("/chatdata/{login_id}")
+    public void updateChatData(@PathVariable String login_id, @RequestBody Map<String, Integer> radio) {
+        chatDataService.updateChatData(login_id, radio.get("radio"));
     }
 
     @DeleteMapping("/chatdata/{login_id}/{chatdata_id}")

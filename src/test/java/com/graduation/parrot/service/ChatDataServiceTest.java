@@ -40,15 +40,21 @@ class ChatDataServiceTest {
     void testAll() {
         ChatDataDto chatDataDto = new ChatDataDto(0, "1", 0, "1", 0, 0, 0, 0);
         Long id = chatDataService.create("login", chatDataDto);
+        chatDataDto = new ChatDataDto(1, "1", 0, "1", 0, 0, 0, 0);
+        Long id2 = chatDataService.create("login", chatDataDto);
+
         List<ChatData> allChatData = chatDataService.getAllChatData("login");
-        assertThat(allChatData.size()).isEqualTo(1);
-        chatDataService.updateChatData("login", id, 2);
+        assertThat(allChatData.size()).isEqualTo(2);
+
+        chatDataService.updateChatData("login", 2);
         ChatData updatedChatData = chatDataRepository.findByUserIdAndId("login", id);
+        ChatData updatedChatData2 = chatDataRepository.findByUserIdAndId("login", id2);
         assertThat(updatedChatData.getRadio()).isEqualTo(2);
+        assertThat(updatedChatData2.getRadio()).isEqualTo(2);
 
         chatDataService.deleteChatData("login", id);
         List<ChatData> deleteResult = chatDataService.getAllChatData("login");
-        assertThat(deleteResult.size()).isEqualTo(0);
+        assertThat(deleteResult.size()).isEqualTo(1);
     }
 
 }
