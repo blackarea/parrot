@@ -210,16 +210,13 @@
 
         /*베스트 댓글*/
         .bestCommentTr{
-            border: 1px solid #e5e5e5;
+            border: 1px solid #e7e7e7;
             border-left: none;
             border-right: none;
             border-top: none;
         }
 
-        .commentImage{
-            width: 20px;
-            height: 20px;
-        }
+
 
         /*일반 댓글 테이블 tr*/
         .commentTr {
@@ -227,6 +224,11 @@
             border-left: none;
             border-right: none;
             border-top: none;
+        }
+        .bi-award-fill{
+            width: 20px;
+            height: 20px;
+            color:#ffb830;
         }
 
         /*테이블 추천 td*/
@@ -243,6 +245,8 @@
         .commentContentTd {
 
 
+
+
         }
 
         /*위 테이블 내용 td안에 있는 div*/
@@ -253,6 +257,7 @@
             margin-top: 10px;
             margin-bottom: 10px;
             padding-bottom: 10px;
+            padding-top:10px;
         }
 
         .commentAuthor {
@@ -314,9 +319,9 @@
                     let commentRecommendTd = document.createElement('td');
                     commentRecommendTd.setAttribute("class", "commentRecommendTd");
 
-                    let commentImage = document.createElement('img');
-                    commentImage.setAttribute('class', 'commentImage');
-                    commentImage.src = '/img/animated_stand2.gif';
+                    let commentImage = document.createElement('i');
+                    commentImage.setAttribute('class', 'bi bi-award-fill');
+
 
                     let recommendCount = document.createElement('div');
                     recommendCount.setAttribute("class", "recommendCount" + index);
@@ -494,10 +499,10 @@
                 if (response.recommend == 'yes') {
                     if (response.point == '1') {
                         let likeButton = document.getElementById('boardLikeButton');
-                        likeButton.setAttribute("style", 'background-color: #FFB830; color:white; width:50px; border:none')
+                        likeButton.setAttribute("style", 'background-color: #FFB830; color:white; width:50px;height:40px; border:none')
                     } else {
                         let hateButton = document.getElementById('boardHateButton');
-                        hateButton.setAttribute("style", 'background-color: #6c757d; color:white; width:50px; border:none')
+                        hateButton.setAttribute("style", 'background-color: #6c757d; color:white; width:50px;height:40px; border:none')
                     }
                 }
             });
@@ -743,8 +748,8 @@
 
                 <div style="background:#FFF4E1;margin-top:5px">
                     <div th:if="${bestCommentListSize} > 0" style="padding-top:10px;margin-left:15px">
-                        <span style="font-size:14px;font-weight:bold;color:#FFA071">베스트
-                            <span style="font-size:14px;font-weight:bold;color:#333">댓글</span>
+                        <span style="font-size:15px;font-weight:bold;color:#FFA071">베스트
+                            <span style="font-size:15px;font-weight:bold;color:#333">댓글</span>
                         </span>
                     </div>
 
