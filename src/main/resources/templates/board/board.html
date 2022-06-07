@@ -208,7 +208,20 @@
 
         /*JS 시작*/
 
-        /*테이블 tr*/
+        /*베스트 댓글*/
+        .bestCommentTr{
+            border: 1px solid #e5e5e5;
+            border-left: none;
+            border-right: none;
+            border-top: none;
+        }
+
+        .commentImage{
+            width: 20px;
+            height: 20px;
+        }
+
+        /*일반 댓글 테이블 tr*/
         .commentTr {
             border: 1px solid #e5e5e5;
             border-left: none;
@@ -237,9 +250,9 @@
             margin-top: auto;
             margin-bottom: auto;
             vertical-align: middle;
-            margin-top:10px;
-            margin-bottom:10px;
-            padding-bottom:10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
         }
 
         .commentAuthor {
@@ -297,17 +310,22 @@
                     let bestCommentTr = document.createElement('tr');
                     bestCommentTr.setAttribute("class", "bestCommentTr");
 
-                    //comment 추천
+                    //comment 왼쪽(추천, 이미지)
                     let commentRecommendTd = document.createElement('td');
                     commentRecommendTd.setAttribute("class", "commentRecommendTd");
 
+                    let commentImage = document.createElement('img');
+                    commentImage.setAttribute('class', 'commentImage');
+                    commentImage.src = '/img/animated_stand2.gif';
+
                     let recommendCount = document.createElement('div');
-                    recommendCount.setAttribute("class", "recommendCount"+index);
+                    recommendCount.setAttribute("class", "recommendCount" + index);
                     recommendCount.innerText = item.recommendCount;
+
+                    commentRecommendTd.appendChild(commentImage);
                     commentRecommendTd.appendChild(recommendCount);
 
-                    //comment 내용
-                    //Table 이어서 Td안에 Div가 있는 형태
+                    //comment 오른쪽(내용)
                     let commentContentTd = document.createElement('td');
                     commentContentTd.setAttribute("class", "commentContentTd");
 
@@ -715,13 +733,13 @@
 
             <div class="comment" style="margin-bottom:50px">
 
-
                 <div style="margin-top:15px">
                     <span style="font-size:15px;font-weight:bold;color:#7f7f7f">총 댓글
-                        <span style="font-size:15px;font-weight:bold;color:#ffb830">(<span th:text="${boardResponseDto.commentCount}"></span>)</span>
+                        <span style="font-size:15px;font-weight:bold;color:#ffb830">
+                            (<span th:text="${boardResponseDto.commentCount}"></span>)
+                        </span>
                     </span>
                 </div>
-
 
                 <div style="background:#FFF4E1;margin-top:5px">
                     <div th:if="${bestCommentListSize} > 0" style="padding-top:10px;margin-left:15px">
@@ -736,7 +754,6 @@
                         </table>
                     </div>
                 </div>
-
 
                 <div class="comment-view">
                     <table id="commentTable">
