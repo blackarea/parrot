@@ -49,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
     public Long update(Long board_id, BoardDto boardDto) {
         Board board = boardRepository.findById(board_id)
                 .orElseThrow(() -> new NoSuchElementException("board update - 해당 게시글이 없습니다. id = " + board_id));
-        board.update(boardDto.getTitle(), boardDto.getContent(), boardDto.getNotice());
+        board.update(boardDto.getTitle(), boardDto.getContent());
         boardRepository.save(board);
 
         return board_id;

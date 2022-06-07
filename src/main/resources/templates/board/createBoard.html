@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/layout}">
+      layout:decorate="~{layout/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <link rel="stylesheet" th:href="@{/css/create-custom.css}">
 
@@ -131,11 +132,13 @@
                           style="font-size: 30px;margin-left:10px;color:#444444;font-weight:bold">#글 등록</span>
                     </div>
                 </div>
-                <div type="text" class="category" style="margin-left:10px;margin-right:10px;height:40px">
-                    <select id="notice" name="notice">
-                        <option value="1">게시판</option>
-                        <option value="2">공지사항</option>
-                    </select>
+                <div class="category" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div type="text" class="category" style="margin-left:10px;margin-right:10px;height:40px">
+                        <select id="notice" name="notice">
+                            <option value="1">게시판</option>
+                            <option value="2">공지사항</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="section" style="margin-left:10px;margin-right:10px;height:40px;width:830px">

@@ -77,10 +77,9 @@ public class Board extends BaseTimeEntity{
         user.getBoards().add(this);
     }
 
-    public void update(String title, String content, String notice) {
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
-        this.notice = notice;
     }
 
     public void updateCommentCount(int point){
