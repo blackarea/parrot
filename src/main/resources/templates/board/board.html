@@ -714,9 +714,9 @@
             </div>
 
             <div class="report">
-                <div th:if="${author} == true"
+                <div th:if="${author == true || #authentication.getPrincipal().getUser().getRole() == T(com.graduation.parrot.domain.Role).ROLE_ADMIN}"
                      style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
-                        <div style="display:flex;align-items:center;margin-top:3px">
+                        <div th:if="${author == true}" style="display:flex;align-items:center;margin-top:3px">
                             <i class="bi bi-eraser-fill" style="font-size:15px; color: #7f7f7f; margin-right:5px"></i>
                             <a th:href="@{/board/update/{id}(id=${boardResponseDto.id})}"
                                style="font-size:13px; color: #7f7f7f">수정하기</a>
@@ -727,7 +727,7 @@
                             <span style="font-size:13px; color: #7f7f7f">삭제하기</span>
                         </button>
                 </div>
-                <div th:if="${author} == false"
+                <div th:if="${author == false && #authentication.getPrincipal().getUser().getRole() == T(com.graduation.parrot.domain.Role).ROLE_USER}"
                      style="height:60px;display:flex;justify-content:right;align-items:center;margin-right:10px">
                     <button onclick="report()"
                             style="font-size:15px; color: #7f7f7f; margin-right:10px;border:none;background:transparent">
