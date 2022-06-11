@@ -42,6 +42,9 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Long create(BoardDto boardDto, User user) {
+        if(boardDto.getNotice() == null){
+            return boardRepository.save(new Board(boardDto.getTitle(), boardDto.getContent(), user, "1")).getId();
+        }
         return boardRepository.save(new Board(boardDto.getTitle(), boardDto.getContent(), user, boardDto.getNotice())).getId();
     }
 
