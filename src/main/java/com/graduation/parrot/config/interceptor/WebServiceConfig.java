@@ -18,7 +18,7 @@ public class WebServiceConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(boardAuthInterceptor)
-                .addPathPatterns("/board/**");
+                .addPathPatterns("/board/*");
     }
 
     @Override
