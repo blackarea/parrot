@@ -7,6 +7,7 @@ on:
 
 env:
   S3_BUCKET_NAME: ai-parrot-build
+  PROJECT_NAME: ai-parrot
     
 jobs:
   build:
@@ -29,7 +30,7 @@ jobs:
       run: ./gradlew clean build
 
     - name: Make zip file
-      run: zip -r ./$GITHUB_SHA.zip .
+      run: zip -r ./$PROJECT_NAME.zip .
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -39,8 +40,8 @@ jobs:
         aws-region: ap-northeast-2
 
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
+      run: aws s3 cp --region ap-northeast-2 ./$PROJECT_NAME.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME.zip
 
     - name: Code Deploy
-      run: aws deploy create-deployment --application-name ai-parrot --deployment-group-name parrot-group --deployment-config-name CodeDeployDefault.AllAtOnce --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$GITHUB_SHA.zip --file-exists-behavior OVERWRITE --region ap-northeast-2
+      run: aws deploy create-deployment --application-name ai-parrot --deployment-group-name parrot-group --deployment-config-name CodeDeployDefault.AllAtOnce --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME.zip --file-exists-behavior OVERWRITE --region ap-northeast-2
       
