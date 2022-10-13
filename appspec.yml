@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/parrot/project
+    destination: /home/ec2-user/parrot/project/parrot
     overwrite: yes
 
 permissions:
