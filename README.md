@@ -23,4 +23,5 @@
 ![image](https://github.com/blackarea/parrot/assets/47111722/b5944020-301c-4c72-b691-9381fb4eb2fd)
 
 # 최종보고서
-https://drive.google.com/file/d/1AZKRAzbUM31CKA4rBlNvw5XH1N7A7ZZ-/view?usp=share_link
+
+https://drive.google.com/file/d/1Tq7zoQP0e27Uf4BfQbOSu7rfM8zA4JuX/view?usp=share_link
